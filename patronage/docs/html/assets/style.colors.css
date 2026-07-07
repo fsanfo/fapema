@@ -1,0 +1,50 @@
+/**
+ * FAPEMA - Color Palette
+ * Baseada na identidade visual observada no portal.
+ */
+
+:root {
+
+  /* Brand */
+  --color-primary: #005A9C;
+  --color-primary-dark: #003F73;
+  --color-primary-light: #3B82C4;
+
+  /* Secondary */
+  --color-secondary: #0A6FB8;
+  --color-secondary-light: #7FB8E6;
+
+  /* Backgrounds */
+  --color-background: #FFFFFF;
+  --color-background-alt: #F5F7FA;
+  --color-surface: #FAFAFA;
+
+  /* Text */
+  --color-text: #333333;
+  --color-text-light: #666666;
+  --color-text-muted: #8A8A8A;
+
+  /* Borders */
+  --color-border: #D9E1E8;
+  --color-divider: #ECEFF3;
+
+  /* States */
+  --color-success: #2E7D32;
+  --color-warning: #F9A825;
+  --color-danger: #C62828;
+  --color-info: #0288D1;
+
+  /* Links */
+  --color-link: var(--color-primary);
+  --color-link-hover: var(--color-primary-dark);
+
+  /* Buttons */
+  --button-primary-bg: var(--color-primary);
+  --button-primary-hover: var(--color-primary-dark);
+  --button-primary-text: #FFFFFF;
+
+  --button-secondary-bg: #FFFFFF;
+  --button-secondary-border: var(--color-primary);
+  --button-secondary-text: var(--color-primary);
+
+}
