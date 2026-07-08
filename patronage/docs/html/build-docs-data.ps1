@@ -2,7 +2,7 @@
 $ErrorActionPreference = 'Stop'
 
 $root = Split-Path -Parent $PSScriptRoot
-$markdownDir = Join-Path $root 'markdown'
+$markdownDir = Join-Path $root 'markdown\mysql'
 $outputPath = Join-Path $PSScriptRoot 'docs-data.js'
 
 function Repair-Mojibake {
