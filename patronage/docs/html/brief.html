@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAPEMA Patronage Analytics | Executive Brief</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Literata:opsz,wght@7..72,400;7..72,500;7..72,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/style.colors.css">
+  <style>
+    :root {
+      --navy-deep: #0d2138;
+      --blue-atlas: #16568b;
+      --teal-signal: #0b7d7a;
+      --sand-paper: #f2eee6;
+      --rust-seal: #b45b2e;
+      --ink-main: #1a2a3a;
+      --ink-soft: #4f5f70;
+      --line: rgba(26, 42, 58, 0.16);
+      --panel: rgba(255, 255, 255, 0.78);
+      --panel-strong: #ffffff;
+      --radius-xxl: 38px;
+      --radius-xl: 26px;
+      --radius-lg: 18px;
+      --shadow-soft: 0 14px 44px rgba(13, 33, 56, 0.12);
+      --shadow-crisp: 0 6px 18px rgba(13, 33, 56, 0.1);
+      --site-max: 1200px;
+      --step--1: clamp(0.82rem, 0.79rem + 0.2vw, 0.95rem);
+      --step-0: clamp(0.98rem, 0.92rem + 0.33vw, 1.14rem);
+      --step-1: clamp(1.2rem, 1.07rem + 0.66vw, 1.58rem);
+      --step-2: clamp(1.55rem, 1.28rem + 1.15vw, 2.22rem);
+      --step-3: clamp(2.1rem, 1.48rem + 2.5vw, 3.45rem);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+    }
+
+    body {
+      color: var(--ink-main);
+      font-family: 'Literata', Georgia, serif;
+      font-size: var(--step-0);
+      line-height: 1.5;
+      background:
+        radial-gradient(circle at 85% 10%, rgba(11, 125, 122, 0.14), transparent 33%),
+        radial-gradient(circle at 8% 26%, rgba(22, 86, 139, 0.19), transparent 28%),
+        linear-gradient(155deg, rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0) 46%),
+        var(--sand-paper);
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        repeating-linear-gradient(
+          -32deg,
+          rgba(26, 42, 58, 0.035) 0,
+          rgba(26, 42, 58, 0.035) 1px,
+          transparent 1px,
+          transparent 17px
+        );
+      opacity: 0.45;
+      z-index: 0;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      background: rgba(242, 238, 230, 0.88);
+      border-bottom: 1px solid rgba(13, 33, 56, 0.09);
+    }
+
+    .topbar-inner {
+      max-width: var(--site-max);
+      margin: 0 auto;
+      padding: 0.72rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      min-width: 0;
+    }
+
+    .brand img {
+      width: 92px;
+      height: auto;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.85);
+      padding: 0.35rem;
+      border: 1px solid rgba(13, 33, 56, 0.14);
+    }
+
+    .brand-copy {
+      min-width: 0;
+    }
+
+    .brand-copy strong {
+      display: block;
+      font-family: 'Chakra Petch', system-ui, sans-serif;
+      font-size: var(--step-1);
+      line-height: 1;
+      letter-spacing: 0.01em;
+      color: var(--navy-deep);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brand-copy span {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.73rem;
+      color: var(--ink-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .topbar-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .meta-pill {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.45rem 0.65rem;
+      border: 1px solid rgba(13, 33, 56, 0.13);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.74);
+      color: var(--ink-soft);
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: var(--site-max);
+      margin: 0 auto;
+      padding: clamp(1.15rem, 1.4vw, 1.6rem);
+      display: grid;
+      gap: 1.25rem;
+    }
+
+    .hero {
+      border-radius: var(--radius-xxl);
+      border: 1px solid rgba(13, 33, 56, 0.12);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      background: var(--panel-strong);
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      min-height: 430px;
+    }
+
+    .hero-copy {
+      padding: clamp(1.35rem, 2.3vw, 2.25rem);
+      background:
+        linear-gradient(130deg, rgba(13, 33, 56, 0.97), rgba(22, 86, 139, 0.92));
+      color: #f8fbff;
+      display: grid;
+      align-content: space-between;
+      gap: 1.2rem;
+    }
+
+    .hero-kicker {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      opacity: 0.86;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-family: 'Chakra Petch', system-ui, sans-serif;
+      font-size: var(--step-3);
+      line-height: 0.92;
+      letter-spacing: 0.01em;
+      max-width: 16ch;
+      text-wrap: balance;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 52ch;
+      color: rgba(248, 251, 255, 0.9);
+      font-size: var(--step-0);
+    }
+
+    .hero-rules {
+      display: grid;
+      gap: 0.5rem;
+      margin-top: 0.2rem;
+    }
+
+    .hero-rules div {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: var(--step--1);
+      color: rgba(248, 251, 255, 0.9);
+    }
+
+    .hero-rules div::before {
+      content: '';
+      width: 26px;
+      height: 1px;
+      background: rgba(248, 251, 255, 0.65);
+    }
+
+    .hero-signature {
+      padding: clamp(1.25rem, 2vw, 2rem);
+      display: grid;
+      align-content: center;
+      background:
+        radial-gradient(circle at 70% 30%, rgba(11, 125, 122, 0.17), transparent 52%),
+        radial-gradient(circle at 25% 80%, rgba(180, 91, 46, 0.16), transparent 45%),
+        var(--panel);
+    }
+
+    .compass {
+      width: min(360px, 100%);
+      aspect-ratio: 1;
+      margin: 0 auto;
+      border-radius: 50%;
+      border: 1px solid rgba(13, 33, 56, 0.16);
+      background:
+        conic-gradient(
+          from -40deg,
+          rgba(11, 125, 122, 0.76) 0deg,
+          rgba(22, 86, 139, 0.72) 115deg,
+          rgba(180, 91, 46, 0.69) 210deg,
+          rgba(13, 33, 56, 0.64) 360deg
+        );
+      position: relative;
+      display: grid;
+      place-items: center;
+      box-shadow: var(--shadow-crisp);
+      isolation: isolate;
+      animation: breathe 7s ease-in-out infinite;
+    }
+
+    .compass::before,
+    .compass::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+    }
+
+    .compass::before {
+      inset: 11%;
+      border: 1px dashed rgba(255, 255, 255, 0.5);
+    }
+
+    .compass::after {
+      inset: 25%;
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(13, 33, 56, 0.2);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.85);
+    }
+
+    .compass-core {
+      position: relative;
+      z-index: 2;
+      width: 46%;
+      text-align: center;
+    }
+
+    .compass-core strong {
+      display: block;
+      font-family: 'Chakra Petch', system-ui, sans-serif;
+      font-size: clamp(1.2rem, 1.4vw, 1.6rem);
+      line-height: 1;
+      color: var(--navy-deep);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .compass-core span {
+      display: block;
+      margin-top: 0.32rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.67rem;
+      letter-spacing: 0.09em;
+      color: var(--ink-soft);
+      text-transform: uppercase;
+    }
+
+    .compass-point {
+      position: absolute;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.63rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: #fdfefe;
+      text-shadow: 0 1px 2px rgba(13, 33, 56, 0.45);
+      z-index: 2;
+    }
+
+    .compass-point.n { top: 9%; left: 50%; transform: translateX(-50%); }
+    .compass-point.e { right: 8%; top: 50%; transform: translateY(-50%); }
+    .compass-point.s { bottom: 8%; left: 50%; transform: translateX(-50%); }
+    .compass-point.w { left: 8%; top: 50%; transform: translateY(-50%); }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--line);
+      background: var(--panel);
+      box-shadow: var(--shadow-crisp);
+      padding: clamp(1rem, 1.25vw, 1.35rem);
+    }
+
+    .card h2,
+    .card h3 {
+      margin: 0;
+      font-family: 'Chakra Petch', system-ui, sans-serif;
+      color: var(--navy-deep);
+      letter-spacing: 0.01em;
+      line-height: 0.98;
+      text-wrap: balance;
+    }
+
+    .card h2 {
+      font-size: var(--step-2);
+    }
+
+    .card h3 {
+      font-size: var(--step-1);
+    }
+
+    .eyebrow {
+      margin: 0 0 0.4rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+
+    .lede {
+      margin: 0.7rem 0 0;
+      color: var(--ink-soft);
+      max-width: 62ch;
+    }
+
+    .metric-board {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.75rem;
+      margin-top: 0.95rem;
+    }
+
+    .metric {
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(13, 33, 56, 0.12);
+      border-radius: var(--radius-lg);
+      padding: 0.76rem;
+      min-height: 92px;
+      display: grid;
+      align-content: start;
+      gap: 0.2rem;
+    }
+
+    .metric strong {
+      font-family: 'Chakra Petch', system-ui, sans-serif;
+      font-size: clamp(1.2rem, 2vw, 1.8rem);
+      line-height: 0.9;
+      color: var(--blue-atlas);
+    }
+
+    .metric span {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.63rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+
+    .scope-list,
+    .risk-list,
+    .decision-list {
+      list-style: none;
+      margin: 0.78rem 0 0;
+      padding: 0;
+      display: grid;
+      gap: 0.65rem;
+    }
+
+    .scope-list li,
+    .risk-list li,
+    .decision-list li {
+      border-left: 3px solid rgba(22, 86, 139, 0.36);
+      padding-left: 0.6rem;
+      color: var(--ink-main);
+      font-size: var(--step--1);
+    }
+
+    .scope-list small,
+    .risk-list small,
+    .decision-list small {
+      display: block;
+      margin-top: 0.15rem;
+      color: var(--ink-soft);
+      font-size: 0.82em;
+    }
+
+    .timeline {
+      margin-top: 0.8rem;
+      border-radius: var(--radius-xl);
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(13, 33, 56, 0.13);
+      overflow: hidden;
+    }
+
+    .phase {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      border-top: 1px solid rgba(13, 33, 56, 0.09);
+    }
+
+    .phase:first-child {
+      border-top: 0;
+    }
+
+    .phase-label {
+      padding: 0.8rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.69rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: rgba(13, 33, 56, 0.05);
+      border-right: 1px solid rgba(13, 33, 56, 0.1);
+      color: var(--ink-soft);
+    }
+
+    .phase-copy {
+      padding: 0.8rem;
+      font-size: var(--step--1);
+      display: grid;
+      gap: 0.35rem;
+    }
+
+    .phase-copy strong {
+      font-family: 'Chakra Petch', system-ui, sans-serif;
+      font-size: 1rem;
+      line-height: 1;
+      color: var(--navy-deep);
+    }
+
+    .phase-copy p {
+      margin: 0;
+      color: var(--ink-soft);
+    }
+
+    .section-reveal {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 500ms ease, transform 500ms ease;
+    }
+
+    .section-reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .footer {
+      margin: 0.2rem 0 0.7rem;
+      border-radius: var(--radius-lg);
+      padding: 0.85rem 1rem;
+      background: rgba(13, 33, 56, 0.9);
+      color: rgba(248, 251, 255, 0.9);
+      border: 1px solid rgba(13, 33, 56, 0.35);
+      font-size: 0.84rem;
+    }
+
+    .footer strong {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.73rem;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: #a7dde3;
+    }
+
+    .footer p {
+      margin: 0.35rem 0 0;
+      max-width: 68ch;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 3px solid rgba(180, 91, 46, 0.48);
+      outline-offset: 2px;
+      border-radius: 8px;
+    }
+
+    @keyframes breathe {
+      0%,
+      100% { transform: scale(1); }
+      50% { transform: scale(1.015); }
+    }
+
+    @media (max-width: 1080px) {
+      .hero {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+
+      .hero-copy,
+      .hero-signature {
+        min-height: 310px;
+      }
+
+      .metric-board {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 820px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar-inner {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .topbar-meta {
+        justify-content: flex-start;
+      }
+
+      .phase {
+        grid-template-columns: 1fr;
+      }
+
+      .phase-label {
+        border-right: 0;
+        border-bottom: 1px solid rgba(13, 33, 56, 0.08);
+      }
+    }
+
+    @media (max-width: 560px) {
+      .brand {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .brand img {
+        width: 86px;
+      }
+
+      .metric-board {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition-duration: 1ms !important;
+        scroll-behavior: auto !important;
+      }
+
+      .section-reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <img src="./assets/logo-fapema.png" alt="Logo FAPEMA">
+        <div class="brand-copy">
+          <strong>FAPEMA Patronage Analytics</strong>
+          <span>Executive reading brief | fase 1</span>
+        </div>
+      </div>
+      <div class="topbar-meta" aria-label="contexto do documento">
+        <span class="meta-pill">Status: Draft</span>
+        <span class="meta-pill">Atualizado: 2026-07-08</span>
+        <span class="meta-pill">Ambiente: On-premises</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero section-reveal" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <div>
+          <p class="hero-kicker">Tese executiva</p>
+          <h1 id="hero-title">Da operacao ao comando estrategico com dados confiaveis.</h1>
+        </div>
+        <p>
+          A fase 1 estabelece a primeira camada analitica institucional do Patronage para reduzir tempo de resposta,
+          padronizar indicadores e dar visibilidade de ponta a ponta sobre editais, chamadas, convenios e atividades.
+        </p>
+        <div class="hero-rules" aria-label="principios da fase inicial">
+          <div>Entrega incremental com valor cedo</div>
+          <div>Modelo Star Schema com dimensoes conformadas</div>
+          <div>Conformidade LGPD e trilha de auditabilidade</div>
+        </div>
+      </div>
+      <aside class="hero-signature" aria-label="assinatura visual do projeto">
+        <div class="compass" role="img" aria-label="Bussola analitica com quatro direcoes estrategicas">
+          <span class="compass-point n">Governanca</span>
+          <span class="compass-point e">Performance</span>
+          <span class="compass-point s">Qualidade</span>
+          <span class="compass-point w">Operacao</span>
+          <div class="compass-core">
+            <strong>Camada 1</strong>
+            <span>analytics base</span>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="card section-reveal" aria-labelledby="problema-title">
+      <p class="eyebrow">Contexto</p>
+      <h2 id="problema-title">Qual problema institucional esta sendo resolvido</h2>
+      <p class="lede">
+        Hoje, perguntas gerenciais dependem de leitura manual de estruturas transacionais e conhecimento tecnico disperso.
+        Isso aumenta o risco de interpretacoes divergentes, retarda relatorios recorrentes e limita a ergonomia decisoria.
+      </p>
+      <div class="metric-board" aria-label="resultados esperados da fase 1">
+        <article class="metric">
+          <strong>-50%</strong>
+          <span>Tempo para relatorio recorrente</span>
+        </article>
+        <article class="metric">
+          <strong>1</strong>
+          <span>Catalogo inicial de KPIs oficiais</span>
+        </article>
+        <article class="metric">
+          <strong>4</strong>
+          <span>Granularidades: mes, tri, sem, ano</span>
+        </article>
+        <article class="metric">
+          <strong>100%</strong>
+          <span>Rastreabilidade de regra de negocio</span>
+        </article>
+      </div>
+    </section>
+
+    <div class="grid-2 section-reveal">
+      <section class="card" aria-labelledby="escopo-title">
+        <p class="eyebrow">Em escopo na fase 1</p>
+        <h3 id="escopo-title">Fundacao tecnica e semantica</h3>
+        <ul class="scope-list">
+          <li>
+            Inventario e curadoria do dicionario de dados existente
+            <small>Base: patronage/docs/markdown/mysql e entidades centrais mapeadas.</small>
+          </li>
+          <li>
+            ETL inicial para Landing e Curated
+            <small>Com caminho de evolucao para arquitetura medalhao quando houver retorno claro.</small>
+          </li>
+          <li>
+            Modelo Star Schema orientado a decisao
+            <small>Fatos reutilizando dimensoes conformadas para consistencia de leitura.</small>
+          </li>
+          <li>
+            Prototipos HTML para validacao de utilidade
+            <small>Foco em consumo executivo e gerencial no ecossistema Laravel 12.</small>
+          </li>
+        </ul>
+      </section>
+
+      <section class="card" aria-labelledby="fora-title">
+        <p class="eyebrow">Fora de escopo na fase 1</p>
+        <h3 id="fora-title">Limites para proteger velocidade</h3>
+        <ul class="scope-list">
+          <li>
+            Reescrita do transacional Laravel
+            <small>A fase analitica e complementar, sem ruptura do core operacional.</small>
+          </li>
+          <li>
+            Plataforma externa de BI sem validacao previa
+            <small>Decisao de ferramenta fica condicionada a aderencia tecnica e custo-beneficio.</small>
+          </li>
+          <li>
+            Predicao avancada e analitica prescritiva em larga escala
+            <small>Evolucao posterior, apos estabilidade da camada de dados e governanca.</small>
+          </li>
+          <li>
+            Substituicao imediata de todos relatorios legados
+            <small>Transicao incremental com homologacao do negocio.</small>
+          </li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="grid-2 section-reveal">
+      <section class="card" aria-labelledby="risco-title">
+        <p class="eyebrow">Riscos e mitigacoes</p>
+        <h3 id="risco-title">Pontos que precisam controle ativo</h3>
+        <ul class="risk-list">
+          <li>
+            Volumetria real pode comprometer janela noturna de carga
+            <small>Mitigar com medicao inicial por tabela e desenho de carga incremental.</small>
+          </li>
+          <li>
+            Semantica de KPI sem dono funcional tende a divergir
+            <small>Mitigar com comite curto PO + TI para homologacao quinzenal de definicoes.</small>
+          </li>
+          <li>
+            Requisitos LGPD por dominio podem bloquear publicacao
+            <small>Mitigar com matriz de mascaramento e minimizacao definida antes de ir a producao.</small>
+          </li>
+        </ul>
+      </section>
+
+      <section class="card" aria-labelledby="decisoes-title">
+        <p class="eyebrow">Decisoes pendentes com stakeholders</p>
+        <h3 id="decisoes-title">Informacoes necessarias para fechar plano</h3>
+        <ul class="decision-list">
+          <li>
+            Qual volumetria atual e crescimento mensal por dominio?
+            <small>Impacta estrategia de particionamento e janela operacional.</small>
+          </li>
+          <li>
+            Qual frequencia minima de atualizacao e aceitavel?
+            <small>D+1, intra-diaria ou semanal definem custo tecnico de operacao.</small>
+          </li>
+          <li>
+            Qual politica obrigatoria de anonimizacao por tipo de dado?
+            <small>Define limites de exposicao e desenho dos datasets consumiveis.</small>
+          </li>
+          <li>
+            Qual padrao preferencial de orquestracao ETL?
+            <small>SQL nativo, jobs agendados, Python ou abordagem hibrida.</small>
+          </li>
+        </ul>
+      </section>
+    </div>
+
+    <section class="card section-reveal" aria-labelledby="roadmap-title">
+      <p class="eyebrow">Roadmap de implantacao</p>
+      <h2 id="roadmap-title">Primeiros 90 dias de execucao</h2>
+      <div class="timeline">
+        <article class="phase">
+          <div class="phase-label">Semanas 1-3</div>
+          <div class="phase-copy">
+            <strong>Descoberta orientada a decisoes</strong>
+            <p>Inventario de dados, identificacao de KPIs prioritarios e baseline de qualidade.</p>
+          </div>
+        </article>
+        <article class="phase">
+          <div class="phase-label">Semanas 4-7</div>
+          <div class="phase-copy">
+            <strong>Modelo e carga inicial</strong>
+            <p>Implementacao de Star Schema, ETL inicial para Curated e validacao tecnica.</p>
+          </div>
+        </article>
+        <article class="phase">
+          <div class="phase-label">Semanas 8-10</div>
+          <div class="phase-copy">
+            <strong>Paineis executivos e homologacao</strong>
+            <p>Entrega de interfaces HTML, refinamento de narrativa e aceite funcional do PO.</p>
+          </div>
+        </article>
+        <article class="phase">
+          <div class="phase-label">Semanas 11-13</div>
+          <div class="phase-copy">
+            <strong>Governanca de continuidade</strong>
+            <p>Definicao de cadencia operacional, monitoramento e backlog da fase 2.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer section-reveal" aria-labelledby="next-step-title">
+      <strong id="next-step-title">Proxima decisao executiva</strong>
+      <p>
+        Aprovar o pacote fase 1 com metas de tempo, qualidade e conformidade para iniciar descoberta formal e
+        fechamento das premissas de volumetria, frequencia de carga e politica LGPD por dominio.
+      </p>
+    </footer>
+  </main>
+
+  <script>
+    (function () {
+      const supportsReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const sections = document.querySelectorAll('.section-reveal');
+
+      if (supportsReducedMotion || !('IntersectionObserver' in window)) {
+        sections.forEach((section) => section.classList.add('visible'));
+        return;
+      }
+
+      const observer = new IntersectionObserver(
+        (entries, obs) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              obs.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+      );
+
+      sections.forEach((section, index) => {
+        section.style.transitionDelay = `${Math.min(index * 60, 260)}ms`;
+        observer.observe(section);
+      });
+    })();
+  </script>
+</body>
+</html>

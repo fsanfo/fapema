@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRD FAPEMA 2026 | Leitura Executiva</title>
+  <meta name="description" content="Versao executiva do PRD FAPEMA Patronage Analytics - fase 1.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../../patronage/docs/html/assets/style.colors.css">
+  <style>
+    :root {
+      --ocean-900: #0a2f4e;
+      --ocean-700: #175884;
+      --signal-500: #1b9aaa;
+      --sand-100: #f0f4f8;
+      --fog-000: #f9fbfd;
+      --ink-900: #13202d;
+      --ink-700: #445363;
+      --line: rgba(19, 32, 45, 0.16);
+      --line-strong: rgba(10, 47, 78, 0.34);
+      --paper: rgba(255, 255, 255, 0.92);
+      --paper-soft: rgba(255, 255, 255, 0.72);
+      --ok: #2f8f5f;
+      --warn: #b88419;
+      --risk: #b7483d;
+      --radius-xl: 28px;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --shadow-soft: 0 12px 40px rgba(10, 47, 78, 0.12);
+      --content-max: 1180px;
+      --step--1: clamp(0.8rem, 0.78rem + 0.1vw, 0.88rem);
+      --step-0: clamp(0.94rem, 0.91rem + 0.22vw, 1.05rem);
+      --step-1: clamp(1.08rem, 1.02rem + 0.44vw, 1.3rem);
+      --step-2: clamp(1.5rem, 1.26rem + 1vw, 2rem);
+      --step-3: clamp(2rem, 1.42rem + 2.44vw, 3.2rem);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+    }
+
+    body {
+      font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+      font-size: var(--step-0);
+      line-height: 1.55;
+      color: var(--ink-900);
+      background:
+        radial-gradient(circle at 12% 18%, rgba(27, 154, 170, 0.2), transparent 27%),
+        radial-gradient(circle at 90% 5%, rgba(10, 47, 78, 0.18), transparent 22%),
+        linear-gradient(180deg, var(--fog-000), var(--sand-100));
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: repeating-linear-gradient(
+        0deg,
+        rgba(23, 88, 132, 0.05) 0,
+        rgba(23, 88, 132, 0.05) 1px,
+        transparent 1px,
+        transparent 26px
+      );
+      mask-image: radial-gradient(circle at center, black 55%, transparent 100%);
+      z-index: 0;
+    }
+
+    a {
+      color: var(--ocean-700);
+    }
+
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: auto;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+
+    .skip-link:focus {
+      left: 0.9rem;
+      top: 0.9rem;
+      width: auto;
+      height: auto;
+      z-index: 100;
+      background: #fff;
+      border: 2px solid var(--ocean-700);
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      background: rgba(249, 251, 253, 0.88);
+      border-bottom: 1px solid rgba(10, 47, 78, 0.14);
+    }
+
+    .topbar-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+      padding: 0.7rem 1rem;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      min-width: 0;
+    }
+
+    .brand img {
+      width: 92px;
+      height: auto;
+      border-radius: 10px;
+      border: 1px solid rgba(10, 47, 78, 0.16);
+      background: #fff;
+      padding: 0.35rem;
+      box-shadow: 0 6px 18px rgba(10, 47, 78, 0.08);
+    }
+
+    .brand-text {
+      min-width: 0;
+    }
+
+    .brand-text strong {
+      display: block;
+      font-family: "Sora", "IBM Plex Sans", sans-serif;
+      font-size: var(--step-1);
+      line-height: 1.1;
+      color: var(--ocean-900);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brand-text span {
+      display: block;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-700);
+    }
+
+    .meta {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .meta-pill {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      border: 1px solid rgba(10, 47, 78, 0.16);
+      background: rgba(255, 255, 255, 0.84);
+      color: var(--ink-700);
+      padding: 0.4rem 0.7rem;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: var(--content-max);
+      margin: 0 auto;
+      padding: 1rem;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .hero {
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      border: 1px solid rgba(10, 47, 78, 0.16);
+      box-shadow: var(--shadow-soft);
+      background: var(--paper);
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+    }
+
+    .hero-copy {
+      padding: clamp(1.2rem, 2vw, 2rem);
+      background: linear-gradient(148deg, var(--ocean-900), #154b75 58%, #216898 100%);
+      color: #eef6fc;
+      display: grid;
+      align-content: space-between;
+      gap: 1rem;
+      min-height: 350px;
+    }
+
+    .eyebrow {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.88;
+      margin: 0;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-family: "Sora", "IBM Plex Sans", sans-serif;
+      font-size: var(--step-3);
+      line-height: 0.95;
+      max-width: 16ch;
+      text-wrap: balance;
+    }
+
+    .hero p {
+      margin: 0;
+      color: rgba(238, 246, 252, 0.9);
+      max-width: 52ch;
+    }
+
+    .hero-notes {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 0.45rem;
+    }
+
+    .hero-notes li {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: var(--step--1);
+      color: rgba(238, 246, 252, 0.9);
+    }
+
+    .hero-notes li::before {
+      content: "";
+      width: 22px;
+      height: 1px;
+      background: rgba(238, 246, 252, 0.7);
+      flex-shrink: 0;
+    }
+
+    .hero-signature {
+      padding: clamp(1rem, 1.7vw, 1.7rem);
+      display: grid;
+      align-content: center;
+      background:
+        radial-gradient(circle at 72% 21%, rgba(27, 154, 170, 0.2), transparent 45%),
+        radial-gradient(circle at 30% 84%, rgba(10, 47, 78, 0.16), transparent 50%),
+        var(--paper-soft);
+    }
+
+    .cadence-dial {
+      width: min(360px, 100%);
+      aspect-ratio: 1;
+      margin: 0 auto;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line-strong);
+      background:
+        conic-gradient(
+          from -20deg,
+          rgba(27, 154, 170, 0.8) 0deg,
+          rgba(23, 88, 132, 0.76) 125deg,
+          rgba(10, 47, 78, 0.72) 250deg,
+          rgba(27, 154, 170, 0.82) 360deg
+        );
+      box-shadow: inset 0 0 0 14px rgba(249, 251, 253, 0.7);
+      position: relative;
+      isolation: isolate;
+      animation: dial-enter 800ms cubic-bezier(.2,.7,.2,1) both;
+    }
+
+    .cadence-dial::before,
+    .cadence-dial::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      border: 1px dashed rgba(255, 255, 255, 0.46);
+      inset: 16%;
+    }
+
+    .cadence-dial::after {
+      inset: 30%;
+      border-style: solid;
+      border-color: rgba(255, 255, 255, 0.55);
+    }
+
+    .dial-core {
+      width: 48%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: rgba(249, 251, 253, 0.94);
+      border: 1px solid rgba(10, 47, 78, 0.2);
+      display: grid;
+      place-content: center;
+      text-align: center;
+      padding: 0.7rem;
+      z-index: 2;
+      box-shadow: 0 8px 20px rgba(10, 47, 78, 0.16);
+    }
+
+    .dial-core strong {
+      font-family: "Sora", sans-serif;
+      font-size: 1.35rem;
+      line-height: 1;
+      color: var(--ocean-900);
+    }
+
+    .dial-core span {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-700);
+    }
+
+    .dial-label {
+      position: absolute;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.69rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff;
+      z-index: 3;
+      text-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .label-mensal { top: 8%; left: 50%; transform: translateX(-50%); }
+    .label-tri { right: 9%; top: 48%; transform: translateY(-50%); }
+    .label-semi { left: 50%; bottom: 8%; transform: translateX(-50%); }
+    .label-anual { left: 9%; top: 48%; transform: translateY(-50%); }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: 0.72fr 1.28fr;
+      gap: 1rem;
+    }
+
+    .stack {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--paper);
+      box-shadow: 0 8px 24px rgba(10, 47, 78, 0.08);
+      padding: 1rem;
+    }
+
+    .panel h2,
+    .panel h3 {
+      margin: 0;
+      font-family: "Sora", "IBM Plex Sans", sans-serif;
+      line-height: 1.1;
+      color: var(--ocean-900);
+    }
+
+    .panel h2 {
+      font-size: var(--step-2);
+      margin-bottom: 0.8rem;
+    }
+
+    .panel h3 {
+      font-size: var(--step-1);
+      margin-bottom: 0.55rem;
+    }
+
+    .panel p,
+    .panel li {
+      color: var(--ink-900);
+    }
+
+    .panel ul {
+      margin: 0;
+      padding-left: 1.1rem;
+      display: grid;
+      gap: 0.4rem;
+    }
+
+    .kpi-cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.7rem;
+    }
+
+    .kpi {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.9);
+      padding: 0.85rem;
+      display: grid;
+      gap: 0.35rem;
+    }
+
+    .kpi strong {
+      font-family: "Sora", sans-serif;
+      font-size: 1.1rem;
+      line-height: 1.1;
+      color: var(--ocean-900);
+    }
+
+    .kpi span {
+      font-size: var(--step--1);
+      color: var(--ink-700);
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0.28rem 0.55rem;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-700);
+      background: rgba(255, 255, 255, 0.84);
+    }
+
+    .risk-list {
+      display: grid;
+      gap: 0.5rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .risk-list li {
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--risk);
+      border-radius: 10px;
+      padding: 0.6rem 0.7rem;
+      background: rgba(255, 255, 255, 0.88);
+      color: var(--ink-900);
+    }
+
+    .risk-list li.ok {
+      border-left-color: var(--ok);
+    }
+
+    .risk-list li.warn {
+      border-left-color: var(--warn);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.7rem;
+    }
+
+    .feature-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 0.85rem;
+      background: rgba(255, 255, 255, 0.88);
+      display: grid;
+      gap: 0.45rem;
+    }
+
+    .feature-card h4 {
+      margin: 0;
+      font-family: "Sora", sans-serif;
+      font-size: 1rem;
+      color: var(--ocean-900);
+    }
+
+    .feature-card p {
+      margin: 0;
+      color: var(--ink-700);
+      font-size: var(--step--1);
+    }
+
+    .feature-card ul {
+      margin: 0;
+      padding-left: 1rem;
+      font-size: var(--step--1);
+      gap: 0.3rem;
+    }
+
+    .timeline {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .timeline li {
+      border: 1px dashed var(--line-strong);
+      border-radius: 12px;
+      padding: 0.55rem 0.65rem;
+      background: rgba(255, 255, 255, 0.82);
+    }
+
+    .timeline strong {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.73rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ocean-700);
+    }
+
+    .timeline p {
+      margin: 0.25rem 0 0;
+      font-size: var(--step--1);
+      color: var(--ink-900);
+    }
+
+    .footer-note {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.88);
+      padding: 1rem;
+      font-size: var(--step--1);
+      color: var(--ink-700);
+    }
+
+    @keyframes dial-enter {
+      from {
+        transform: rotate(-14deg) scale(0.94);
+        opacity: 0;
+      }
+      to {
+        transform: rotate(0deg) scale(1);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 1020px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .section-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .kpi-cards,
+      .feature-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .topbar-inner {
+        padding-top: 0.6rem;
+        padding-bottom: 0.6rem;
+      }
+
+      .meta {
+        justify-content: flex-start;
+      }
+
+      .kpi-cards,
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy {
+        min-height: 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--signal-500);
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteudo principal</a>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <img src="../../../../patronage/docs/html/assets/logo-fapema.png" alt="Logo da FAPEMA">
+        <div class="brand-text">
+          <strong>PRD FAPEMA Patronage Analytics</strong>
+          <span>Versao executiva - fase 1</span>
+        </div>
+      </div>
+      <div class="meta" aria-label="Metadados do documento">
+        <span class="meta-pill">Status: draft</span>
+        <span class="meta-pill">Criado: 2026-07-08</span>
+        <span class="meta-pill">Atualizado: 2026-07-08</span>
+      </div>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <div>
+          <p class="eyebrow">Leitura de 6 minutos para decisao</p>
+          <h1 id="hero-title">Fundacao analitica institucional para o ecossistema Patronage</h1>
+        </div>
+        <p>
+          A fase 1 estabelece inventario de dados, modelo Star Schema, ETL D+1 e paineis executivos para reduzir tempo de resposta gerencial,
+          padronizar KPIs e aumentar confiabilidade na tomada de decisao da FAPEMA.
+        </p>
+        <ul class="hero-notes" aria-label="Diretrizes principais">
+          <li>Stack alvo: Laravel 12, MySQL 8.0.34 e infraestrutura on-premises.</li>
+          <li>Privacidade: aderencia a LGPD com controle de exposicao de dados pessoais.</li>
+          <li>Entrega incremental: valor imediato com base para evolucoes futuras.</li>
+        </ul>
+      </div>
+
+      <div class="hero-signature" aria-label="Assinatura visual de periodicidade dos KPIs">
+        <div class="cadence-dial" role="img" aria-label="Dial de cadencia dos indicadores em ciclos mensal, trimestral, semestral e anual">
+          <span class="dial-label label-mensal">Mensal</span>
+          <span class="dial-label label-tri">Trimestral</span>
+          <span class="dial-label label-semi">Semestral</span>
+          <span class="dial-label label-anual">Anual</span>
+          <div class="dial-core">
+            <strong>KPI</strong>
+            <span>cadencia oficial</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-grid" aria-label="Resumo estrategico">
+      <div class="stack">
+        <article class="panel">
+          <h3>Objetivo da fase 1</h3>
+          <p>
+            Transformar dados operacionais em informacao comparavel e rastreavel para niveis operacional, gerencial e executivo,
+            reduzindo dependencia de consultas ad hoc ao banco transacional.
+          </p>
+        </article>
+
+        <article class="panel">
+          <h3>Usuarios-alvo</h3>
+          <ul>
+            <li>Gestores operacionais e administrativos.</li>
+            <li>Liderancas institucionais e C-Level.</li>
+            <li>Equipe tecnica de TI e dados para sustentacao e qualidade.</li>
+          </ul>
+        </article>
+
+        <article class="panel">
+          <h3>Fora de escopo</h3>
+          <ul>
+            <li>Reescrita do sistema transacional Patronage.</li>
+            <li>Machine learning e analitica prescritiva em larga escala.</li>
+            <li>Substituicao total de relatorios legados sem transicao incremental.</li>
+          </ul>
+        </article>
+      </div>
+
+      <article class="panel">
+        <h2>Metricas de sucesso para patrocinio executivo</h2>
+        <div class="kpi-cards" aria-label="KPIs de sucesso do PRD">
+          <div class="kpi">
+            <span class="tag">SM-1 primaria</span>
+            <strong>-50% no tempo de relatorio recorrente</strong>
+            <span>Valida capacidade de ETL e consumo analitico.</span>
+          </div>
+          <div class="kpi">
+            <span class="tag">SM-2 primaria</span>
+            <strong>>=90% dos KPIs com regra homologada</strong>
+            <span>Assegura padronizacao semantica e governanca.</span>
+          </div>
+          <div class="kpi">
+            <span class="tag">SM-3 secundaria</span>
+            <strong>>=80% de aceite dos mockups na 1a rodada</strong>
+            <span>Indica aderencia funcional e clareza de interface.</span>
+          </div>
+        </div>
+
+        <h3 style="margin-top: 1rem;">Contra-metricas e protecoes</h3>
+        <ul class="risk-list">
+          <li class="warn">Nao exceder a janela operacional permitida para carga ETL.</li>
+          <li class="ok">Preservar LGPD: minimizar risco de exposicao de dados pessoais.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="panel" aria-labelledby="features-title">
+      <h2 id="features-title">Features do PRD (FR-1 a FR-6)</h2>
+      <div class="feature-grid">
+        <article class="feature-card">
+          <h4>FR-1 Inventario de entidades prioritarias</h4>
+          <p>Mapear tabelas e relacionamentos prioritarios com origem, periodicidade e dono funcional.</p>
+          <ul>
+            <li>Catalogo validado com PO e TI.</li>
+            <li>Base para qualidade e rastreabilidade.</li>
+          </ul>
+        </article>
+
+        <article class="feature-card">
+          <h4>FR-2 Star Schema inicial</h4>
+          <p>Estruturar fatos e dimensoes conformadas com granularidade mensal, trimestral, semestral e anual.</p>
+          <ul>
+            <li>Modelo dimensional documentado.</li>
+            <li>Padrao unico para consumo analitico.</li>
+          </ul>
+        </article>
+
+        <article class="feature-card">
+          <h4>FR-3 Cargas ETL D+1</h4>
+          <p>Executar cargas recorrentes para camada Curated com logs e contagem de registros.</p>
+          <ul>
+            <li>Disponibilidade no prazo acordado.</li>
+            <li>Historico operacional auditavel.</li>
+          </ul>
+        </article>
+
+        <article class="feature-card">
+          <h4>FR-4 Validacao de qualidade</h4>
+          <p>Aplicar validacoes de integridade, completude e consistencia apos cada lote.</p>
+          <ul>
+            <li>Checklist por carga.</li>
+            <li>Alertas para inconsistencias criticas.</li>
+          </ul>
+        </article>
+
+        <article class="feature-card">
+          <h4>FR-5 Paineis com segmentadores</h4>
+          <p>Entregar paineis com filtros principais e secundarios definidos por governanca analitica.</p>
+          <ul>
+            <li>Indicadores homologados em catalogo KPI.</li>
+            <li>Leitura rapida para perfil operacional e executivo.</li>
+          </ul>
+        </article>
+
+        <article class="feature-card">
+          <h4>FR-6 Prototipos HTML validados</h4>
+          <p>Validar mockups com PO antes da implementacao definitiva no ecossistema Laravel.</p>
+          <ul>
+            <li>Paineis prioritarios com aceite formal.</li>
+            <li>Feedbacks incorporados de usabilidade.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-grid" aria-label="Homologacao e governanca">
+      <article class="panel">
+        <h2>Paineis mandatorios para homologacao</h2>
+        <ul class="timeline">
+          <li>
+            <strong>Painel operacional de chamadas e editais</strong>
+            <p>Volume por periodo, status/publicacao, tempo medio de ciclo e gargalos por segmentador.</p>
+          </li>
+          <li>
+            <strong>Painel gerencial de convenios e execucao</strong>
+            <p>Quantidade por tipo, vigencia, situacao de relatorios e aderencia a prazos de prestacao.</p>
+          </li>
+          <li>
+            <strong>Painel executivo de KPIs institucionais</strong>
+            <p>Tendencias multitemporais, comparativos e alertas de desvios relevantes.</p>
+          </li>
+        </ul>
+      </article>
+
+      <div class="stack">
+        <article class="panel">
+          <h3>Questoes em aberto</h3>
+          <ul>
+            <li>Volumetria atual e crescimento mensal das tabelas criticas.</li>
+            <li>Janela operacional exata para cargas ETL diarias D+1.</li>
+            <li>Regras obrigatorias de mascaramento e pseudonimizacao LGPD.</li>
+            <li>Estrategia preferencial de orquestracao ETL (SQL, jobs, Python, outra).</li>
+            <li>Aprovacao final dos tres paineis mandatarios sem ajustes.</li>
+          </ul>
+        </article>
+
+        <article class="panel">
+          <h3>Assumption registrada</h3>
+          <ul>
+            <li>
+              A janela operacional diaria sera suficiente para concluir ETL, validacoes de qualidade e publicacao no prazo.
+            </li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer-note">
+      Documento executivo derivado do PRD em Markdown. Esta versao prioriza orientacao de decisao: escopo, metricas, riscos,
+      homologacao e pendencias que exigem alinhamento entre TI, dados e stakeholders institucionais.
+    </footer>
+  </main>
+</body>
+</html>

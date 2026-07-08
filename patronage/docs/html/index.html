@@ -3,52 +3,61 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>patronage | Atlas MySQL</title>
+  <title>patronage | Índice editorial</title>
+  <meta name="description" content="Landing page com o mapa editorial dos documentos HTML do patronage: briefing, PRD e documentação do banco.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Literata:opsz,wght@7..72,400;7..72,500;7..72,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./assets/style.colors.css">
   <style>
     :root {
-      --paper: #f4efe6;
-      --paper-strong: #ebe4d5;
-      --ink: #172230;
-      --ink-soft: rgba(23, 34, 48, 0.72);
-      --ink-faint: rgba(23, 34, 48, 0.46);
-      --line: rgba(23, 34, 48, 0.12);
-      --line-strong: rgba(23, 34, 48, 0.26);
-      --accent: #d16b2f;
-      --accent-soft: rgba(209, 107, 47, 0.16);
-      --accent-deep: #8f4319;
-      --panel: rgba(255, 255, 255, 0.7);
-      --panel-strong: rgba(255, 255, 255, 0.92);
-      --shadow: 0 24px 60px rgba(24, 28, 38, 0.14);
-      --radius-xl: 32px;
-      --radius-lg: 22px;
-      --radius-md: 16px;
-      --sidebar-width: 360px;
-      --content-width: 880px;
-      --grid-gap: clamp(1rem, 1.8vw, 1.4rem);
+      --navy-deep: #0d2138;
+      --blue-atlas: #16568b;
+      --teal-signal: #0b7d7a;
+      --sand-paper: #f2eee6;
+      --rust-seal: #b45b2e;
+      --ink-main: #1a2a3a;
+      --ink-soft: #4f5f70;
+      --line: rgba(26, 42, 58, 0.16);
+      --panel: rgba(255, 255, 255, 0.78);
+      --panel-strong: #ffffff;
+      --radius-xxl: 38px;
+      --radius-xl: 26px;
+      --radius-lg: 18px;
+      --shadow-soft: 0 14px 44px rgba(13, 33, 56, 0.12);
+      --shadow-crisp: 0 6px 18px rgba(13, 33, 56, 0.1);
+      --site-max: 1200px;
+      --step--1: clamp(0.82rem, 0.79rem + 0.2vw, 0.95rem);
+      --step-0: clamp(0.98rem, 0.92rem + 0.33vw, 1.14rem);
+      --step-1: clamp(1.2rem, 1.07rem + 0.66vw, 1.58rem);
+      --step-2: clamp(1.55rem, 1.28rem + 1.15vw, 2.22rem);
+      --step-3: clamp(2.1rem, 1.48rem + 2.5vw, 3.45rem);
     }
 
     * {
       box-sizing: border-box;
     }
 
-    html {
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
       scroll-behavior: smooth;
     }
 
     body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      color: var(--ink);
+      color: var(--ink-main);
+      font-family: 'Literata', Georgia, serif;
+      font-size: var(--step-0);
+      line-height: 1.52;
       background:
-        radial-gradient(circle at top left, rgba(209, 107, 47, 0.16), transparent 28%),
-        radial-gradient(circle at 85% 12%, rgba(0, 90, 156, 0.14), transparent 24%),
-        linear-gradient(135deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 42%),
-        var(--paper);
-      min-height: 100vh;
+        radial-gradient(circle at 84% 10%, rgba(11, 125, 122, 0.14), transparent 34%),
+        radial-gradient(circle at 10% 22%, rgba(22, 86, 139, 0.18), transparent 30%),
+        linear-gradient(155deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0) 46%),
+        var(--sand-paper);
+      position: relative;
+      overflow-x: hidden;
     }
 
     body::before {
@@ -57,1149 +66,911 @@
       inset: 0;
       pointer-events: none;
       background-image:
-        linear-gradient(rgba(23, 34, 48, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(23, 34, 48, 0.03) 1px, transparent 1px);
-      background-size: 32px 32px;
-      mask-image: radial-gradient(circle at center, black 45%, transparent 100%);
-      opacity: 0.5;
+        repeating-linear-gradient(
+          -32deg,
+          rgba(26, 42, 58, 0.035) 0,
+          rgba(26, 42, 58, 0.035) 1px,
+          transparent 1px,
+          transparent 17px
+        );
+      opacity: 0.42;
+      z-index: 0;
     }
 
-    .shell {
-      display: grid;
-      grid-template-columns: minmax(300px, var(--sidebar-width)) 1fr;
-      gap: clamp(1rem, 2vw, 1.5rem);
-      padding: clamp(1rem, 2vw, 1.5rem);
-      position: relative;
-      z-index: 1;
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
-    .sidebar,
-    .content {
-      min-height: calc(100vh - 2rem);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+    :focus-visible {
+      outline: 2px solid rgba(20, 112, 150, 0.38);
+      outline-offset: 3px;
     }
 
-    .sidebar {
-      position: sticky;
-      top: 1rem;
-      align-self: start;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.74), rgba(255, 255, 255, 0.88));
-      border: 1px solid rgba(255, 255, 255, 0.5);
-      box-shadow: var(--shadow);
-      border-radius: var(--radius-xl);
-      padding: 1.25rem;
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: auto;
+      width: 1px;
+      height: 1px;
       overflow: hidden;
     }
 
-    .sidebar::after {
-      content: '';
-      position: absolute;
-      right: -80px;
-      top: -60px;
-      width: 180px;
-      height: 180px;
-      background: conic-gradient(from 220deg, rgba(209, 107, 47, 0.14), rgba(0, 90, 156, 0.02), rgba(209, 107, 47, 0.2));
-      border-radius: 50%;
-      filter: blur(10px);
+    .skip-link:focus {
+      left: 1rem;
+      top: 1rem;
+      width: auto;
+      height: auto;
+      z-index: 100;
+      background: #fff;
+      border: 2px solid var(--blue-atlas);
+      border-radius: 10px;
+      padding: 0.5rem 0.75rem;
+      font-weight: 700;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      background: rgba(242, 238, 230, 0.9);
+      border-bottom: 1px solid rgba(13, 33, 56, 0.1);
+    }
+
+    .topbar-inner {
+      max-width: var(--site-max);
+      margin: 0 auto;
+      padding: 0.72rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
     }
 
     .brand {
-      display: grid;
-      grid-template-columns: 1fr;
-      justify-items: stretch;
-      align-items: start;
+      display: flex;
+      align-items: center;
       gap: 0.85rem;
-      margin-bottom: 1.25rem;
-      overflow: visible;
+      min-width: 0;
     }
 
     .brand img {
-      width: 100%;
-      max-width: 100%;
+      width: 92px;
       height: auto;
-      aspect-ratio: 2048 / 924;
-      object-fit: contain;
-      object-position: center;
-      display: block;
-      border-radius: 22px;
-      margin-left: 0;
-      background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(245, 239, 230, 0.92));
-      padding: 0.6rem;
-      border: 1px solid rgba(23, 34, 48, 0.08);
-      box-shadow: 0 10px 24px rgba(24, 28, 38, 0.08);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.85);
+      padding: 0.35rem;
+      border: 1px solid rgba(13, 33, 56, 0.14);
+      box-shadow: var(--shadow-crisp);
       flex-shrink: 0;
     }
 
     .brand-copy {
       min-width: 0;
-      padding-top: 0;
     }
 
-    .eyebrow,
-    .kicker,
-    .metric-label,
-    .section-note,
-    .doc-meta,
-    .footer-note {
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+    .brand-copy strong {
+      display: block;
+      font-family: 'Chakra Petch', system-ui, sans-serif;
+      font-size: var(--step-1);
+      line-height: 1;
+      letter-spacing: 0.01em;
+      color: var(--navy-deep);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brand-copy span {
+      display: block;
+      font-family: 'Space Mono', monospace;
       font-size: 0.72rem;
-      color: var(--ink-faint);
-      padding-bottom: 0.75rem;
-    }
-
-    .brand-copy h1,
-    .hero h2,
-    .panel-title,
-    .article-title,
-    .markdown h1,
-    .markdown h2,
-    .markdown h3,
-    .markdown h4 {
-      margin: 0;
-      font-family: 'League Spartan', sans-serif;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      line-height: 0.95;
-    }
-
-    .brand-copy h1 {
-      font-size: clamp(1.9rem, 2vw, 2.4rem);
-      margin-top: 0.15rem;
-    }
-
-    .brand-copy p {
-      margin: 0.4rem 0 0;
       color: var(--ink-soft);
-      font-size: 0.95rem;
-      max-width: 22rem;
     }
 
-    .search-panel,
-    .legend,
-    .category-list,
-    .stats-ribbon,
-    .doc-list,
-    .article-shell,
-    .toc {
+    .topbar-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .meta-pill {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.42rem 0.7rem;
+      border: 1px solid rgba(13, 33, 56, 0.13);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.76);
+      color: var(--ink-soft);
+    }
+
+    main {
       position: relative;
       z-index: 1;
-    }
-
-    .search-panel {
+      max-width: var(--site-max);
+      margin: 0 auto;
+      padding: clamp(1rem, 1.6vw, 1.5rem);
       display: grid;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
-    }
-
-    .search-panel input {
-      width: 100%;
-      border: 1px solid rgba(23, 34, 48, 0.08);
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 999px;
-      padding: 0.95rem 1.1rem;
-      font: inherit;
-      color: var(--ink);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
-    }
-
-    .search-panel input:focus,
-    .category-chip:focus,
-    .doc-item:focus,
-    .jump-link:focus {
-      outline: 2px solid rgba(209, 107, 47, 0.4);
-      outline-offset: 2px;
-    }
-
-    .legend {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.55rem;
-      margin-bottom: 1rem;
-    }
-
-    .category-chip {
-      border: 1px solid rgba(23, 34, 48, 0.09);
-      background: rgba(255, 255, 255, 0.74);
-      color: var(--ink-soft);
-      padding: 0.55rem 0.8rem;
-      border-radius: 999px;
-      font: inherit;
-      font-size: 0.82rem;
-      cursor: pointer;
-      transition: transform 180ms ease, background 180ms ease, color 180ms ease, border-color 180ms ease;
-    }
-
-    .category-chip:hover,
-    .category-chip.active {
-      transform: translateY(-1px);
-      background: var(--accent-soft);
-      border-color: rgba(209, 107, 47, 0.28);
-      color: var(--accent-deep);
-    }
-
-    .category-list {
-      display: grid;
-      gap: 0.75rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .category-card {
-      border: 1px solid rgba(23, 34, 48, 0.08);
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.72);
-      padding: 0.9rem 1rem;
-    }
-
-    .category-card strong {
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-      margin-bottom: 0.3rem;
-      font-size: 0.96rem;
-    }
-
-    .category-card p {
-      margin: 0;
-      color: var(--ink-soft);
-      font-size: 0.82rem;
-      line-height: 1.55;
-    }
-
-    .content {
-      display: grid;
-      gap: 1rem;
-      align-content: start;
+      gap: 1.2rem;
     }
 
     .hero {
-      position: relative;
+      border-radius: var(--radius-xxl);
+      border: 1px solid rgba(13, 33, 56, 0.12);
       overflow: hidden;
-      border-radius: var(--radius-xl);
-      background:
-        linear-gradient(120deg, rgba(10, 111, 184, 0.92), rgba(0, 63, 115, 0.98)),
-        #003f73;
-      color: white;
-      padding: clamp(1.4rem, 2vw, 2rem);
-      box-shadow: var(--shadow);
-      isolation: isolate;
-    }
-
-    .hero::before,
-    .hero::after {
-      content: '';
-      position: absolute;
-      inset: auto;
-      border-radius: 999px;
-      opacity: 0.55;
-      z-index: -1;
-    }
-
-    .hero::before {
-      width: 280px;
-      height: 280px;
-      right: -70px;
-      top: -110px;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.42), transparent 66%);
-    }
-
-    .hero::after {
-      width: 420px;
-      height: 420px;
-      right: 20%;
-      bottom: -290px;
-      background: radial-gradient(circle, rgba(209, 107, 47, 0.3), transparent 68%);
-    }
-
-    .hero-grid {
+      box-shadow: var(--shadow-soft);
+      background: var(--panel-strong);
       display: grid;
-      grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.9fr);
-      gap: 1rem;
-      align-items: end;
+      grid-template-columns: minmax(0, 1.14fr) minmax(320px, 0.86fr);
     }
 
-    .hero h2 {
-      font-size: clamp(3rem, 5vw, 5.2rem);
-      max-width: 11ch;
+    .hero-copy {
+      padding: clamp(1.35rem, 2.2vw, 2.3rem);
+      background:
+        linear-gradient(135deg, rgba(13, 33, 56, 0.98), rgba(22, 86, 139, 0.92));
+      color: #f8fbff;
+      display: grid;
+      gap: 1rem;
+      align-content: space-between;
+      min-height: 420px;
+    }
+
+    .eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      margin: 0;
+      opacity: 0.86;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-family: 'Chakra Petch', system-ui, sans-serif;
+      font-size: var(--step-3);
+      line-height: 0.93;
+      letter-spacing: 0.01em;
+      max-width: 12ch;
+      text-wrap: balance;
     }
 
     .hero p {
-      max-width: 62ch;
-      color: rgba(255, 255, 255, 0.84);
-      margin: 0.85rem 0 0;
-      line-height: 1.75;
-      font-size: 1rem;
+      margin: 0;
+      max-width: 54ch;
+      color: rgba(248, 251, 255, 0.9);
     }
 
-    .hero .eyebrow {
-      color: rgba(255, 255, 255, 0.68);
-    }
-
-    .stats-ribbon {
+    .hero-notes {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.85rem;
-      align-self: stretch;
-      min-width: 0;
+      gap: 0.5rem;
+      margin: 0;
     }
 
-    .metric-card {
+    .hero-notes div {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      color: rgba(248, 251, 255, 0.92);
+      font-size: var(--step--1);
+    }
+
+    .hero-notes div::before {
+      content: '';
+      width: 26px;
+      height: 1px;
+      background: rgba(248, 251, 255, 0.68);
+      flex: 0 0 auto;
+    }
+
+    .hero-signature {
+      padding: clamp(1.15rem, 1.8vw, 2rem);
+      background:
+        radial-gradient(circle at 78% 24%, rgba(11, 125, 122, 0.16), transparent 48%),
+        radial-gradient(circle at 20% 78%, rgba(180, 91, 46, 0.14), transparent 42%),
+        var(--panel);
+      display: grid;
+      align-content: center;
+    }
+
+    .route-map {
+      width: min(390px, 100%);
+      aspect-ratio: 1;
+      margin: 0 auto;
+      border-radius: 50%;
+      border: 1px solid rgba(13, 33, 56, 0.16);
+      background:
+        conic-gradient(
+          from 45deg,
+          rgba(11, 125, 122, 0.78) 0deg,
+          rgba(22, 86, 139, 0.74) 118deg,
+          rgba(180, 91, 46, 0.7) 220deg,
+          rgba(13, 33, 56, 0.66) 360deg
+        );
+      position: relative;
+      display: grid;
+      place-items: center;
+      box-shadow: inset 0 0 0 14px rgba(255, 255, 255, 0.23);
+    }
+
+    .route-map::before {
+      content: '';
+      position: absolute;
+      inset: 11%;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.26);
       background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      border-radius: 20px;
-      padding: 1rem;
-      min-height: 132px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-width: 0;
-      overflow: hidden;
     }
 
-    .metric-card .metric-label {
-      color: rgba(255, 255, 255, 0.78);
+    .route-map::after {
+      content: '';
+      position: absolute;
+      inset: 50%;
+      width: 1px;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.44);
+      box-shadow:
+        0 -120px 0 rgba(255, 255, 255, 0.44),
+        120px 0 0 rgba(255, 255, 255, 0.44),
+        0 120px 0 rgba(255, 255, 255, 0.44),
+        -120px 0 0 rgba(255, 255, 255, 0.44);
     }
 
-    .metric-value {
-      font-family: 'League Spartan', sans-serif;
-      font-size: clamp(1.9rem, 2.4vw, 2.7rem);
-      line-height: 0.92;
-      margin: 0.2rem 0 0;
-      overflow-wrap: anywhere;
-      word-break: break-word;
-      max-width: 100%;
-    }
-
-    .metric-card--compact .metric-value {
-      font-size: clamp(1.55rem, 2vw, 2.2rem);
-      line-height: 0.98;
-    }
-
-    .metric-card--date .metric-value {
-      font-size: clamp(1.75rem, 2.2vw, 2.35rem);
-    }
-
-    .metric-text {
-      color: rgba(255, 255, 255, 0.78);
-      font-size: 0.88rem;
-      line-height: 1.45;
-      overflow-wrap: anywhere;
-    }
-
-    .workspace {
-      display: grid;
-      grid-template-columns: minmax(280px, 340px) minmax(0, var(--content-width));
-      gap: 1rem;
-      align-items: start;
-    }
-
-    .panel,
-    .article-shell {
-      background: var(--panel-strong);
-      border: 1px solid rgba(23, 34, 48, 0.08);
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow);
-    }
-
-    .panel {
-      padding: 1rem;
-      position: sticky;
-      top: 1rem;
-      max-height: calc(100vh - 2rem);
-      overflow: auto;
-    }
-
-    .panel-title {
-      font-size: 1.35rem;
-      margin-bottom: 0.75rem;
-    }
-
-    .doc-list {
-      display: grid;
-      gap: 0.65rem;
-    }
-
-    .doc-item {
-      width: 100%;
-      text-align: left;
-      border: 1px solid rgba(23, 34, 48, 0.08);
+    .route-node {
+      position: absolute;
+      z-index: 1;
+      padding: 0.45rem 0.75rem;
+      border-radius: 999px;
       background: rgba(255, 255, 255, 0.9);
-      border-radius: 18px;
-      padding: 0.9rem 0.95rem;
-      cursor: pointer;
-      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+      border: 1px solid rgba(13, 33, 56, 0.12);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-main);
+      box-shadow: 0 8px 18px rgba(13, 33, 56, 0.08);
     }
 
-    .doc-item:hover,
-    .doc-item.active {
-      transform: translateY(-2px);
-      border-color: rgba(209, 107, 47, 0.3);
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 245, 238, 0.96));
-      box-shadow: 0 12px 28px rgba(24, 28, 38, 0.08);
+    .route-node.brief {
+      top: 16%;
+      left: 50%;
+      transform: translateX(-50%);
     }
 
-    .doc-item strong {
+    .route-node.prd {
+      right: 11%;
+      top: 54%;
+      transform: translateY(-50%);
+    }
+
+    .route-node.sgbd {
+      bottom: 16%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .route-core {
+      position: relative;
+      z-index: 1;
+      width: min(190px, 62%);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(13, 33, 56, 0.14);
+      box-shadow: 0 12px 26px rgba(13, 33, 56, 0.1);
+    }
+
+    .route-core strong {
       display: block;
-      font-size: 0.98rem;
-      margin-bottom: 0.25rem;
+      font-family: 'Chakra Petch', system-ui, sans-serif;
+      font-size: clamp(1.2rem, 1.1rem + 1vw, 1.75rem);
+      letter-spacing: 0.02em;
+      color: var(--navy-deep);
+      line-height: 1;
     }
 
-    .doc-item p {
+    .route-core span {
+      display: block;
+      margin-top: 0.2rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+
+    .stat {
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.76);
+      border: 1px solid rgba(13, 33, 56, 0.1);
+      padding: 0.9rem 1rem;
+      box-shadow: var(--shadow-crisp);
+      min-height: 108px;
+    }
+
+    .stat .label {
+      display: block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 0.45rem;
+    }
+
+    .stat strong {
+      display: block;
+      font-family: 'Chakra Petch', system-ui, sans-serif;
+      font-size: clamp(1.35rem, 1.1rem + 1vw, 1.9rem);
+      line-height: 1;
+      color: var(--navy-deep);
+      margin-bottom: 0.2rem;
+    }
+
+    .stat span {
+      display: block;
+      color: var(--ink-soft);
+      font-size: var(--step--1);
+    }
+
+    .section-title {
+      margin: 0;
+      font-family: 'Chakra Petch', system-ui, sans-serif;
+      font-size: clamp(1.5rem, 1.1rem + 1.1vw, 2.2rem);
+      line-height: 0.98;
+      letter-spacing: 0.01em;
+      color: var(--navy-deep);
+    }
+
+    .section-lead {
+      margin: 0.55rem 0 0;
+      max-width: 72ch;
+      color: var(--ink-soft);
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .page-card {
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(13, 33, 56, 0.12);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      min-height: 100%;
+    }
+
+    .page-card .card-top {
+      padding: 1.1rem 1.1rem 0.9rem;
+      background:
+        linear-gradient(145deg, rgba(13, 33, 56, 0.96), rgba(22, 86, 139, 0.86));
+      color: #f8fbff;
+    }
+
+    .page-card:nth-child(2) .card-top {
+      background:
+        linear-gradient(145deg, rgba(13, 33, 56, 0.98), rgba(11, 125, 122, 0.82));
+    }
+
+    .page-card:nth-child(3) .card-top {
+      background:
+        linear-gradient(145deg, rgba(13, 33, 56, 0.98), rgba(180, 91, 46, 0.82));
+    }
+
+    .page-card .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.88;
+    }
+
+    .page-card .tag::before {
+      content: '';
+      width: 18px;
+      height: 1px;
+      background: rgba(248, 251, 255, 0.7);
+      flex: 0 0 auto;
+    }
+
+    .page-card h3 {
+      margin: 0.65rem 0 0;
+      font-family: 'Chakra Petch', system-ui, sans-serif;
+      font-size: clamp(1.28rem, 1.1rem + 0.7vw, 1.75rem);
+      line-height: 0.98;
+      letter-spacing: 0.01em;
+    }
+
+    .page-card .card-body {
+      padding: 1rem 1.1rem 1.15rem;
+      display: grid;
+      gap: 0.9rem;
+      align-content: start;
+    }
+
+    .page-card p {
       margin: 0;
       color: var(--ink-soft);
-      font-size: 0.82rem;
-      line-height: 1.55;
     }
 
-    .doc-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.45rem;
-      margin-top: 0.6rem;
+    .bullet-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 0.5rem;
     }
 
-    .doc-meta span {
+    .bullet-list li {
+      padding-left: 1rem;
+      position: relative;
+      color: var(--ink-main);
+    }
+
+    .bullet-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.68em;
+      width: 0.42rem;
+      height: 0.42rem;
+      border-radius: 50%;
+      background: var(--rust-seal);
+      transform: translateY(-50%);
+    }
+
+    .page-card .card-footer {
+      padding: 0 1.1rem 1.15rem;
+    }
+
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.72rem 0.95rem;
       border-radius: 999px;
-      padding: 0.35rem 0.55rem;
-      background: rgba(23, 34, 48, 0.06);
-      color: var(--ink-soft);
-      font-size: 0.68rem;
+      border: 1px solid rgba(13, 33, 56, 0.14);
+      background: rgba(242, 238, 230, 0.88);
+      color: var(--navy-deep);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.74rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      box-shadow: 0 8px 18px rgba(13, 33, 56, 0.07);
     }
 
-    .article-shell {
-      padding: clamp(1.2rem, 2vw, 1.8rem);
-      overflow: hidden;
+    .card-link::after {
+      content: '→';
+      font-family: inherit;
+      font-size: 0.95rem;
+      line-height: 1;
     }
 
-    .article-header {
+    .menu-panel {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
       gap: 1rem;
-      align-items: end;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid var(--line);
-      margin-bottom: 1rem;
     }
 
-    .article-title {
-      font-size: clamp(2.3rem, 4vw, 2.5rem);
+    .menu-card {
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(13, 33, 56, 0.12);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-soft);
+      padding: 1rem 1.1rem;
     }
 
-    .article-subtitle {
-      margin: 0.45rem 0 0;
-      color: var(--ink-soft);
-      line-height: 1.7;
-      max-width: 64ch;
+    .menu-card h3 {
+      margin: 0;
+      font-family: 'Chakra Petch', system-ui, sans-serif;
+      font-size: 1.2rem;
+      line-height: 1;
+      color: var(--navy-deep);
     }
 
-    .summary-grid {
+    .menu-list {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 0.75rem;
-      margin: 1rem 0 1.35rem;
+      gap: 0.7rem;
+      margin: 1rem 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .menu-list li {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 0.7rem;
+      align-items: start;
+      padding: 0.85rem 0.9rem;
+      border-radius: 18px;
+      border: 1px solid rgba(13, 33, 56, 0.1);
+      background: rgba(242, 238, 230, 0.5);
+    }
+
+    .menu-index {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      min-width: 2.6rem;
+    }
+
+    .menu-list strong {
+      display: block;
+      color: var(--navy-deep);
+      margin-bottom: 0.2rem;
+    }
+
+    .menu-list span {
+      display: block;
+      color: var(--ink-soft);
+      font-size: var(--step--1);
+    }
+
+    .menu-list a {
+      white-space: nowrap;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--blue-atlas);
     }
 
     .summary-card {
-      padding: 0.95rem 1rem;
-      border-radius: 20px;
-      background: linear-gradient(180deg, rgba(23, 34, 48, 0.04), rgba(23, 34, 48, 0.02));
-      border: 1px solid rgba(23, 34, 48, 0.06);
+      background: linear-gradient(150deg, rgba(13, 33, 56, 0.95), rgba(10, 94, 101, 0.92));
+      color: #f8fbff;
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(13, 33, 56, 0.12);
+      box-shadow: var(--shadow-soft);
+      padding: 1rem 1.1rem;
+      display: grid;
+      gap: 0.75rem;
+      align-content: start;
     }
 
-    .summary-card strong {
-      display: block;
-      font-family: 'League Spartan', sans-serif;
-      font-size: 1.45rem;
-      margin-top: 0.35rem;
+    .summary-card h3 {
+      margin: 0;
+      font-family: 'Chakra Petch', system-ui, sans-serif;
+      font-size: 1.2rem;
+      line-height: 1;
     }
 
-    .toc {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      margin-bottom: 1rem;
+    .summary-card p {
+      margin: 0;
+      color: rgba(248, 251, 255, 0.9);
     }
 
-    .jump-link {
-      color: var(--accent-deep);
-      text-decoration: none;
-      border: 1px solid rgba(209, 107, 47, 0.18);
-      padding: 0.5rem 0.7rem;
-      border-radius: 999px;
-      background: rgba(209, 107, 47, 0.08);
-      font-size: 0.82rem;
+    .summary-card .mini-grid {
+      display: grid;
+      gap: 0.55rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .markdown {
-      line-height: 1.8;
-      color: var(--ink);
+    .mini-chip {
+      padding: 0.65rem 0.75rem;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.08);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(248, 251, 255, 0.9);
+      line-height: 1.4;
     }
 
-    .markdown > :first-child {
-      margin-top: 0;
+    .footer {
+      display: grid;
+      gap: 0.5rem;
+      padding: 0.25rem 0 0.9rem;
+      color: var(--ink-soft);
+      font-size: var(--step--1);
     }
 
-    .markdown h1,
-    .markdown h2,
-    .markdown h3,
-    .markdown h4 {
-      scroll-margin-top: 1.2rem;
-      margin-top: 1.65rem;
-      margin-bottom: 0.55rem;
+    .footer strong {
+      color: var(--navy-deep);
+      font-family: 'Chakra Petch', system-ui, sans-serif;
+      font-size: 1rem;
       letter-spacing: 0.02em;
     }
 
-    .markdown h1 { font-size: 2.2rem; }
-    .markdown h2 { font-size: 1.7rem; }
-    .markdown h3 { font-size: 1.35rem; }
-    .markdown h4 { font-size: 1.05rem; }
-
-    .markdown p,
-    .markdown li {
-      color: var(--ink-soft);
-      font-size: 0.96rem;
-    }
-
-    .markdown ul {
-      padding-left: 1.15rem;
-    }
-
-    .markdown hr {
-      border: 0;
-      border-top: 1px solid var(--line);
-      margin: 1.3rem 0;
-    }
-
-    .markdown blockquote {
-      margin: 1rem 0;
-      padding: 0.9rem 1rem;
-      border-left: 4px solid var(--accent);
-      background: rgba(209, 107, 47, 0.08);
-      border-radius: 0 18px 18px 0;
-      color: var(--ink-soft);
-    }
-
-    .markdown code {
-      font-family: 'Consolas', 'Courier New', monospace;
-      font-size: 0.92em;
-      padding: 0.12rem 0.35rem;
-      border-radius: 8px;
-      background: rgba(23, 34, 48, 0.08);
-      color: var(--accent-deep);
-    }
-
-    .table-wrap {
-      overflow: auto;
-      margin: 1rem 0 1.2rem;
-      border-radius: 20px;
-      border: 1px solid rgba(23, 34, 48, 0.08);
-      background: rgba(255, 255, 255, 0.86);
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 720px;
-    }
-
-    thead {
-      position: sticky;
-      top: 0;
-      background: linear-gradient(180deg, rgba(0, 90, 156, 0.94), rgba(0, 63, 115, 0.96));
-      color: white;
-      z-index: 1;
-    }
-
-    th,
-    td {
-      padding: 0.9rem 0.95rem;
-      border-bottom: 1px solid rgba(23, 34, 48, 0.08);
-      vertical-align: top;
-      text-align: left;
-      font-size: 0.9rem;
-    }
-
-    tbody tr:nth-child(even) {
-      background: rgba(23, 34, 48, 0.025);
-    }
-
-    .empty-state {
-      padding: 1.1rem;
-      border-radius: 22px;
-      background: rgba(23, 34, 48, 0.04);
-      color: var(--ink-soft);
-      border: 1px dashed rgba(23, 34, 48, 0.15);
-    }
-
-    .footer-note {
-      margin-top: 1rem;
-      color: var(--ink-faint);
-    }
-
-    @media (max-width: 1240px) {
-      .shell,
-      .workspace,
-      .hero-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .sidebar,
-      .panel {
-        position: relative;
-        top: 0;
-        max-height: none;
-      }
-
-      .summary-grid,
-      .stats-ribbon {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 720px) {
-      .shell {
-        padding: 0.75rem;
-      }
-
-      .sidebar,
+    @media (max-width: 1040px) {
       .hero,
-      .panel,
-      .article-shell {
-        border-radius: 24px;
+      .menu-panel {
+        grid-template-columns: 1fr;
       }
 
-      .summary-grid,
-      .stats-ribbon,
-      .article-header {
+      .content-grid {
         grid-template-columns: 1fr;
+      }
+
+      .stats-bar {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar-inner {
+        padding-inline: 0.85rem;
+      }
+
+      main {
+        padding: 0.85rem;
       }
 
       .brand img {
-        padding: 0.45rem;
+        width: 78px;
       }
 
-      .hero h2,
-      .article-title {
-        line-height: 1;
+      .route-map {
+        width: 100%;
       }
 
-      .doc-meta {
-        gap: 0.35rem;
+      .menu-list li {
+        grid-template-columns: 1fr;
       }
 
-      table {
-        min-width: 640px;
+      .menu-list a {
+        justify-self: start;
+      }
+
+      .summary-card .mini-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html,
+      body {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
       }
     }
   </style>
 </head>
 <body>
-  <div class="shell">
-    <aside class="sidebar">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="topbar">
+    <div class="topbar-inner">
       <div class="brand">
         <img src="./assets/logo-fapema.png" alt="Logo da FAPEMA">
         <div class="brand-copy">
-          <div class="eyebrow">patronage • Documentação de dados</div>
-          <h1>Atlas SQL</h1>
-          <p>Portal editorial para consulta de tabelas, relacionamentos e regras estruturais do banco MySQL do projeto patronage.</p>
+          <strong>patronage</strong>
+          <span>Índice editorial dos documentos HTML</span>
         </div>
       </div>
 
-      <section class="search-panel" aria-label="Pesquisar artefatos">
-        <label class="kicker" for="searchInput">Busca por tabela, categoria ou regra</label>
-        <input id="searchInput" type="search" placeholder="Ex.: processos, users, auditoria, edital">
-      </section>
+      <div class="topbar-meta" aria-label="Resumo do portal">
+        <span class="meta-pill">Brief</span>
+        <span class="meta-pill">PRD</span>
+        <span class="meta-pill">Atlas SQL</span>
+      </div>
+    </div>
+  </header>
 
-      <div id="categoryChips" class="legend" aria-label="Filtros por categoria"></div>
-      <div id="categoryCards" class="category-list" aria-label="Resumo das categorias"></div>
-      <div class="footer-note">Fonte: arquivos Markdown em patronage/docs/markdown, com assets locais em patronage/docs/html/assets e foco no banco MySQL do projeto patronage.</div>
-    </aside>
-
-    <main class="content">
-      <section class="hero" aria-labelledby="heroTitle">
-        <div class="hero-grid">
-          <div>
-            <div class="eyebrow">Arquitetura documental • patronage em MySQL</div>
-            <h2 id="heroTitle">Dicionário de dados com leitura operacional</h2>
-            <p>Os artefatos do banco MySQL do patronage foram agrupados por função no domínio, permitindo navegar entre dimensões, fatos, governança, segurança e estruturas de suporte sem perder o contexto operacional.</p>
-          </div>
-          <div id="statsRibbon" class="stats-ribbon" aria-label="Indicadores do acervo"></div>
+  <main id="conteudo">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <div>
+          <p class="eyebrow">Leitura guiada</p>
+          <h1 id="hero-title">Leia o briefing, depois o PRD, e use o banco como referência.</h1>
         </div>
-      </section>
 
-      <section class="workspace">
-        <aside class="panel" aria-labelledby="panelTitle">
-          <div class="kicker">Catálogo navegável</div>
-          <h3 id="panelTitle" class="panel-title">Artefatos</h3>
-          <div class="section-note" id="resultsSummary"></div>
-          <div id="docList" class="doc-list"></div>
-        </aside>
+        <p>
+          Este índice organiza a documentação HTML do patronage em uma sequência sugerida de leitura: primeiro o
+          briefing executivo em [brief.html](brief.html), depois a definição de produto em [prd.html](prd.html) e,
+          quando houver dúvidas sobre o estado atual do banco, a documentação atualizada em [sgbd.html](sgbd.html).
+        </p>
 
-        <article class="article-shell">
-          <div class="article-header">
+        <div class="hero-notes" aria-label="Trilha recomendada">
+          <div>1. Entenda o problema e o objetivo no Brief</div>
+          <div>2. Confirme escopo, métricas e entregas no PRD</div>
+          <div>3. Consulte o Atlas SQL quando precisar validar a base existente</div>
+        </div>
+      </div>
+
+      <div class="hero-signature" aria-label="Mapa visual do índice">
+        <div class="route-map" role="img" aria-label="Mapa circular ligando Brief, PRD e Atlas SQL ao núcleo patronage">
+          <span class="route-node brief">Brief</span>
+          <span class="route-node prd">PRD</span>
+          <span class="route-node sgbd">Atlas SQL</span>
+          <div class="route-core">
             <div>
-              <div class="kicker" id="docCategoryLabel"></div>
-              <h3 class="article-title" id="docTitle">Selecione um artefato</h3>
-              <p class="article-subtitle" id="docSubtitle">Escolha uma tabela na coluna lateral para visualizar a documentação consolidada.</p>
+              <strong>Patronage</strong>
+              <span>leitura guiada</span>
             </div>
-            <div class="kicker" id="docSchemaLabel">Schema</div>
           </div>
+        </div>
+      </div>
+    </section>
 
-          <section id="summaryGrid" class="summary-grid"></section>
-          <nav id="toc" class="toc" aria-label="Atalhos internos"></nav>
-          <div id="articleContent" class="markdown">
-            <div class="empty-state">O portal foi preparado para leitura local, com renderização direta dos Markdown transformados em uma base JavaScript offline.</div>
+    <section class="stats-bar" aria-label="Panorama do acervo">
+      <article class="stat">
+        <span class="label">Ordem sugerida</span>
+        <strong>Brief → PRD → SGBD</strong>
+        <span>Comece pela decisão, siga pelo produto e finalize na base técnica.</span>
+      </article>
+      <article class="stat">
+        <span class="label">Função do índice</span>
+        <strong>Portal de entrada</strong>
+        <span>Um único ponto de navegação para toda a coleção publicada em HTML.</span>
+      </article>
+      <article class="stat">
+        <span class="label">Tom visual</span>
+        <strong>Mesmo idioma</strong>
+        <span>Areia, navy, teal e rust preservam a identidade dos outros documentos.</span>
+      </article>
+    </section>
+
+    <section aria-labelledby="pages-title">
+      <p class="eyebrow">O que cada página contém</p>
+      <h2 class="section-title" id="pages-title">Mapa do conteúdo por leitura</h2>
+      <p class="section-lead">
+        O índice não duplica o material. Ele mostra o propósito de cada documento e ajuda o usuário a abrir a página
+        certa na hora certa.
+      </p>
+
+      <div class="content-grid" style="margin-top: 1rem;">
+        <article class="page-card">
+          <div class="card-top">
+            <span class="tag">Leitura executiva</span>
+            <h3>Brief</h3>
+          </div>
+          <div class="card-body">
+            <p>
+              Tese da fase 1, problema institucional, limites, riscos e as próximas decisões que precisam ser fechadas
+              com os stakeholders.
+            </p>
+            <ul class="bullet-list">
+              <li>Contexto e valor esperado.</li>
+              <li>Escopo, fora de escopo e mitigação de riscos.</li>
+              <li>Roadmap inicial e pendências de decisão.</li>
+            </ul>
+          </div>
+          <div class="card-footer">
+            <a class="card-link" href="./brief.html">Abrir Brief</a>
           </div>
         </article>
-      </section>
-    </main>
-  </div>
 
-  <script src="./docs-data.js" charset="UTF-8"></script>
-  <script>
-    (function () {
-      const store = window.__DOCS_PORTAL__;
-      const searchInput = document.getElementById('searchInput');
-      const categoryChips = document.getElementById('categoryChips');
-      const categoryCards = document.getElementById('categoryCards');
-      const statsRibbon = document.getElementById('statsRibbon');
-      const docList = document.getElementById('docList');
-      const resultsSummary = document.getElementById('resultsSummary');
-      const docCategoryLabel = document.getElementById('docCategoryLabel');
-      const docTitle = document.getElementById('docTitle');
-      const docSubtitle = document.getElementById('docSubtitle');
-      const docSchemaLabel = document.getElementById('docSchemaLabel');
-      const summaryGrid = document.getElementById('summaryGrid');
-      const toc = document.getElementById('toc');
-      const articleContent = document.getElementById('articleContent');
+        <article class="page-card">
+          <div class="card-top">
+            <span class="tag">Produto e entrega</span>
+            <h3>PRD</h3>
+          </div>
+          <div class="card-body">
+            <p>
+              Definição do produto analítico da fase 1, com objetivos, usuários, métricas, features e painéis que
+              precisam de homologação.
+            </p>
+            <ul class="bullet-list">
+              <li>Objetivo, usuários-alvo e fora de escopo.</li>
+              <li>FR-1 a FR-6 com critérios claros.</li>
+              <li>KPIs, questões em aberto e assumption registrada.</li>
+            </ul>
+          </div>
+          <div class="card-footer">
+            <a class="card-link" href="./prd.html">Abrir PRD</a>
+          </div>
+        </article>
 
-      if (!store || !Array.isArray(store.documents)) {
-        articleContent.innerHTML = '<div class="empty-state">Base de documentos indisponível. Execute o script <code>build-docs-data.ps1</code> para gerar o arquivo <code>docs-data.js</code>.</div>';
-        return;
-      }
+        <article class="page-card">
+          <div class="card-top">
+            <span class="tag">Base de referência</span>
+            <h3>Atlas SQL</h3>
+          </div>
+          <div class="card-body">
+            <p>
+              Documentação atualizada do banco de dados. Use esta página quando precisar consultar o dicionário
+              existente, categorias e artefatos estruturais do projeto.
+            </p>
+            <ul class="bullet-list">
+              <li>Busca por tabela, categoria e regra.</li>
+              <li>Resumo navegável do acervo MySQL.</li>
+              <li>Leitura consolidada dos documentos Markdown.</li>
+            </ul>
+          </div>
+          <div class="card-footer">
+            <a class="card-link" href="./sgbd.html">Abrir Atlas SQL</a>
+          </div>
+        </article>
+      </div>
+    </section>
 
-      const state = {
-        query: '',
-        category: 'all',
-        selectedId: store.documents[0] ? store.documents[0].id : null
-      };
+    <section class="menu-panel" aria-labelledby="menu-title" style="margin-top: 0.2rem;">
+      <article class="menu-card">
+        <p class="eyebrow">Menu consolidado</p>
+        <h3 id="menu-title">Acesso rápido na ordem certa</h3>
+        <ul class="menu-list">
+          <li>
+            <span class="menu-index">01</span>
+            <div>
+              <strong>Brief</strong>
+              <span>Leitura inicial para entender o problema, o valor da fase e os limites do escopo.</span>
+            </div>
+            <a href="./brief.html">Abrir</a>
+          </li>
+          <li>
+            <span class="menu-index">02</span>
+            <div>
+              <strong>PRD</strong>
+              <span>Leitura seguinte para confirmar produto, métricas, features e entregáveis.</span>
+            </div>
+            <a href="./prd.html">Abrir</a>
+          </li>
+          <li>
+            <span class="menu-index">03</span>
+            <div>
+              <strong>Atlas SQL</strong>
+              <span>Consulta técnica quando houver dúvidas sobre a estrutura atual do banco.</span>
+            </div>
+            <a href="./sgbd.html">Abrir</a>
+          </li>
+        </ul>
+      </article>
 
-      const CATEGORY_META = {
-        auxiliares: {
-          label: 'Auxiliares',
-          description: 'Artefatos de apoio que não se encaixam nos grupos centrais.'
-        },
-        avaliacao: {
-          label: 'Formulários e Avaliações',
-          description: 'Questionários, respostas, avaliações e resultados consolidados.'
-        },
-        convenios: {
-          label: 'Convênios',
-          description: 'Artefatos financeiros e operacionais associados a convênios e aditivos.'
-        },
-        dimensoes: {
-          label: 'Dimensões',
-          description: 'Cadastros mestres, taxonomias e entidades de referência.'
-        },
-        editais: {
-          label: 'Editais e Chamadas',
-          description: 'Estruturas de parametrização, publicação e regras dos instrumentos de fomento.'
-        },
-        fatos: {
-          label: 'Fatos e Fluxos',
-          description: 'Tabelas centrais do ciclo operacional, submissão, execução e tramitação.'
-        },
-        governanca: {
-          label: 'Termos e Governança',
-          description: 'Documentos normativos, aceite, cláusulas e trilhas formais do sistema.'
-        },
-        plataforma: {
-          label: 'Plataforma e Auditoria',
-          description: 'Operação técnica, observabilidade, integração e suporte ao produto.'
-        },
-        seguranca: {
-          label: 'Segurança e Acesso',
-          description: 'Controle de identidade, papéis, permissões e atores institucionais.'
-        }
-      };
+      <aside class="summary-card" aria-label="Como navegar neste portal">
+        <p class="eyebrow">Regra de uso</p>
+        <h3>Se tiver dúvida, desça um nível.</h3>
+        <p>
+          O portal foi pensado para guiá-lo da visão executiva à base técnica. Quando a dúvida for de direção, volte ao
+          Brief. Quando for de produto, use o PRD. Quando for sobre o estado atual da informação, consulte o Atlas SQL.
+        </p>
+        <div class="mini-grid">
+          <div class="mini-chip">1. Brief primeiro</div>
+          <div class="mini-chip">2. PRD depois</div>
+          <div class="mini-chip">3. SGBD quando necessário</div>
+          <div class="mini-chip">Base do projeto: MySQL</div>
+        </div>
+      </aside>
+    </section>
 
-      const metricCards = [
-        {
-          label: 'Projeto',
-          value: String(store.projectName || 'patronage'),
-          text: 'Identificação do sistema cuja camada relacional está sendo documentada.',
-          compact: true
-        },
-        {
-          label: 'SGBD',
-          value: String(store.databaseEngine || 'MySQL'),
-          text: 'Motor relacional de referência considerado na documentação.',
-          compact: true
-        },
-        {
-          label: 'Artefatos',
-          value: String(store.totalDocuments || store.documents.length),
-          text: 'Total de tabelas e estruturas catalogadas no acervo HTML.'
-        },
-        {
-          label: 'Categorias',
-          value: String((store.categories || []).length),
-          text: 'Separação por famílias estruturais para leitura mais rápida.'
-        },
-        {
-          label: 'Última geração',
-          value: (store.generatedAt || '').slice(0, 10).replace(/-/g, '/'),
-          text: 'Snapshot derivado automaticamente dos Markdown de origem.',
-          compact: true,
-          kind: 'date'
-        }
-      ];
-
-      function slugify(value) {
-        return value
-          .toLowerCase()
-          .normalize('NFD')
-          .replace(/[\u0300-\u036f]/g, '')
-          .replace(/[^a-z0-9]+/g, '-')
-          .replace(/(^-|-$)/g, '');
-      }
-
-      function escapeHtml(value) {
-        return String(value)
-          .replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(/"/g, '&quot;');
-      }
-
-      function getCategoryMeta(categoryKey, fallbackLabel, fallbackDescription) {
-        return CATEGORY_META[categoryKey] || {
-          label: fallbackLabel || categoryKey,
-          description: fallbackDescription || ''
-        };
-      }
-
-      function renderInline(text) {
-        return escapeHtml(text)
-          .replace(/`([^`]+)`/g, '<code>$1</code>')
-          .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-          .replace(/\*([^*]+)\*/g, '<em>$1</em>');
-      }
-
-      function parseMarkdown(markdown) {
-        const lines = markdown.replace(/\r\n/g, '\n').split('\n');
-        const html = [];
-        const sections = [];
-        let paragraph = [];
-        let listItems = [];
-
-        function flushParagraph() {
-          if (paragraph.length) {
-            html.push('<p>' + renderInline(paragraph.join(' ')) + '</p>');
-            paragraph = [];
-          }
-        }
-
-        function flushList() {
-          if (listItems.length) {
-            html.push('<ul>' + listItems.map((item) => '<li>' + renderInline(item) + '</li>').join('') + '</ul>');
-            listItems = [];
-          }
-        }
-
-        function parseTable(startIndex) {
-          const tableLines = [];
-          let index = startIndex;
-          while (index < lines.length && /^\|/.test(lines[index].trim())) {
-            tableLines.push(lines[index].trim());
-            index += 1;
-          }
-
-          function toTableCells(line) {
-            let row = line.trim();
-            if (row.startsWith('|')) {
-              row = row.slice(1);
-            }
-            if (row.endsWith('|')) {
-              row = row.slice(0, -1);
-            }
-            return row.split('|').map((cell) => cell.trim());
-          }
-
-          const rows = tableLines
-            .filter((line, rowIndex) => !(rowIndex === 1 && /^\|\s*:?[- ]+/.test(line)))
-            .map((line) => toTableCells(line));
-
-          if (rows.length < 1) {
-            return { html: '', nextIndex: index };
-          }
-
-          const header = rows[0];
-          const body = rows.slice(1);
-          const tableHtml = [
-            '<div class="table-wrap"><table>',
-            '<thead><tr>' + header.map((cell) => '<th>' + renderInline(cell) + '</th>').join('') + '</tr></thead>',
-            '<tbody>' + body.map((row) => '<tr>' + row.map((cell) => '<td>' + renderInline(cell) + '</td>').join('') + '</tr>').join('') + '</tbody>',
-            '</table></div>'
-          ].join('');
-
-          return { html: tableHtml, nextIndex: index };
-        }
-
-        for (let index = 0; index < lines.length; index += 1) {
-          const line = lines[index].trim();
-
-          if (!line) {
-            flushParagraph();
-            flushList();
-            continue;
-          }
-
-          if (/^\|/.test(line)) {
-            flushParagraph();
-            flushList();
-            const table = parseTable(index);
-            html.push(table.html);
-            index = table.nextIndex - 1;
-            continue;
-          }
-
-          if (/^---+$/.test(line)) {
-            flushParagraph();
-            flushList();
-            html.push('<hr>');
-            continue;
-          }
-
-          if (/^>/.test(line)) {
-            flushParagraph();
-            flushList();
-            html.push('<blockquote>' + renderInline(line.replace(/^>\s?/, '')) + '</blockquote>');
-            continue;
-          }
-
-          const headingMatch = line.match(/^(#{1,4})\s+(.+)$/);
-          if (headingMatch) {
-            flushParagraph();
-            flushList();
-            const level = headingMatch[1].length;
-            const headingText = headingMatch[2].replace(/[`*]/g, '').trim();
-            const sectionId = slugify(headingText);
-            html.push('<h' + level + ' id="' + sectionId + '">' + renderInline(headingMatch[2]) + '</h' + level + '>');
-            if (level <= 3) {
-              sections.push({ id: sectionId, label: headingText });
-            }
-            continue;
-          }
-
-          const listMatch = line.match(/^[-*]\s+(.+)$/);
-          if (listMatch) {
-            flushParagraph();
-            listItems.push(listMatch[1]);
-            continue;
-          }
-
-          paragraph.push(line);
-        }
-
-        flushParagraph();
-        flushList();
-        return { html: html.join(''), sections: sections.slice(0, 6) };
-      }
-
-      function getFilteredDocuments() {
-        const query = state.query.trim().toLowerCase();
-        return store.documents.filter((doc) => {
-          const matchesCategory = state.category === 'all' || doc.categoryKey === state.category;
-          if (!matchesCategory) {
-            return false;
-          }
-
-          if (!query) {
-            return true;
-          }
-
-          const haystack = [
-            doc.name,
-            doc.fileName,
-            doc.categoryLabel,
-            doc.overview,
-            doc.tableType,
-            doc.deleteStrategy,
-            doc.markdown
-          ].join(' ').toLowerCase();
-
-          return haystack.indexOf(query) >= 0;
-        });
-      }
-
-      function ensureSelected(filteredDocs) {
-        if (!filteredDocs.length) {
-          state.selectedId = null;
-          return;
-        }
-
-        const stillVisible = filteredDocs.some((doc) => doc.id === state.selectedId);
-        if (!stillVisible) {
-          state.selectedId = filteredDocs[0].id;
-        }
-      }
-
-      function renderMetrics() {
-        statsRibbon.innerHTML = metricCards.map((metric) => {
-          const classNames = ['metric-card'];
-          if (metric.compact) {
-            classNames.push('metric-card--compact');
-          }
-          if (metric.kind === 'date') {
-            classNames.push('metric-card--date');
-          }
-
-          return (
-          '<div class="' + classNames.join(' ') + '">' +
-            '<div>' +
-              '<div class="metric-label">' + escapeHtml(metric.label) + '</div>' +
-              '<div class="metric-value">' + escapeHtml(metric.value) + '</div>' +
-            '</div>' +
-            '<div class="metric-text">' + escapeHtml(metric.text) + '</div>' +
-          '</div>'
-          );
-        }).join('');
-      }
-
-      function renderCategories() {
-        const chips = [{ key: 'all', label: 'Tudo', count: store.documents.length }].concat(
-          (store.categories || []).map((category) => {
-            const meta = getCategoryMeta(category.key, category.label, category.description);
-            return {
-              key: category.key,
-              label: meta.label,
-              description: meta.description,
-              count: category.count
-            };
-          })
-        );
-        categoryChips.innerHTML = chips.map((category) => {
-          const activeClass = category.key === state.category ? ' active' : '';
-          return '<button class="category-chip' + activeClass + '" data-category="' + escapeHtml(category.key) + '">' + escapeHtml(category.label) + ' (' + escapeHtml(category.count) + ')</button>';
-        }).join('');
-
-        categoryCards.innerHTML = (store.categories || []).map((category) => {
-          const meta = getCategoryMeta(category.key, category.label, category.description);
-          return (
-          '<div class="category-card">' +
-            '<strong><span>' + escapeHtml(meta.label) + '</span><span>' + escapeHtml(category.count) + '</span></strong>' +
-            '<p>' + escapeHtml(meta.description) + '</p>' +
-          '</div>'
-          );
-        }).join('');
-
-        categoryChips.querySelectorAll('.category-chip').forEach((chip) => {
-          chip.addEventListener('click', () => {
-            state.category = chip.getAttribute('data-category') || 'all';
-            render();
-          });
-        });
-      }
-
-      function renderDocList(filteredDocs) {
-        resultsSummary.textContent = filteredDocs.length + ' resultado(s) visível(is)';
-
-        if (!filteredDocs.length) {
-          docList.innerHTML = '<div class="empty-state">Nenhum artefato encontrado para o filtro atual.</div>';
-          return;
-        }
-
-        docList.innerHTML = filteredDocs.map((doc) => {
-          const activeClass = doc.id === state.selectedId ? ' active' : '';
-          const description = doc.overview || doc.tableType || 'Sem descrição resumida.';
-          const meta = getCategoryMeta(doc.categoryKey, doc.categoryLabel, doc.categoryDescription);
-          return '<button class="doc-item' + activeClass + '" data-id="' + escapeHtml(doc.id) + '">' +
-            '<strong>' + escapeHtml(doc.name) + '</strong>' +
-            '<p>' + escapeHtml(description) + '</p>' +
-            '<div class="doc-meta">' +
-              '<span>' + escapeHtml(meta.label) + '</span>' +
-              '<span>' + escapeHtml(doc.columnCount) + ' colunas</span>' +
-              '<span>' + escapeHtml(doc.fkCount) + ' FKs</span>' +
-            '</div>' +
-          '</button>';
-        }).join('');
-
-        docList.querySelectorAll('.doc-item').forEach((item) => {
-          item.addEventListener('click', () => {
-            state.selectedId = item.getAttribute('data-id');
-            render();
-          });
-        });
-      }
-
-      function renderDocument(filteredDocs) {
-        const selected = filteredDocs.find((doc) => doc.id === state.selectedId);
-        if (!selected) {
-          docCategoryLabel.textContent = 'Sem seleção';
-          docTitle.textContent = 'Nenhum artefato disponível';
-          docSubtitle.textContent = 'Ajuste os filtros para visualizar um documento.';
-          docSchemaLabel.textContent = 'Schema';
-          summaryGrid.innerHTML = '';
-          toc.innerHTML = '';
-          articleContent.innerHTML = '<div class="empty-state">Não há documento para exibir com o filtro atual.</div>';
-          return;
-        }
-
-        docCategoryLabel.textContent = selected.categoryLabel;
-  const meta = getCategoryMeta(selected.categoryKey, selected.categoryLabel, selected.categoryDescription);
-  docCategoryLabel.textContent = meta.label;
-        docTitle.textContent = selected.name;
-        docSubtitle.textContent = selected.overview || selected.tableType || 'Documentação tecnicamente estruturada a partir do DDL.';
-        docSchemaLabel.textContent = 'Schema ' + selected.schema;
-
-        const cards = [
-          { label: 'Colunas', value: selected.columnCount || '0' },
-          { label: 'FKs/Rel.', value: selected.fkCount || '0' },
-          { label: 'Tipo', value: selected.tableType || 'Não classificado' },
-          { label: 'Deleção', value: selected.deleteStrategy || 'Não informado' }
-        ];
-
-        summaryGrid.innerHTML = cards.map((card) => (
-          '<div class="summary-card">' +
-            '<div class="metric-label">' + escapeHtml(card.label) + '</div>' +
-            '<strong>' + escapeHtml(card.value) + '</strong>' +
-          '</div>'
-        )).join('');
-
-        let parsed;
-        try {
-          parsed = parseMarkdown(selected.markdown);
-        } catch (error) {
-          parsed = {
-            sections: [],
-            html: '<div class="empty-state">Falha ao interpretar este Markdown automaticamente. O conteúdo bruto segue abaixo para preservar a consulta.</div><pre>' + escapeHtml(selected.markdown) + '</pre>'
-          };
-        }
-
-        toc.innerHTML = parsed.sections.map((section) => (
-          '<a class="jump-link" href="#' + escapeHtml(section.id) + '">' + escapeHtml(section.label) + '</a>'
-        )).join('');
-
-        articleContent.innerHTML = parsed.html;
-      }
-
-      function render() {
-        const filteredDocs = getFilteredDocuments();
-        ensureSelected(filteredDocs);
-        renderCategories();
-        renderDocList(filteredDocs);
-        renderDocument(filteredDocs);
-      }
-
-      renderMetrics();
-      render();
-
-      searchInput.addEventListener('input', (event) => {
-        state.query = event.target.value || '';
-        render();
-      });
-    })();
-  </script>
+    <footer class="footer">
+      <strong>Índice editorial do patronage</strong>
+      <p>
+        Esta landing page mantém a identidade visual já criada nos documentos e organiza a leitura guiada para o
+        usuário chegar ao briefing, depois ao PRD e, por fim, à documentação atualizada do banco.
+      </p>
+    </footer>
+  </main>
 </body>
 </html>

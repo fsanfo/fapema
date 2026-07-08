@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>patronage | Atlas MySQL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/style.colors.css">
+  <style>
+    :root {
+      --paper: #f4efe6;
+      --paper-strong: #ebe4d5;
+      --ink: #172230;
+      --ink-soft: rgba(23, 34, 48, 0.72);
+      --ink-faint: rgba(23, 34, 48, 0.46);
+      --line: rgba(23, 34, 48, 0.12);
+      --line-strong: rgba(23, 34, 48, 0.26);
+      --accent: #d16b2f;
+      --accent-soft: rgba(209, 107, 47, 0.16);
+      --accent-deep: #8f4319;
+      --panel: rgba(255, 255, 255, 0.7);
+      --panel-strong: rgba(255, 255, 255, 0.92);
+      --shadow: 0 24px 60px rgba(24, 28, 38, 0.14);
+      --radius-xl: 32px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --sidebar-width: 360px;
+      --content-width: 880px;
+      --grid-gap: clamp(1rem, 1.8vw, 1.4rem);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(209, 107, 47, 0.16), transparent 28%),
+        radial-gradient(circle at 85% 12%, rgba(0, 90, 156, 0.14), transparent 24%),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 42%),
+        var(--paper);
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(23, 34, 48, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(23, 34, 48, 0.03) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: radial-gradient(circle at center, black 45%, transparent 100%);
+      opacity: 0.5;
+    }
+
+    .shell {
+      display: grid;
+      grid-template-columns: minmax(300px, var(--sidebar-width)) 1fr;
+      gap: clamp(1rem, 2vw, 1.5rem);
+      padding: clamp(1rem, 2vw, 1.5rem);
+      position: relative;
+      z-index: 1;
+    }
+
+    .sidebar,
+    .content {
+      min-height: calc(100vh - 2rem);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 1rem;
+      align-self: start;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.74), rgba(255, 255, 255, 0.88));
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius-xl);
+      padding: 1.25rem;
+      overflow: hidden;
+    }
+
+    .sidebar::after {
+      content: '';
+      position: absolute;
+      right: -80px;
+      top: -60px;
+      width: 180px;
+      height: 180px;
+      background: conic-gradient(from 220deg, rgba(209, 107, 47, 0.14), rgba(0, 90, 156, 0.02), rgba(209, 107, 47, 0.2));
+      border-radius: 50%;
+      filter: blur(10px);
+    }
+
+    .brand {
+      display: grid;
+      grid-template-columns: 1fr;
+      justify-items: stretch;
+      align-items: start;
+      gap: 0.85rem;
+      margin-bottom: 1.25rem;
+      overflow: visible;
+    }
+
+    .brand img {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      aspect-ratio: 2048 / 924;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+      border-radius: 22px;
+      margin-left: 0;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(245, 239, 230, 0.92));
+      padding: 0.6rem;
+      border: 1px solid rgba(23, 34, 48, 0.08);
+      box-shadow: 0 10px 24px rgba(24, 28, 38, 0.08);
+      flex-shrink: 0;
+    }
+
+    .brand-copy {
+      min-width: 0;
+      padding-top: 0;
+    }
+
+    .eyebrow,
+    .kicker,
+    .metric-label,
+    .section-note,
+    .doc-meta,
+    .footer-note {
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      color: var(--ink-faint);
+      padding-bottom: 0.75rem;
+    }
+
+    .brand-copy h1,
+    .hero h2,
+    .panel-title,
+    .article-title,
+    .markdown h1,
+    .markdown h2,
+    .markdown h3,
+    .markdown h4 {
+      margin: 0;
+      font-family: 'League Spartan', sans-serif;
+      text-transform: uppercase;
+      line-height: 0.95;
+    }
+
+    .brand-copy h1 {
+      font-size: clamp(1.9rem, 2vw, 2.4rem);
+      margin-top: 0.15rem;
+    }
+
+    .brand-copy p {
+      margin: 0.4rem 0 0;
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+      max-width: 22rem;
+    }
+
+    .search-panel,
+    .legend,
+    .category-list,
+    .stats-ribbon,
+    .doc-list,
+    .article-shell,
+    .toc {
+      position: relative;
+      z-index: 1;
+    }
+
+    .search-panel {
+      display: grid;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .search-panel input {
+      width: 100%;
+      border: 1px solid rgba(23, 34, 48, 0.08);
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 999px;
+      padding: 0.95rem 1.1rem;
+      font: inherit;
+      color: var(--ink);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+    }
+
+    .search-panel input:focus,
+    .category-chip:focus,
+    .doc-item:focus,
+    .jump-link:focus {
+      outline: 2px solid rgba(209, 107, 47, 0.4);
+      outline-offset: 2px;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-bottom: 1rem;
+    }
+
+    .category-chip {
+      border: 1px solid rgba(23, 34, 48, 0.09);
+      background: rgba(255, 255, 255, 0.74);
+      color: var(--ink-soft);
+      padding: 0.55rem 0.8rem;
+      border-radius: 999px;
+      font: inherit;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: transform 180ms ease, background 180ms ease, color 180ms ease, border-color 180ms ease;
+    }
+
+    .category-chip:hover,
+    .category-chip.active {
+      transform: translateY(-1px);
+      background: var(--accent-soft);
+      border-color: rgba(209, 107, 47, 0.28);
+      color: var(--accent-deep);
+    }
+
+    .category-list {
+      display: grid;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .category-card {
+      border: 1px solid rgba(23, 34, 48, 0.08);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.72);
+      padding: 0.9rem 1rem;
+    }
+
+    .category-card strong {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 0.3rem;
+      font-size: 0.96rem;
+    }
+
+    .category-card p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 0.82rem;
+      line-height: 1.55;
+    }
+
+    .content {
+      display: grid;
+      gap: 1rem;
+      align-content: start;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-xl);
+      background:
+        linear-gradient(120deg, rgba(10, 111, 184, 0.92), rgba(0, 63, 115, 0.98)),
+        #003f73;
+      color: white;
+      padding: clamp(1.4rem, 2vw, 2rem);
+      box-shadow: var(--shadow);
+      isolation: isolate;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: auto;
+      border-radius: 999px;
+      opacity: 0.55;
+      z-index: -1;
+    }
+
+    .hero::before {
+      width: 280px;
+      height: 280px;
+      right: -70px;
+      top: -110px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.42), transparent 66%);
+    }
+
+    .hero::after {
+      width: 420px;
+      height: 420px;
+      right: 20%;
+      bottom: -290px;
+      background: radial-gradient(circle, rgba(209, 107, 47, 0.3), transparent 68%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.9fr);
+      gap: 1rem;
+      align-items: end;
+    }
+
+    .hero h2 {
+      font-size: clamp(3rem, 5vw, 5.2rem);
+      max-width: 11ch;
+    }
+
+    .hero p {
+      max-width: 62ch;
+      color: rgba(255, 255, 255, 0.84);
+      margin: 0.85rem 0 0;
+      line-height: 1.75;
+      font-size: 1rem;
+    }
+
+    .hero .eyebrow {
+      color: rgba(255, 255, 255, 0.68);
+    }
+
+    .stats-ribbon {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.85rem;
+      align-self: stretch;
+      min-width: 0;
+    }
+
+    .metric-card {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 20px;
+      padding: 1rem;
+      min-height: 132px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .metric-card .metric-label {
+      color: rgba(255, 255, 255, 0.78);
+    }
+
+    .metric-value {
+      font-family: 'League Spartan', sans-serif;
+      font-size: clamp(1.9rem, 2.4vw, 2.7rem);
+      line-height: 0.92;
+      margin: 0.2rem 0 0;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      max-width: 100%;
+    }
+
+    .metric-card--compact .metric-value {
+      font-size: clamp(1.55rem, 2vw, 2.2rem);
+      line-height: 0.98;
+    }
+
+    .metric-card--date .metric-value {
+      font-size: clamp(1.75rem, 2.2vw, 2.35rem);
+    }
+
+    .metric-text {
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 0.88rem;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(280px, 340px) minmax(0, var(--content-width));
+      gap: 1rem;
+      align-items: start;
+    }
+
+    .panel,
+    .article-shell {
+      background: var(--panel-strong);
+      border: 1px solid rgba(23, 34, 48, 0.08);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+    }
+
+    .panel {
+      padding: 1rem;
+      position: sticky;
+      top: 1rem;
+      max-height: calc(100vh - 2rem);
+      overflow: auto;
+    }
+
+    .panel-title {
+      font-size: 1.35rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .doc-list {
+      display: grid;
+      gap: 0.65rem;
+    }
+
+    .doc-item {
+      width: 100%;
+      text-align: left;
+      border: 1px solid rgba(23, 34, 48, 0.08);
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 18px;
+      padding: 0.9rem 0.95rem;
+      cursor: pointer;
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+    }
+
+    .doc-item:hover,
+    .doc-item.active {
+      transform: translateY(-2px);
+      border-color: rgba(209, 107, 47, 0.3);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 245, 238, 0.96));
+      box-shadow: 0 12px 28px rgba(24, 28, 38, 0.08);
+    }
+
+    .doc-item strong {
+      display: block;
+      font-size: 0.98rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .doc-item p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 0.82rem;
+      line-height: 1.55;
+    }
+
+    .doc-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 0.6rem;
+    }
+
+    .doc-meta span {
+      border-radius: 999px;
+      padding: 0.35rem 0.55rem;
+      background: rgba(23, 34, 48, 0.06);
+      color: var(--ink-soft);
+      font-size: 0.68rem;
+    }
+
+    .article-shell {
+      padding: clamp(1.2rem, 2vw, 1.8rem);
+      overflow: hidden;
+    }
+
+    .article-header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 1rem;
+      align-items: end;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 1rem;
+    }
+
+    .article-title {
+      font-size: clamp(2.3rem, 4vw, 2.5rem);
+    }
+
+    .article-subtitle {
+      margin: 0.45rem 0 0;
+      color: var(--ink-soft);
+      line-height: 1.7;
+      max-width: 64ch;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.75rem;
+      margin: 1rem 0 1.35rem;
+    }
+
+    .summary-card {
+      padding: 0.95rem 1rem;
+      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(23, 34, 48, 0.04), rgba(23, 34, 48, 0.02));
+      border: 1px solid rgba(23, 34, 48, 0.06);
+    }
+
+    .summary-card strong {
+      display: block;
+      font-family: 'League Spartan', sans-serif;
+      font-size: 1.45rem;
+      margin-top: 0.35rem;
+    }
+
+    .toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+    }
+
+    .jump-link {
+      color: var(--accent-deep);
+      text-decoration: none;
+      border: 1px solid rgba(209, 107, 47, 0.18);
+      padding: 0.5rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(209, 107, 47, 0.08);
+      font-size: 0.82rem;
+    }
+
+    .markdown {
+      line-height: 1.8;
+      color: var(--ink);
+    }
+
+    .markdown > :first-child {
+      margin-top: 0;
+    }
+
+    .markdown h1,
+    .markdown h2,
+    .markdown h3,
+    .markdown h4 {
+      scroll-margin-top: 1.2rem;
+      margin-top: 1.65rem;
+      margin-bottom: 0.55rem;
+      letter-spacing: 0.02em;
+    }
+
+    .markdown h1 { font-size: 2.2rem; }
+    .markdown h2 { font-size: 1.7rem; }
+    .markdown h3 { font-size: 1.35rem; }
+    .markdown h4 { font-size: 1.05rem; }
+
+    .markdown p,
+    .markdown li {
+      color: var(--ink-soft);
+      font-size: 0.96rem;
+    }
+
+    .markdown ul {
+      padding-left: 1.15rem;
+    }
+
+    .markdown hr {
+      border: 0;
+      border-top: 1px solid var(--line);
+      margin: 1.3rem 0;
+    }
+
+    .markdown blockquote {
+      margin: 1rem 0;
+      padding: 0.9rem 1rem;
+      border-left: 4px solid var(--accent);
+      background: rgba(209, 107, 47, 0.08);
+      border-radius: 0 18px 18px 0;
+      color: var(--ink-soft);
+    }
+
+    .markdown code {
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 0.92em;
+      padding: 0.12rem 0.35rem;
+      border-radius: 8px;
+      background: rgba(23, 34, 48, 0.08);
+      color: var(--accent-deep);
+    }
+
+    .table-wrap {
+      overflow: auto;
+      margin: 1rem 0 1.2rem;
+      border-radius: 20px;
+      border: 1px solid rgba(23, 34, 48, 0.08);
+      background: rgba(255, 255, 255, 0.86);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+    }
+
+    thead {
+      position: sticky;
+      top: 0;
+      background: linear-gradient(180deg, rgba(0, 90, 156, 0.94), rgba(0, 63, 115, 0.96));
+      color: white;
+      z-index: 1;
+    }
+
+    th,
+    td {
+      padding: 0.9rem 0.95rem;
+      border-bottom: 1px solid rgba(23, 34, 48, 0.08);
+      vertical-align: top;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    tbody tr:nth-child(even) {
+      background: rgba(23, 34, 48, 0.025);
+    }
+
+    .empty-state {
+      padding: 1.1rem;
+      border-radius: 22px;
+      background: rgba(23, 34, 48, 0.04);
+      color: var(--ink-soft);
+      border: 1px dashed rgba(23, 34, 48, 0.15);
+    }
+
+    .footer-note {
+      margin-top: 1rem;
+      color: var(--ink-faint);
+    }
+
+    @media (max-width: 1240px) {
+      .shell,
+      .workspace,
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar,
+      .panel {
+        position: relative;
+        top: 0;
+        max-height: none;
+      }
+
+      .summary-grid,
+      .stats-ribbon {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      .shell {
+        padding: 0.75rem;
+      }
+
+      .sidebar,
+      .hero,
+      .panel,
+      .article-shell {
+        border-radius: 24px;
+      }
+
+      .summary-grid,
+      .stats-ribbon,
+      .article-header {
+        grid-template-columns: 1fr;
+      }
+
+      .brand img {
+        padding: 0.45rem;
+      }
+
+      .hero h2,
+      .article-title {
+        line-height: 1;
+      }
+
+      .doc-meta {
+        gap: 0.35rem;
+      }
+
+      table {
+        min-width: 640px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="./assets/logo-fapema.png" alt="Logo da FAPEMA">
+        <div class="brand-copy">
+          <div class="eyebrow">patronage • Documentação de dados</div>
+          <h1>Atlas SQL</h1>
+          <p>Portal editorial para consulta de tabelas, relacionamentos e regras estruturais do banco MySQL do projeto patronage.</p>
+        </div>
+      </div>
+
+      <section class="search-panel" aria-label="Pesquisar artefatos">
+        <label class="kicker" for="searchInput">Busca por tabela, categoria ou regra</label>
+        <input id="searchInput" type="search" placeholder="Ex.: processos, users, auditoria, edital">
+      </section>
+
+      <div id="categoryChips" class="legend" aria-label="Filtros por categoria"></div>
+      <div id="categoryCards" class="category-list" aria-label="Resumo das categorias"></div>
+      <div class="footer-note">Fonte: arquivos Markdown em patronage/docs/markdown, com assets locais em patronage/docs/html/assets e foco no banco MySQL do projeto patronage.</div>
+    </aside>
+
+    <main class="content">
+      <section class="hero" aria-labelledby="heroTitle">
+        <div class="hero-grid">
+          <div>
+            <div class="eyebrow">Arquitetura documental • patronage em MySQL</div>
+            <h2 id="heroTitle">Dicionário de dados com leitura operacional</h2>
+            <p>Os artefatos do banco MySQL do patronage foram agrupados por função no domínio, permitindo navegar entre dimensões, fatos, governança, segurança e estruturas de suporte sem perder o contexto operacional.</p>
+          </div>
+          <div id="statsRibbon" class="stats-ribbon" aria-label="Indicadores do acervo"></div>
+        </div>
+      </section>
+
+      <section class="workspace">
+        <aside class="panel" aria-labelledby="panelTitle">
+          <div class="kicker">Catálogo navegável</div>
+          <h3 id="panelTitle" class="panel-title">Artefatos</h3>
+          <div class="section-note" id="resultsSummary"></div>
+          <div id="docList" class="doc-list"></div>
+        </aside>
+
+        <article class="article-shell">
+          <div class="article-header">
+            <div>
+              <div class="kicker" id="docCategoryLabel"></div>
+              <h3 class="article-title" id="docTitle">Selecione um artefato</h3>
+              <p class="article-subtitle" id="docSubtitle">Escolha uma tabela na coluna lateral para visualizar a documentação consolidada.</p>
+            </div>
+            <div class="kicker" id="docSchemaLabel">Schema</div>
+          </div>
+
+          <section id="summaryGrid" class="summary-grid"></section>
+          <nav id="toc" class="toc" aria-label="Atalhos internos"></nav>
+          <div id="articleContent" class="markdown">
+            <div class="empty-state">O portal foi preparado para leitura local, com renderização direta dos Markdown transformados em uma base JavaScript offline.</div>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script src="./docs-data.js" charset="UTF-8"></script>
+  <script>
+    (function () {
+      const store = window.__DOCS_PORTAL__;
+      const searchInput = document.getElementById('searchInput');
+      const categoryChips = document.getElementById('categoryChips');
+      const categoryCards = document.getElementById('categoryCards');
+      const statsRibbon = document.getElementById('statsRibbon');
+      const docList = document.getElementById('docList');
+      const resultsSummary = document.getElementById('resultsSummary');
+      const docCategoryLabel = document.getElementById('docCategoryLabel');
+      const docTitle = document.getElementById('docTitle');
+      const docSubtitle = document.getElementById('docSubtitle');
+      const docSchemaLabel = document.getElementById('docSchemaLabel');
+      const summaryGrid = document.getElementById('summaryGrid');
+      const toc = document.getElementById('toc');
+      const articleContent = document.getElementById('articleContent');
+
+      if (!store || !Array.isArray(store.documents)) {
+        articleContent.innerHTML = '<div class="empty-state">Base de documentos indisponível. Execute o script <code>build-docs-data.ps1</code> para gerar o arquivo <code>docs-data.js</code>.</div>';
+        return;
+      }
+
+      const state = {
+        query: '',
+        category: 'all',
+        selectedId: store.documents[0] ? store.documents[0].id : null
+      };
+
+      const CATEGORY_META = {
+        auxiliares: {
+          label: 'Auxiliares',
+          description: 'Artefatos de apoio que não se encaixam nos grupos centrais.'
+        },
+        avaliacao: {
+          label: 'Formulários e Avaliações',
+          description: 'Questionários, respostas, avaliações e resultados consolidados.'
+        },
+        convenios: {
+          label: 'Convênios',
+          description: 'Artefatos financeiros e operacionais associados a convênios e aditivos.'
+        },
+        dimensoes: {
+          label: 'Dimensões',
+          description: 'Cadastros mestres, taxonomias e entidades de referência.'
+        },
+        editais: {
+          label: 'Editais e Chamadas',
+          description: 'Estruturas de parametrização, publicação e regras dos instrumentos de fomento.'
+        },
+        fatos: {
+          label: 'Fatos e Fluxos',
+          description: 'Tabelas centrais do ciclo operacional, submissão, execução e tramitação.'
+        },
+        governanca: {
+          label: 'Termos e Governança',
+          description: 'Documentos normativos, aceite, cláusulas e trilhas formais do sistema.'
+        },
+        plataforma: {
+          label: 'Plataforma e Auditoria',
+          description: 'Operação técnica, observabilidade, integração e suporte ao produto.'
+        },
+        seguranca: {
+          label: 'Segurança e Acesso',
+          description: 'Controle de identidade, papéis, permissões e atores institucionais.'
+        }
+      };
+
+      const metricCards = [
+        {
+          label: 'Projeto',
+          value: String(store.projectName || 'patronage'),
+          text: 'Identificação do sistema cuja camada relacional está sendo documentada.',
+          compact: true
+        },
+        {
+          label: 'SGBD',
+          value: String(store.databaseEngine || 'MySQL'),
+          text: 'Motor relacional de referência considerado na documentação.',
+          compact: true
+        },
+        {
+          label: 'Artefatos',
+          value: String(store.totalDocuments || store.documents.length),
+          text: 'Total de tabelas e estruturas catalogadas no acervo HTML.'
+        },
+        {
+          label: 'Categorias',
+          value: String((store.categories || []).length),
+          text: 'Separação por famílias estruturais para leitura mais rápida.'
+        },
+        {
+          label: 'Última geração',
+          value: (store.generatedAt || '').slice(0, 10).replace(/-/g, '/'),
+          text: 'Snapshot derivado automaticamente dos Markdown de origem.',
+          compact: true,
+          kind: 'date'
+        }
+      ];
+
+      function slugify(value) {
+        return value
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/(^-|-$)/g, '');
+      }
+
+      function escapeHtml(value) {
+        return String(value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      function getCategoryMeta(categoryKey, fallbackLabel, fallbackDescription) {
+        return CATEGORY_META[categoryKey] || {
+          label: fallbackLabel || categoryKey,
+          description: fallbackDescription || ''
+        };
+      }
+
+      function renderInline(text) {
+        return escapeHtml(text)
+          .replace(/`([^`]+)`/g, '<code>$1</code>')
+          .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+          .replace(/\*([^*]+)\*/g, '<em>$1</em>');
+      }
+
+      function parseMarkdown(markdown) {
+        const lines = markdown.replace(/\r\n/g, '\n').split('\n');
+        const html = [];
+        const sections = [];
+        let paragraph = [];
+        let listItems = [];
+
+        function flushParagraph() {
+          if (paragraph.length) {
+            html.push('<p>' + renderInline(paragraph.join(' ')) + '</p>');
+            paragraph = [];
+          }
+        }
+
+        function flushList() {
+          if (listItems.length) {
+            html.push('<ul>' + listItems.map((item) => '<li>' + renderInline(item) + '</li>').join('') + '</ul>');
+            listItems = [];
+          }
+        }
+
+        function parseTable(startIndex) {
+          const tableLines = [];
+          let index = startIndex;
+          while (index < lines.length && /^\|/.test(lines[index].trim())) {
+            tableLines.push(lines[index].trim());
+            index += 1;
+          }
+
+          function toTableCells(line) {
+            let row = line.trim();
+            if (row.startsWith('|')) {
+              row = row.slice(1);
+            }
+            if (row.endsWith('|')) {
+              row = row.slice(0, -1);
+            }
+            return row.split('|').map((cell) => cell.trim());
+          }
+
+          const rows = tableLines
+            .filter((line, rowIndex) => !(rowIndex === 1 && /^\|\s*:?[- ]+/.test(line)))
+            .map((line) => toTableCells(line));
+
+          if (rows.length < 1) {
+            return { html: '', nextIndex: index };
+          }
+
+          const header = rows[0];
+          const body = rows.slice(1);
+          const tableHtml = [
+            '<div class="table-wrap"><table>',
+            '<thead><tr>' + header.map((cell) => '<th>' + renderInline(cell) + '</th>').join('') + '</tr></thead>',
+            '<tbody>' + body.map((row) => '<tr>' + row.map((cell) => '<td>' + renderInline(cell) + '</td>').join('') + '</tr>').join('') + '</tbody>',
+            '</table></div>'
+          ].join('');
+
+          return { html: tableHtml, nextIndex: index };
+        }
+
+        for (let index = 0; index < lines.length; index += 1) {
+          const line = lines[index].trim();
+
+          if (!line) {
+            flushParagraph();
+            flushList();
+            continue;
+          }
+
+          if (/^\|/.test(line)) {
+            flushParagraph();
+            flushList();
+            const table = parseTable(index);
+            html.push(table.html);
+            index = table.nextIndex - 1;
+            continue;
+          }
+
+          if (/^---+$/.test(line)) {
+            flushParagraph();
+            flushList();
+            html.push('<hr>');
+            continue;
+          }
+
+          if (/^>/.test(line)) {
+            flushParagraph();
+            flushList();
+            html.push('<blockquote>' + renderInline(line.replace(/^>\s?/, '')) + '</blockquote>');
+            continue;
+          }
+
+          const headingMatch = line.match(/^(#{1,4})\s+(.+)$/);
+          if (headingMatch) {
+            flushParagraph();
+            flushList();
+            const level = headingMatch[1].length;
+            const headingText = headingMatch[2].replace(/[`*]/g, '').trim();
+            const sectionId = slugify(headingText);
+            html.push('<h' + level + ' id="' + sectionId + '">' + renderInline(headingMatch[2]) + '</h' + level + '>');
+            if (level <= 3) {
+              sections.push({ id: sectionId, label: headingText });
+            }
+            continue;
+          }
+
+          const listMatch = line.match(/^[-*]\s+(.+)$/);
+          if (listMatch) {
+            flushParagraph();
+            listItems.push(listMatch[1]);
+            continue;
+          }
+
+          paragraph.push(line);
+        }
+
+        flushParagraph();
+        flushList();
+        return { html: html.join(''), sections: sections.slice(0, 6) };
+      }
+
+      function getFilteredDocuments() {
+        const query = state.query.trim().toLowerCase();
+        return store.documents.filter((doc) => {
+          const matchesCategory = state.category === 'all' || doc.categoryKey === state.category;
+          if (!matchesCategory) {
+            return false;
+          }
+
+          if (!query) {
+            return true;
+          }
+
+          const haystack = [
+            doc.name,
+            doc.fileName,
+            doc.categoryLabel,
+            doc.overview,
+            doc.tableType,
+            doc.deleteStrategy,
+            doc.markdown
+          ].join(' ').toLowerCase();
+
+          return haystack.indexOf(query) >= 0;
+        });
+      }
+
+      function ensureSelected(filteredDocs) {
+        if (!filteredDocs.length) {
+          state.selectedId = null;
+          return;
+        }
+
+        const stillVisible = filteredDocs.some((doc) => doc.id === state.selectedId);
+        if (!stillVisible) {
+          state.selectedId = filteredDocs[0].id;
+        }
+      }
+
+      function renderMetrics() {
+        statsRibbon.innerHTML = metricCards.map((metric) => {
+          const classNames = ['metric-card'];
+          if (metric.compact) {
+            classNames.push('metric-card--compact');
+          }
+          if (metric.kind === 'date') {
+            classNames.push('metric-card--date');
+          }
+
+          return (
+          '<div class="' + classNames.join(' ') + '">' +
+            '<div>' +
+              '<div class="metric-label">' + escapeHtml(metric.label) + '</div>' +
+              '<div class="metric-value">' + escapeHtml(metric.value) + '</div>' +
+            '</div>' +
+            '<div class="metric-text">' + escapeHtml(metric.text) + '</div>' +
+          '</div>'
+          );
+        }).join('');
+      }
+
+      function renderCategories() {
+        const chips = [{ key: 'all', label: 'Tudo', count: store.documents.length }].concat(
+          (store.categories || []).map((category) => {
+            const meta = getCategoryMeta(category.key, category.label, category.description);
+            return {
+              key: category.key,
+              label: meta.label,
+              description: meta.description,
+              count: category.count
+            };
+          })
+        );
+        categoryChips.innerHTML = chips.map((category) => {
+          const activeClass = category.key === state.category ? ' active' : '';
+          return '<button class="category-chip' + activeClass + '" data-category="' + escapeHtml(category.key) + '">' + escapeHtml(category.label) + ' (' + escapeHtml(category.count) + ')</button>';
+        }).join('');
+
+        categoryCards.innerHTML = (store.categories || []).map((category) => {
+          const meta = getCategoryMeta(category.key, category.label, category.description);
+          return (
+          '<div class="category-card">' +
+            '<strong><span>' + escapeHtml(meta.label) + '</span><span>' + escapeHtml(category.count) + '</span></strong>' +
+            '<p>' + escapeHtml(meta.description) + '</p>' +
+          '</div>'
+          );
+        }).join('');
+
+        categoryChips.querySelectorAll('.category-chip').forEach((chip) => {
+          chip.addEventListener('click', () => {
+            state.category = chip.getAttribute('data-category') || 'all';
+            render();
+          });
+        });
+      }
+
+      function renderDocList(filteredDocs) {
+        resultsSummary.textContent = filteredDocs.length + ' resultado(s) visível(is)';
+
+        if (!filteredDocs.length) {
+          docList.innerHTML = '<div class="empty-state">Nenhum artefato encontrado para o filtro atual.</div>';
+          return;
+        }
+
+        docList.innerHTML = filteredDocs.map((doc) => {
+          const activeClass = doc.id === state.selectedId ? ' active' : '';
+          const description = doc.overview || doc.tableType || 'Sem descrição resumida.';
+          const meta = getCategoryMeta(doc.categoryKey, doc.categoryLabel, doc.categoryDescription);
+          return '<button class="doc-item' + activeClass + '" data-id="' + escapeHtml(doc.id) + '">' +
+            '<strong>' + escapeHtml(doc.name) + '</strong>' +
+            '<p>' + escapeHtml(description) + '</p>' +
+            '<div class="doc-meta">' +
+              '<span>' + escapeHtml(meta.label) + '</span>' +
+              '<span>' + escapeHtml(doc.columnCount) + ' colunas</span>' +
+              '<span>' + escapeHtml(doc.fkCount) + ' FKs</span>' +
+            '</div>' +
+          '</button>';
+        }).join('');
+
+        docList.querySelectorAll('.doc-item').forEach((item) => {
+          item.addEventListener('click', () => {
+            state.selectedId = item.getAttribute('data-id');
+            render();
+          });
+        });
+      }
+
+      function renderDocument(filteredDocs) {
+        const selected = filteredDocs.find((doc) => doc.id === state.selectedId);
+        if (!selected) {
+          docCategoryLabel.textContent = 'Sem seleção';
+          docTitle.textContent = 'Nenhum artefato disponível';
+          docSubtitle.textContent = 'Ajuste os filtros para visualizar um documento.';
+          docSchemaLabel.textContent = 'Schema';
+          summaryGrid.innerHTML = '';
+          toc.innerHTML = '';
+          articleContent.innerHTML = '<div class="empty-state">Não há documento para exibir com o filtro atual.</div>';
+          return;
+        }
+
+        docCategoryLabel.textContent = selected.categoryLabel;
+  const meta = getCategoryMeta(selected.categoryKey, selected.categoryLabel, selected.categoryDescription);
+  docCategoryLabel.textContent = meta.label;
+        docTitle.textContent = selected.name;
+        docSubtitle.textContent = selected.overview || selected.tableType || 'Documentação tecnicamente estruturada a partir do DDL.';
+        docSchemaLabel.textContent = 'Schema ' + selected.schema;
+
+        const cards = [
+          { label: 'Colunas', value: selected.columnCount || '0' },
+          { label: 'FKs/Rel.', value: selected.fkCount || '0' },
+          { label: 'Tipo', value: selected.tableType || 'Não classificado' },
+          { label: 'Deleção', value: selected.deleteStrategy || 'Não informado' }
+        ];
+
+        summaryGrid.innerHTML = cards.map((card) => (
+          '<div class="summary-card">' +
+            '<div class="metric-label">' + escapeHtml(card.label) + '</div>' +
+            '<strong>' + escapeHtml(card.value) + '</strong>' +
+          '</div>'
+        )).join('');
+
+        let parsed;
+        try {
+          parsed = parseMarkdown(selected.markdown);
+        } catch (error) {
+          parsed = {
+            sections: [],
+            html: '<div class="empty-state">Falha ao interpretar este Markdown automaticamente. O conteúdo bruto segue abaixo para preservar a consulta.</div><pre>' + escapeHtml(selected.markdown) + '</pre>'
+          };
+        }
+
+        toc.innerHTML = parsed.sections.map((section) => (
+          '<a class="jump-link" href="#' + escapeHtml(section.id) + '">' + escapeHtml(section.label) + '</a>'
+        )).join('');
+
+        articleContent.innerHTML = parsed.html;
+      }
+
+      function render() {
+        const filteredDocs = getFilteredDocuments();
+        ensureSelected(filteredDocs);
+        renderCategories();
+        renderDocList(filteredDocs);
+        renderDocument(filteredDocs);
+      }
+
+      renderMetrics();
+      render();
+
+      searchInput.addEventListener('input', (event) => {
+        state.query = event.target.value || '';
+        render();
+      });
+    })();
+  </script>
+</body>
+</html>
