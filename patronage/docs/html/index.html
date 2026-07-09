@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>patronage | Índice editorial</title>
-  <meta name="description" content="Landing page com o mapa editorial dos documentos HTML do patronage: briefing, PRD e documentação do banco.">
+  <meta name="description" content="Landing page com o mapa editorial dos documentos HTML do patronage: briefing, PRD, mapeamento SIGEF e documentação do banco.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -783,6 +783,7 @@
       <div class="topbar-meta" aria-label="Resumo do portal">
         <span class="meta-pill">Brief</span>
         <span class="meta-pill">PRD</span>
+        <span class="meta-pill">Mapping SIGEF</span>
         <span class="meta-pill">Atlas SQL</span>
         <span class="meta-pill">Mockups FR-6 v1</span>
       </div>
@@ -806,8 +807,9 @@
         <div class="hero-notes" aria-label="Trilha recomendada">
           <div>1. Entenda o problema e o objetivo no Brief</div>
           <div>2. Confirme escopo, métricas e entregas no PRD</div>
-          <div>3. Consulte o Atlas SQL quando precisar validar a base existente</div>
-          <div>4. Abra os Mockups FR-6 v1 para homologar os painéis com o PO</div>
+          <div>3. Revise o Mapping SIGEF para regras de integração e conciliação</div>
+          <div>4. Consulte o Atlas SQL quando precisar validar a base existente</div>
+          <div>5. Abra os Mockups FR-6 v1 para homologar os painéis com o PO</div>
         </div>
       </div>
 
@@ -918,6 +920,27 @@
 
         <article class="page-card">
           <div class="card-top">
+            <span class="tag">Integração SIGEF</span>
+            <h3>Mapping API</h3>
+          </div>
+          <div class="card-body">
+            <p>
+              Mapeamento técnico dos endpoints SIGEF e estratégia de conciliação para batimento de pagamentos,
+              créditos e auditoria no ecossistema Patronage.
+            </p>
+            <ul class="bullet-list">
+              <li>Endpoints por objetivo de negócio.</li>
+              <li>Regra de conciliação por ID de edital e CPF.</li>
+              <li>Diretrizes para monitoramento contábil e financeiro.</li>
+            </ul>
+          </div>
+          <div class="card-footer">
+            <a class="card-link" href="./mapping.html">Abrir Mapping SIGEF</a>
+          </div>
+        </article>
+
+        <article class="page-card">
+          <div class="card-top">
             <span class="tag">Homologação FR-6</span>
             <h3>Mockups v1</h3>
           </div>
@@ -972,6 +995,14 @@
           <li>
             <span class="menu-index">04</span>
             <div>
+              <strong>Mapping API SIGEF</strong>
+              <span>Mapeamento técnico de endpoints e regra de conciliação para batimento transacional.</span>
+            </div>
+            <a href="./mapping.html">Abrir</a>
+          </li>
+          <li>
+            <span class="menu-index">05</span>
+            <div>
               <strong>Mockups FR-6 v1</strong>
               <span>Protótipos HTML para homologar os painéis operacional, gerencial e executivo.</span>
             </div>
@@ -990,8 +1021,9 @@
         <div class="mini-grid">
           <div class="mini-chip">1. Brief primeiro</div>
           <div class="mini-chip">2. PRD depois</div>
-          <div class="mini-chip">3. SGBD quando necessário</div>
-          <div class="mini-chip">4. Mockups FR-6 para homologar</div>
+          <div class="mini-chip">3. Mapping SIGEF para integração</div>
+          <div class="mini-chip">4. SGBD quando necessário</div>
+          <div class="mini-chip">5. Mockups FR-6 para homologar</div>
           <div class="mini-chip">Base do projeto: MySQL</div>
         </div>
       </aside>
