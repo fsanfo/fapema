@@ -2,7 +2,7 @@
 title: Addendum Tecnico - PRD FAPEMA Patronage Analytics
 status: draft
 created: 2026-07-08
-updated: 2026-07-08
+updated: 2026-07-09
 ---
 
 # Addendum Tecnico
@@ -39,8 +39,8 @@ Dimensoes candidatas:
 
 ## 4. Decisoes Tecnicas em Aberto
 
-- Ferramenta/estrategia de orquestracao ETL (jobs SQL, procedures, Python ou combinacao).
-- Estrategia de refresh confirmada: batch diario (D+1).
+- Estrategia de orquestracao ETL confirmada: jobs para automacao dos dados SIGEF via API com gravacao em MySQL on-premise; demais artefatos por SQL em schema analytics/BI.
+- Janela de refresh confirmada: batch diario (D+1), inicio as 5h, finalizacao ate 7h e disponibilidade curada ate 8h.
 - Estrategia de particionamento e retenao para tabelas volumosas.
 - Estrategia de embed de paineis no ecossistema Laravel.
 

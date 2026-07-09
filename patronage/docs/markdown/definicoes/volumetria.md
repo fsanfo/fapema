@@ -4,6 +4,13 @@ Contexto: volumetria do sistema Patronage da FAPEMA.
 Banco: MySQL 8.
 Schema: patronage.
 
+## Resumo da Volumetria
+
+- Quantidade de tabelas: 178
+- Tamanho total somado (MB): 590.12
+- Dados somados (MB): 386.66
+- Indices somados (MB): 204.12
+
 | Tabela | Total de Linhas | Tamanho Total (MB) | Dados (MB) | Indices (MB) | Espaco Livre (Bytes) |
 | --- | --- | --- | --- | --- | --- |
 | activity_log | 338633 | 176.36 | 124.67 | 51.69 | 7340032 |

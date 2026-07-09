@@ -2,7 +2,7 @@
 title: PRD - FAPEMA Patronage Analytics
 status: draft
 created: 2026-07-08
-updated: 2026-07-08
+updated: 2026-07-09
 ---
 
 # PRD: FAPEMA Patronage Analytics
@@ -116,7 +116,7 @@ Consequencias (testaveis):
 
 ### 6.1 Em Escopo
 
-- Modelo Star Schema inicial para dominos prioritarios.
+- Modelo Star Schema inicial para dominios prioritarios.
 - Pipeline ETL inicial com camada Landing e Curated.
 - Catalogo inicial de KPIs operacionais, gerenciais, qualidade e performance.
 - Mockups HTML e paineis iniciais para perfis operacional e executivo.
@@ -133,6 +133,22 @@ Consequencias (testaveis):
 - Painel Gerencial de Convenios e Execucao: quantidade por tipo, vigencia, situacao de relatorios e aderencia a prazos de prestacao.
 - Painel Executivo de KPIs Institucionais: visao consolidada com tendencias mensais/trimestrais/semestrais/anuais, comparativos e alertas de desvios relevantes.
 
+### 6.4 Baseline de Volumetria (resolucao parcial da questao 8.1)
+
+Fonte: patronage/docs/markdown/definicoes/volumetria.md (schema patronage, MySQL 8).
+
+Maiores tabelas por tamanho total (MB):
+- activity_log: 338633 linhas, 176.36 MB (dados 124.67 MB, indices 51.69 MB).
+- logs: 147355 linhas, 84.16 MB (dados 67.61 MB, indices 16.55 MB).
+- pulse_entries: 355401 linhas, 83.78 MB (dados 20.55 MB, indices 63.23 MB).
+- failed_jobs: 1668 linhas, 47.75 MB (dados 47.52 MB, indices 0.23 MB).
+- processos: 30024 linhas, 31.73 MB (dados 17.55 MB, indices 14.19 MB).
+
+Implicacoes para a fase 1:
+- Priorizar extracao incremental e monitoramento de carga para activity_log, logs e pulse_entries.
+- Separar claramente eventos tecnicos/telemetria de fatos de negocio no desenho dimensional.
+- Antecipar estrategia de particionamento e retencao para tabelas de maior volume no desenho da arquitetura.
+
 ## 7. Metricas de Sucesso
 
 Primarias:
@@ -146,14 +162,28 @@ Contra-metricas:
 - SM-C1: Nao aumentar tempo de carga ETL acima da janela operacional permitida.
 - SM-C2: Nao elevar incidencias de exposicao de dados pessoais em artefatos analiticos.
 
-## 8. Questoes em Aberto
+## 8. Pendencias e Status
 
-1. Qual a volumetria atual e crescimento mensal das principais tabelas?
-2. Qual a janela operacional exata para execucao das cargas ETL diarias (D+1)?
-3. Quais regras obrigatorias de mascaramento e pseudonimizacao LGPD por dominio?
-4. Qual estrategia preferencial de orquestracao ETL (SQL nativo, jobs, Python, outra)?
-5. Os tres paineis mandatarios propostos em 6.3 estao aprovados sem ajustes?
+1. Crescimento mensal das principais tabelas
+	- Status: Resolvido.
+	- Resposta consolidada: crescimento mensal estimado entre 5% e 7%.
+
+2. Janela operacional para cargas ETL diarias (D+1)
+	- Status: Resolvido.
+	- Resposta consolidada: janela de 2 horas, inicio as 5h e conclusao prevista ate 7h, com dados atualizados e curados disponiveis ate 8h.
+
+3. Regras obrigatorias de mascaramento e pseudonimizacao LGPD por dominio
+	- Status: Resolvido.
+	- Resposta consolidada: adotar as regras LGPD ja vigentes e aplicadas no Patronage em producao.
+
+4. Estrategia preferencial de orquestracao ETL
+	- Status: Resolvido.
+	- Resposta consolidada: uso de jobs para automacao dos dados do SIGEF via API com gravacao em MySQL on-premise; demais artefatos acessados via SQL em schema dedicado para analytics e BI.
+
+5. Aprovacao dos tres paineis mandatarios da secao 6.3
+	- Status: Em aberto.
+	- Situacao atual: aguardando validacao final dos stakeholders.
 
 ## 9. Indice de Assumptions
 
-- [ASSUMPTION] A janela operacional diaria disponivel sera suficiente para concluir ETL, validacoes de qualidade e publicacao no prazo acordado.
+- [ASSUMPTION] Os tres paineis mandatarios descritos na secao 6.3 serao aprovados sem alteracoes estruturais relevantes.

@@ -621,7 +621,7 @@
       <div class="meta" aria-label="Metadados do documento">
         <span class="meta-pill">Status: draft</span>
         <span class="meta-pill">Criado: 2026-07-08</span>
-        <span class="meta-pill">Atualizado: 2026-07-08</span>
+        <span class="meta-pill">Atualizado: 2026-07-09</span>
       </div>
     </div>
   </header>
@@ -795,13 +795,13 @@
 
       <div class="stack">
         <article class="panel">
-          <h3>Questoes em aberto</h3>
+          <h3>Pendencias e status</h3>
           <ul>
-            <li>Volumetria atual e crescimento mensal das tabelas criticas.</li>
-            <li>Janela operacional exata para cargas ETL diarias D+1.</li>
-            <li>Regras obrigatorias de mascaramento e pseudonimizacao LGPD.</li>
-            <li>Estrategia preferencial de orquestracao ETL (SQL, jobs, Python, outra).</li>
-            <li>Aprovacao final dos tres paineis mandatarios sem ajustes.</li>
+            <li>Crescimento mensal das tabelas criticas: <strong>resolvido</strong> (estimativa de 5% a 7%).</li>
+            <li>Janela operacional ETL D+1: <strong>resolvido</strong> (5h-7h, com dados curados disponiveis ate 8h).</li>
+            <li>Mascaramento e pseudonimizacao LGPD por dominio: <strong>resolvido</strong> (regras vigentes do Patronage em producao).</li>
+            <li>Estrategia de orquestracao ETL: <strong>resolvido</strong> (jobs para SIGEF via API + SQL em schema analytics/BI).</li>
+            <li>Aprovacao dos tres paineis mandatarios: <strong>em aberto</strong> (aguardando validacao final dos stakeholders).</li>
           </ul>
         </article>
 
@@ -809,7 +809,7 @@
           <h3>Assumption registrada</h3>
           <ul>
             <li>
-              A janela operacional diaria sera suficiente para concluir ETL, validacoes de qualidade e publicacao no prazo.
+              Os tres paineis mandatarios descritos para homologacao serao aprovados sem alteracoes estruturais relevantes.
             </li>
           </ul>
         </article>
@@ -818,7 +818,7 @@
 
     <footer class="footer-note">
       Documento executivo derivado do PRD em Markdown. Esta versao prioriza orientacao de decisao: escopo, metricas, riscos,
-      homologacao e pendencias que exigem alinhamento entre TI, dados e stakeholders institucionais.
+      homologacao e uma pendencia ativa que exige alinhamento entre TI, dados e stakeholders institucionais.
     </footer>
   </main>
 </body>
