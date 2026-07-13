@@ -619,9 +619,9 @@
         </div>
       </div>
       <div class="meta" aria-label="Metadados do documento">
-        <span class="meta-pill">Status: draft</span>
+        <span class="meta-pill">Status: final</span>
         <span class="meta-pill">Criado: 2026-07-08</span>
-        <span class="meta-pill">Atualizado: 2026-07-09</span>
+        <span class="meta-pill">Atualizado: 2026-07-13</span>
       </div>
     </div>
   </header>
@@ -634,7 +634,7 @@
           <h1 id="hero-title">Fundacao analitica institucional para o ecossistema Patronage</h1>
         </div>
         <p>
-          A fase 1 estabelece inventario de dados, modelo Star Schema, ETL D+1 e paineis executivos para reduzir tempo de resposta gerencial,
+          A fase 1 estabelece inventario de dados, modelo Star Schema, ETL D+1 e conciliacao financeira Patronage x SIGEF para reduzir tempo de resposta gerencial,
           padronizar KPIs e aumentar confiabilidade na tomada de decisao da FAPEMA.
         </p>
         <ul class="hero-notes" aria-label="Diretrizes principais">
@@ -663,8 +663,8 @@
         <article class="panel">
           <h3>Objetivo da fase 1</h3>
           <p>
-            Transformar dados operacionais em informacao comparavel e rastreavel para niveis operacional, gerencial e executivo,
-            reduzindo dependencia de consultas ad hoc ao banco transacional.
+            Transformar dados operacionais do Patronage e retornos financeiros do SIGEF em informacao comparavel e rastreavel para niveis
+            operacional, gerencial, financeiro e executivo, reduzindo dependencia de consultas ad hoc ao banco transacional.
           </p>
         </article>
 
@@ -672,6 +672,7 @@
           <h3>Usuarios-alvo</h3>
           <ul>
             <li>Gestores operacionais e administrativos.</li>
+            <li>Financeiro institucional e controle interno para conciliacao.</li>
             <li>Liderancas institucionais e C-Level.</li>
             <li>Equipe tecnica de TI e dados para sustentacao e qualidade.</li>
           </ul>
@@ -705,6 +706,11 @@
             <strong>>=80% de aceite dos mockups na 1a rodada</strong>
             <span>Indica aderencia funcional e clareza de interface.</span>
           </div>
+          <div class="kpi">
+            <span class="tag">SM-4 primaria</span>
+            <strong>4 paineis mandatarios homologados</strong>
+            <span>Exige aceite formal dos aprovadores designados por painel.</span>
+          </div>
         </div>
 
         <h3 style="margin-top: 1rem;">Contra-metricas e protecoes</h3>
@@ -720,25 +726,27 @@
       <div class="feature-grid">
         <article class="feature-card">
           <h4>FR-1 Inventario de entidades prioritarias</h4>
-          <p>Mapear tabelas e relacionamentos prioritarios com origem, periodicidade e dono funcional.</p>
+          <p>Mapear tabelas, endpoints e relacionamentos Patronage + SIGEF com origem, periodicidade e dono funcional.</p>
           <ul>
             <li>Catalogo validado com PO e TI.</li>
             <li>Base para qualidade e rastreabilidade.</li>
+            <li>Regra funcional da chave composta edital + CPF documentada.</li>
           </ul>
         </article>
 
         <article class="feature-card">
           <h4>FR-2 Star Schema inicial</h4>
-          <p>Estruturar fatos e dimensoes conformadas com granularidade mensal, trimestral, semestral e anual.</p>
+          <p>Estruturar fatos e dimensoes conformadas com granularidade oficial e ponte de conciliacao financeira.</p>
           <ul>
             <li>Modelo dimensional documentado.</li>
             <li>Padrao unico para consumo analitico.</li>
+            <li>Batimento por chave composta nos fatos financeiros priorizados.</li>
           </ul>
         </article>
 
         <article class="feature-card">
           <h4>FR-3 Cargas ETL D+1</h4>
-          <p>Executar cargas recorrentes para camada Curated com logs e contagem de registros.</p>
+          <p>Executar cargas recorrentes Patronage e SIGEF para camada Curated com logs e contagem de registros.</p>
           <ul>
             <li>Disponibilidade no prazo acordado.</li>
             <li>Historico operacional auditavel.</li>
@@ -747,19 +755,20 @@
 
         <article class="feature-card">
           <h4>FR-4 Validacao de qualidade</h4>
-          <p>Aplicar validacoes de integridade, completude e consistencia apos cada lote.</p>
+          <p>Aplicar validacoes de integridade, completude, consistencia e batimento financeiro apos cada lote.</p>
           <ul>
             <li>Checklist por carga.</li>
             <li>Alertas para inconsistencias criticas.</li>
+            <li>Divergencias classificadas por ausencia, valor e status de pagamento.</li>
           </ul>
         </article>
 
         <article class="feature-card">
           <h4>FR-5 Paineis com segmentadores</h4>
-          <p>Entregar paineis com filtros principais e secundarios definidos por governanca analitica.</p>
+          <p>Entregar paineis com filtros principais e secundarios para perfis operacional, gerencial, financeiro e C-Level.</p>
           <ul>
             <li>Indicadores homologados em catalogo KPI.</li>
-            <li>Leitura rapida para perfil operacional e executivo.</li>
+            <li>Leitura rapida para decisoes e rastreabilidade.</li>
           </ul>
         </article>
 
@@ -787,8 +796,12 @@
             <p>Quantidade por tipo, vigencia, situacao de relatorios e aderencia a prazos de prestacao.</p>
           </li>
           <li>
-            <strong>Painel executivo de KPIs institucionais</strong>
-            <p>Tendencias multitemporais, comparativos e alertas de desvios relevantes.</p>
+            <strong>Painel de conciliacao SIGEF x Patronage</strong>
+            <p>Batimento de bolsas e auxilios por edital + CPF, com divergencias por ausencia, valor e status.</p>
+          </li>
+          <li>
+            <strong>Painel executivo C-Level de KPIs institucionais</strong>
+            <p>Tendencias multitemporais, comparativos, alertas e sinalizacao executiva de conciliacao financeira.</p>
           </li>
         </ul>
       </article>
@@ -800,8 +813,8 @@
             <li>Crescimento mensal das tabelas criticas: <strong>resolvido</strong> (estimativa de 5% a 7%).</li>
             <li>Janela operacional ETL D+1: <strong>resolvido</strong> (5h-7h, com dados curados disponiveis ate 8h).</li>
             <li>Mascaramento e pseudonimizacao LGPD por dominio: <strong>resolvido</strong> (regras vigentes do Patronage em producao).</li>
-            <li>Estrategia de orquestracao ETL: <strong>resolvido</strong> (jobs para SIGEF via API + SQL em schema analytics/BI).</li>
-            <li>Aprovacao dos tres paineis mandatarios: <strong>em aberto</strong> (aguardando validacao final dos stakeholders).</li>
+            <li>Estrategia de orquestracao ETL: <strong>resolvido</strong> (jobs para SIGEF via API + SQL em schema analytics/BI + batimento por chave composta).</li>
+            <li>Aprovacao dos quatro paineis mandatarios: <strong>parcialmente resolvido</strong> (criterios e aprovadores definidos; aceite formal pendente no checkpoint final).</li>
           </ul>
         </article>
 
@@ -809,7 +822,10 @@
           <h3>Assumption registrada</h3>
           <ul>
             <li>
-              Os tres paineis mandatarios descritos para homologacao serao aprovados sem alteracoes estruturais relevantes.
+              A correlacao entre ID do edital Patronage e os campos equivalentes no SIGEF permanecera estavel para os fatos financeiros priorizados.
+            </li>
+            <li>
+              A homologacao formal dos quatro paineis mandatarios ocorrera com dados D+1 e disponibilidade dos aprovadores designados.
             </li>
           </ul>
         </article>
@@ -818,7 +834,7 @@
 
     <footer class="footer-note">
       Documento executivo derivado do PRD em Markdown. Esta versao prioriza orientacao de decisao: escopo, metricas, riscos,
-      homologacao e uma pendencia ativa que exige alinhamento entre TI, dados e stakeholders institucionais.
+      homologacao de quatro paineis mandatarios e checkpoint operacional de aceite formal antes da implementacao definitiva.
     </footer>
   </main>
 </body>
