@@ -582,7 +582,7 @@ h1, h2, h3, h4 {
       </div>
     </nav>
     <div class="side-foot">
-      <span>Fontes: camada Curated + lotes SIGEF (ordembancaria, ordemcronologica, credor)</span>
+      <span>Fontes: camada Curated + lotes SIGEF (contas, ordembancaria, ordemcronologica, credor, guiarecebimento)</span>
       <span>Granularidade: D+1 por lote financeiro</span>
     </div>
   </aside>
@@ -603,9 +603,10 @@ h1, h2, h3, h4 {
             <p class="eyebrow">Painel mandatório 3 de 4</p>
             <h1 id="heroTitle">Conciliação SIGEF x Patronage</h1>
             <p>
-              Leitura operacional-financeira para batimento de pagamentos de bolsas e auxílios usando a chave composta
-              ID do edital + CPF do proponente. O objetivo é identificar ausência de correspondência, diferença de valor
-              e divergência de status antes do consolidado executivo.
+              Leitura operacional-financeira que cobre monitoramento de saldos e contas da FAPEMA, créditos recebidos
+              e batimento de pagamentos de bolsas e auxílios usando a chave composta ID do edital + CPF do proponente.
+              O objetivo é identificar ausência de correspondência, diferença de valor e divergência de status antes
+              do consolidado executivo, com trilha de auditoria completa por lote D+1.
             </p>
             <span class="mockup-flag">Dados fictícios — layout para validação com o PO</span>
           </div>
@@ -643,10 +644,92 @@ h1, h2, h3, h4 {
       </section>
 
       <nav class="jump-nav" aria-label="Navegação rápida entre seções">
+        <a class="jump-link" href="#saldo-contas">Saldo de contas FAPEMA</a>
         <a class="jump-link" href="#tendencia">Taxa de conciliação por lote</a>
         <a class="jump-link" href="#comparativo">Divergências por classe</a>
+        <a class="jump-link" href="#creditos">Créditos recebidos</a>
         <a class="jump-link" href="#alertas">Alertas de curadoria</a>
+        <a class="jump-link" href="#auditoria">Trilha de auditoria D+1</a>
       </nav>
+
+      <section aria-label="Monitoramento de contas e saldos SIGEF">
+        <article class="card" id="saldo-contas">
+          <div class="card-head">
+            <h2>Saldo de Contas FAPEMA (SIGEF)</h2>
+            <span class="card-note">GET /sigef/contas/ · monitoramento contábil-financeiro</span>
+          </div>
+          <div class="kpi-strip" style="margin-bottom:1rem;">
+            <div class="kpi-card">
+              <span class="kpi-label eyebrow">Saldo total monitorado</span>
+              <strong>R$ 13,31 mi</strong>
+              <span class="kpi-delta up">▲ 1,6% no período</span>
+            </div>
+            <div class="kpi-card">
+              <span class="kpi-label eyebrow">Débito do período</span>
+              <strong>R$ 2,64 mi</strong>
+              <span class="kpi-delta flat">estável vs. lote anterior</span>
+            </div>
+            <div class="kpi-card">
+              <span class="kpi-label eyebrow">Crédito do período</span>
+              <strong>R$ 2,82 mi</strong>
+              <span class="kpi-delta up">▲ 0,9% vs. lote anterior</span>
+            </div>
+            <div class="kpi-card">
+              <span class="kpi-label eyebrow">Contas monitoradas</span>
+              <strong>4</strong>
+              <span class="kpi-delta flat">ativas no SIGEF</span>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Conta corrente</th>
+                  <th>Conta contábil</th>
+                  <th>Débito</th>
+                  <th>Crédito</th>
+                  <th>Saldo atual</th>
+                  <th>Variação</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>12345-6</td>
+                  <td>Convênios e Repasses – Bolsas</td>
+                  <td>R$ 1.240.000</td>
+                  <td>R$ 1.180.000</td>
+                  <td>R$ 3.420.000</td>
+                  <td><span class="badge ok">▲ 2,3%</span></td>
+                </tr>
+                <tr>
+                  <td>98765-4</td>
+                  <td>Auxílios à Pesquisa</td>
+                  <td>R$ 512.000</td>
+                  <td>R$ 480.000</td>
+                  <td>R$ 1.150.000</td>
+                  <td><span class="badge risk">▼ 1,1%</span></td>
+                </tr>
+                <tr>
+                  <td>55210-9</td>
+                  <td>Bolsas de Pós-Graduação</td>
+                  <td>R$ 890.000</td>
+                  <td>R$ 905.000</td>
+                  <td>R$ 2.760.000</td>
+                  <td><span class="badge ok">▲ 0,8%</span></td>
+                </tr>
+                <tr>
+                  <td>33440-1</td>
+                  <td>Fundo de Reserva Institucional</td>
+                  <td>R$ 0</td>
+                  <td>R$ 250.000</td>
+                  <td>R$ 5.980.000</td>
+                  <td><span class="badge ok">▲ 4,4%</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </section>
 
       <section class="filter-bar" aria-label="Filtros do painel">
         <div class="filter-group" role="group" aria-label="Período">
@@ -686,6 +769,51 @@ h1, h2, h3, h4 {
           <div class="legend">
             <span><i style="background:#8A8A8A"></i> Lote anterior</span>
             <span><i style="background:#d16b2f"></i> Lote atual</span>
+          </div>
+        </article>
+      </section>
+
+      <section aria-label="Créditos recebidos e outras movimentações">
+        <article class="card" id="creditos">
+          <div class="card-head">
+            <h2>Créditos Recebidos e Outras Movimentações</h2>
+            <span class="card-note">GET /sigef/guiarecebimento/ · aportes, estornos e repasses complementares</span>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Guia de recebimento</th>
+                  <th>Conta</th>
+                  <th>Evento</th>
+                  <th>Valor</th>
+                  <th>Data</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>2026GR001</td>
+                  <td>12345-6</td>
+                  <td>Estorno de bolsa não utilizada</td>
+                  <td>R$ 18.400</td>
+                  <td>08/07/2026</td>
+                </tr>
+                <tr>
+                  <td>2026GR002</td>
+                  <td>98765-4</td>
+                  <td>Repasse complementar SEPLAN-MA</td>
+                  <td>R$ 260.000</td>
+                  <td>05/07/2026</td>
+                </tr>
+                <tr>
+                  <td>2026GR003</td>
+                  <td>55210-9</td>
+                  <td>Devolução de auxílio cancelado</td>
+                  <td>R$ 7.250</td>
+                  <td>02/07/2026</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </article>
       </section>
@@ -733,9 +861,62 @@ h1, h2, h3, h4 {
         </article>
       </section>
 
+      <section aria-label="Trilha de auditoria por lote D+1">
+        <article class="card" id="auditoria">
+          <div class="card-head">
+            <h2>Trilha de Auditoria por Lote D+1</h2>
+            <span class="card-note">data de carga, volume processado e status · critério de homologação FR-3/FR-4</span>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Lote</th>
+                  <th>Data de carga</th>
+                  <th>Registros processados</th>
+                  <th>Registros conciliados</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>2026-07-13-01</td>
+                  <td>13/07/2026 05:42</td>
+                  <td>4.612</td>
+                  <td>4.284</td>
+                  <td><span class="badge ok">Concluído</span></td>
+                </tr>
+                <tr>
+                  <td>2026-07-12-01</td>
+                  <td>12/07/2026 05:38</td>
+                  <td>4.550</td>
+                  <td>4.201</td>
+                  <td><span class="badge ok">Concluído</span></td>
+                </tr>
+                <tr>
+                  <td>2026-07-11-01</td>
+                  <td>11/07/2026 05:51</td>
+                  <td>4.480</td>
+                  <td>4.052</td>
+                  <td><span class="badge warn">Concluído com exceções</span></td>
+                </tr>
+                <tr>
+                  <td>2026-07-10-01</td>
+                  <td>10/07/2026 06:02</td>
+                  <td>4.510</td>
+                  <td>4.190</td>
+                  <td><span class="badge ok">Concluído</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
       <footer class="footer-note">
-        Painel de conciliação (3 de 4) · Alimentado pela camada Curated e pelos lotes SIGEF,
-        com batimento por chave composta edital + CPF e trilha de auditoria D+1. Regras de divergência seguem
+        Painel de conciliação (3 de 4) · Alimentado pela camada Curated e pelos lotes SIGEF (contas, ordembancaria,
+        ordemcronologica, credor, guiarecebimento), cobrindo saldo de contas, créditos recebidos e batimento por
+        chave composta edital + CPF, com trilha de auditoria D+1 por lote. Regras de divergência seguem
         homologação funcional com financeiro institucional e controle interno.
       </footer>
     </main>
