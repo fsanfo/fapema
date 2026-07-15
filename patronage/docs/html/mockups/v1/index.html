@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Protótipos FR-6 | FAPEMA Patronage Analytics</title>
-<meta name="description" content="Índice dos três painéis mandatórios de homologação definidos no PRD (FR-6): operacional, gerencial e executivo.">
+<meta name="description" content="Índice dos quatro painéis mandatórios de homologação definidos no PRD (FR-6): operacional, gerencial, conciliação e executivo C-Level.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -201,7 +201,8 @@ h1, h2, h3, h4 {
   top: 1rem;
   align-self: start;
   max-height: calc(100vh - 2rem);
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.9));
   border: 1px solid rgba(255, 255, 255, 0.5);
   box-shadow: var(--shadow);
@@ -578,7 +579,8 @@ h1, h2, h3, h4 {
         <a href="./index.html" class="active"><b>00</b>&nbsp;Visão geral</a>
         <a href="./painel-operacional-chamadas-editais.html"><b>01</b>&nbsp;Operacional</a>
         <a href="./painel-gerencial-convenios-execucao.html"><b>02</b>&nbsp;Gerencial</a>
-        <a href="./painel-executivo-kpis.html"><b>03</b>&nbsp;Executivo</a>
+        <a href="./painel-conciliacao-sigef-patronage.html"><b>03</b>&nbsp;Conciliação</a>
+        <a href="./painel-executivo-kpis.html"><b>04</b>&nbsp;Executivo</a>
       </div>
     </nav>
     <div class="side-foot">
@@ -592,18 +594,18 @@ h1, h2, h3, h4 {
       <div class="crumb"><span class="eyebrow" style="margin:0;">patronage</span> <span class="eyebrow" style="margin:0;">/</span> <b>Protótipos HTML (FR-6)</b></div>
       <div class="meta">
         <span class="meta-pill draft">Status: mockup</span>
-        <span class="meta-pill">Atualizado: 2026-07-09</span>
+        <span class="meta-pill">Atualizado: 2026-07-13</span>
       </div>
     </div>
 
     <main id="conteudo" style="display:grid; gap:1.35rem;">
       <section class="context-panel" aria-labelledby="hero-title">
         <p class="eyebrow">Feature FR-6 do PRD</p>
-        <h1 id="hero-title">Três painéis para validar com o PO antes da implementação em Laravel</h1>
+        <h1 id="hero-title">Quatro painéis para validar com aprovadores designados antes da implementação em Laravel</h1>
         <p>
           Esta é a leitura de bancada para a equipe de desenvolvimento: cada protótipo abaixo materializa um dos painéis
           mandatórios definidos na seção "Homologação e governança" do PRD, usando as entidades já mapeadas no Atlas SQL
-          (editais, chamadas, convênios e execuções). Os números são fictícios, coerentes com a granularidade descrita
+          (editais, chamadas, convênios, execuções e reconciliação financeira). Os números são fictícios, coerentes com a granularidade descrita
           (mensal, trimestral, semestral, anual) — servem para validar layout, hierarquia e leitura, não para reportar.
         </p>
         <div class="context-notes">
@@ -641,14 +643,26 @@ h1, h2, h3, h4 {
             <span class="cta">Abrir painel →</span>
           </a>
           <a class="launch-card" href="./painel-executivo-kpis.html">
-            <span class="idx">Painel 03 · Executivo</span>
+            <span class="idx">Painel 03 · Conciliação</span>
+            <h2>SIGEF x Patronage</h2>
+            <p>Leitura financeira para batimento por edital + CPF, com divergências por ausência, valor e status de pagamento.</p>
+            <ul>
+              <li>Batimento por chave composta</li>
+              <li>Ausência no SIGEF/Patronage</li>
+              <li>Diferença de valor</li>
+              <li>Trilha de auditoria D+1</li>
+            </ul>
+            <span class="cta">Abrir painel →</span>
+          </a>
+          <a class="launch-card" href="./painel-executivo-kpis.html">
+            <span class="idx">Painel 04 · Executivo</span>
             <h2>KPIs institucionais</h2>
-            <p>Leitura para C-Level: tendências multitemporais, comparativos ano a ano e alertas de desvios relevantes.</p>
+            <p>Leitura para C-Level: tendências multitemporais, comparativos ano a ano, alertas e sinalização executiva da conciliação.</p>
             <ul>
               <li>Tendência multitemporal</li>
               <li>Comparativo ano a ano</li>
               <li>Alertas de desvio</li>
-              <li>Catálogo de KPIs oficiais</li>
+              <li>KPIs mínimos de execução financeira</li>
             </ul>
             <span class="cta">Abrir painel →</span>
           </a>

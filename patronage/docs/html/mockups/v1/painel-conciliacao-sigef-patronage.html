@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Painel Gerencial · Convênios e Execução | FAPEMA Patronage Analytics</title>
+<title>Painel de Conciliação · SIGEF x Patronage | FAPEMA Patronage Analytics</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -566,7 +566,7 @@ h1, h2, h3, h4 {
 <div class="app-shell">
   <aside class="app-sidebar">
     <div class="brand-mark">
-      <svg width="36" height="36" viewBox="0 0 34 34" fill="none"><rect width="34" height="34" rx="9" fill="#005A9C"/><path d="M8 24V10h6.2c3 0 5 1.8 5 4.6 0 2.8-2 4.6-5 4.6h-3v4.8H8Zm3.2-7.4h2.7c1.3 0 2.1-.7 2.1-1.8s-.8-1.8-2.1-1.8h-2.7v3.6Z" fill="#fff"/></svg>
+      <svg width="36" height="36" viewBox="0 0 34 34" fill="none"><rect width="34" height="34" rx="9" fill="#003F73"/><path d="M8 24V10h6.2c3 0 5 1.8 5 4.6 0 2.8-2 4.6-5 4.6h-3v4.8H8Zm3.2-7.4h2.7c1.3 0 2.1-.7 2.1-1.8s-.8-1.8-2.1-1.8h-2.7v3.6Z" fill="#fff"/></svg>
       <div>
         <strong>Patronage Analytics</strong>
         <span>Protótipos FR-6</span>
@@ -577,23 +577,23 @@ h1, h2, h3, h4 {
       <div class="side-nav">
         <a href="./index.html"><b>00</b>&nbsp;Visão geral</a>
         <a href="./painel-operacional-chamadas-editais.html"><b>01</b>&nbsp;Operacional</a>
-        <a href="./painel-gerencial-convenios-execucao.html" class="active"><b>02</b>&nbsp;Gerencial</a>
-        <a href="./painel-conciliacao-sigef-patronage.html"><b>03</b>&nbsp;Conciliação</a>
+        <a href="./painel-gerencial-convenios-execucao.html"><b>02</b>&nbsp;Gerencial</a>
+        <a href="./painel-conciliacao-sigef-patronage.html" class="active"><b>03</b>&nbsp;Conciliação</a>
         <a href="./painel-executivo-kpis.html"><b>04</b>&nbsp;Executivo</a>
       </div>
     </nav>
     <div class="side-foot">
-      <span>Fontes: convenios, convenio_execucoes, convenio_aditivos, chamada_relatorios</span>
-      <span>Granularidade: mensal / trimestral</span>
+      <span>Fontes: camada Curated + lotes SIGEF (contas, ordembancaria, ordemcronologica, credor, guiarecebimento)</span>
+      <span>Granularidade: D+1 por lote financeiro</span>
     </div>
   </aside>
 
   <div class="app-main">
     <div class="topbar-inner">
-      <div class="crumb"><span class="eyebrow" style="margin:0;">patronage</span> <span class="eyebrow" style="margin:0;">/</span> <b>Painel 02 · Gerencial</b></div>
+      <div class="crumb"><span class="eyebrow" style="margin:0;">patronage</span> <span class="eyebrow" style="margin:0;">/</span> <b>Painel 03 · Conciliação</b></div>
       <div class="meta">
         <span class="meta-pill draft">Status: mockup</span>
-        <span class="meta-pill">Perfil: gerencial</span>
+        <span class="meta-pill">Perfil: Financeiro e controle interno</span>
       </div>
     </div>
 
@@ -601,154 +601,312 @@ h1, h2, h3, h4 {
       <section class="hero" aria-labelledby="heroTitle">
         <div class="hero-grid">
           <div>
-            <p class="eyebrow">Painel mandatório 2 de 3</p>
-            <h1 id="heroTitle">Convênios e execução</h1>
+            <p class="eyebrow">Painel mandatório 3 de 4</p>
+            <h1 id="heroTitle">Conciliação SIGEF x Patronage</h1>
             <p>
-              Visão de portfólio para gestão: quanto está firmado por tipo, quem está com vigência ativa, como estão
-              os relatórios de prestação de contas e onde há risco de descumprimento de prazo. Uso esperado: gestores
-              institucionais e administrativos.
+              Leitura operacional-financeira que cobre monitoramento de saldos e contas da FAPEMA, créditos recebidos
+              e batimento de pagamentos de bolsas e auxílios usando a chave composta ID do edital + CPF do proponente.
+              O objetivo é identificar ausência de correspondência, diferença de valor e divergência de status antes
+              do consolidado executivo, com trilha de auditoria completa por lote D+1.
             </p>
             <span class="mockup-flag">Dados fictícios — layout para validação com o PO</span>
           </div>
-          <div class="stats-ribbon" aria-label="Indicadores-chave">
+          <div class="stats-ribbon" aria-label="Indicadores-chave institucionais">
             <article class="metric-card">
               <div>
-                <div class="metric-label">Convênios ativos</div>
-                <div class="metric-value">47</div>
+                <div class="metric-label">Registros conciliados (lote D+1)</div>
+                <div class="metric-value">4.284</div>
               </div>
-              <span class="metric-delta up">3 novos no trimestre</span>
+              <span class="metric-delta up">92,7% do lote conciliado</span>
             </article>
             <article class="metric-card">
               <div>
-                <div class="metric-label">Valor total em execução</div>
-                <div class="metric-value">R$ 18,4 mi</div>
+                <div class="metric-label">Ausência de correspondência</div>
+                <div class="metric-value">213</div>
               </div>
-              <span class="metric-delta">≈ estável vs. tri. anterior</span>
+              <span class="metric-delta down">4,6% do lote</span>
             </article>
             <article class="metric-card">
               <div>
-                <div class="metric-label">Aderência a prazos</div>
-                <div class="metric-value">84%</div>
+                <div class="metric-label">Diferença de valor</div>
+                <div class="metric-value">R$ 183 mil</div>
               </div>
-              <span class="metric-delta down">3 p.p. vs. meta de 90%</span>
+              <span class="metric-delta warn">0,9% da massa financeira</span>
             </article>
             <article class="metric-card">
               <div>
-                <div class="metric-label">Relatórios pendentes</div>
-                <div class="metric-value">7</div>
+                <div class="metric-label">Divergência de status</div>
+                <div class="metric-value">138</div>
               </div>
-              <span class="metric-delta down">15% do total</span>
+              <span class="metric-delta down">3,0% do lote</span>
             </article>
           </div>
         </div>
       </section>
 
       <nav class="jump-nav" aria-label="Navegação rápida entre seções">
-        <a class="jump-link" href="#tipos">Quantidade por tipo</a>
-        <a class="jump-link" href="#relatorios">Situação de relatórios</a>
-        <a class="jump-link" href="#vigencia">Vigência</a>
-        <a class="jump-link" href="#aderencia">Aderência a prazos</a>
+        <a class="jump-link" href="#saldo-contas">Saldo de contas FAPEMA</a>
+        <a class="jump-link" href="#tendencia">Taxa de conciliação por lote</a>
+        <a class="jump-link" href="#comparativo">Divergências por classe</a>
+        <a class="jump-link" href="#creditos">Créditos recebidos</a>
+        <a class="jump-link" href="#alertas">Alertas de curadoria</a>
+        <a class="jump-link" href="#auditoria">Trilha de auditoria D+1</a>
       </nav>
 
-      <section class="filter-bar" aria-label="Filtros do painel">
-        <div class="filter-group" role="group" aria-label="Tipo de convênio">
-          <span class="fg-label">Tipo</span>
-          <button class="chip active" type="button" aria-pressed="true">Todos</button>
-          <button class="chip" type="button" aria-pressed="false">Pesquisa</button>
-          <button class="chip" type="button" aria-pressed="false">Extensão</button>
-          <button class="chip" type="button" aria-pressed="false">Infraestrutura</button>
-        </div>
-        <div class="filter-sep"></div>
-        <div class="filter-group" role="group" aria-label="Vigência">
-          <span class="fg-label">Vigência</span>
-          <button class="chip active" type="button" aria-pressed="true">Ativa</button>
-          <button class="chip" type="button" aria-pressed="false">A vencer (90d)</button>
-          <button class="chip" type="button" aria-pressed="false">Encerrada</button>
-        </div>
-        <div class="filter-sep"></div>
-        <div class="filter-group" role="group" aria-label="Situação de relatório">
-          <span class="fg-label">Relatório</span>
-          <button class="chip active" type="button" aria-pressed="true">Todos</button>
-          <button class="chip" type="button" aria-pressed="false">Atrasado</button>
-        </div>
-        <span class="filter-note">Segmentadores conforme FR-5 · governança analítica</span>
-      </section>
-
-      <section class="chart-grid" aria-label="Portfólio por tipo e situação de relatório">
-        <article class="card" id="tipos">
+      <section aria-label="Monitoramento de contas e saldos SIGEF">
+        <article class="card" id="saldo-contas">
           <div class="card-head">
-            <h2>Quantidade por tipo</h2>
-            <span class="card-note">convênios ativos no trimestre</span>
+            <h2>Saldo de Contas FAPEMA (SIGEF)</h2>
+            <span class="card-note">GET /sigef/contas/ · monitoramento contábil-financeiro</span>
           </div>
-          <svg class="chart-svg" viewBox="0 0 560 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Gráfico de barras da quantidade de convênios por tipo"><line x1="40" y1="196.0" x2="550" y2="196.0" stroke="var(--line)" stroke-width="1"/><text x="32" y="200.0" font-size="9" fill="var(--ink-faint)" text-anchor="end">0</text><line x1="40" y1="151.0" x2="550" y2="151.0" stroke="var(--line)" stroke-width="1"/><text x="32" y="155.0" font-size="9" fill="var(--ink-faint)" text-anchor="end">6</text><line x1="40" y1="106.0" x2="550" y2="106.0" stroke="var(--line)" stroke-width="1"/><text x="32" y="110.0" font-size="9" fill="var(--ink-faint)" text-anchor="end">12</text><line x1="40" y1="61.0" x2="550" y2="61.0" stroke="var(--line)" stroke-width="1"/><text x="32" y="65.0" font-size="9" fill="var(--ink-faint)" text-anchor="end">19</text><line x1="40" y1="16.0" x2="550" y2="16.0" stroke="var(--line)" stroke-width="1"/><text x="32" y="20.0" font-size="9" fill="var(--ink-faint)" text-anchor="end">25</text><rect x="86.8" y="44.8" width="34" height="151.2" rx="3" fill="#0A6FB8"/><text x="103.8" y="212" font-size="10" fill="var(--ink-soft)" text-anchor="middle">Pesquisa</text><rect x="214.2" y="95.2" width="34" height="100.8" rx="3" fill="#0A6FB8"/><text x="231.2" y="212" font-size="10" fill="var(--ink-soft)" text-anchor="middle">Extensão</text><rect x="341.8" y="145.6" width="34" height="50.4" rx="3" fill="#0A6FB8"/><text x="358.8" y="212" font-size="10" fill="var(--ink-soft)" text-anchor="middle">Infraestrutura</text><rect x="469.2" y="160.0" width="34" height="36.0" rx="3" fill="#d16b2f"/><text x="486.2" y="212" font-size="10" fill="var(--ink-soft)" text-anchor="middle">Cooperação</text></svg>
-        </article>
-
-        <article class="card" id="relatorios">
-          <div class="card-head">
-            <h3>Situação de relatórios</h3>
-            <span class="card-note">prestação de contas · trimestre</span>
-          </div>
-          <svg class="chart-svg" viewBox="0 0 250 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Gráfico de rosca da situação dos relatórios de convênio"><circle cx="125.0" cy="125.0" r="85" fill="none" stroke="rgba(23,34,48,0.08)" stroke-width="32"/><circle cx="125.0" cy="125.0" r="85" fill="none" stroke="#2E7D32" stroke-width="32" stroke-dasharray="295.4 238.6" transform="rotate(-90.0 125.0 125.0)" stroke-linecap="butt"/><circle cx="125.0" cy="125.0" r="85" fill="none" stroke="#0288D1" stroke-width="32" stroke-dasharray="102.3 431.8" transform="rotate(109.1 125.0 125.0)" stroke-linecap="butt"/><circle cx="125.0" cy="125.0" r="85" fill="none" stroke="#C62828" stroke-width="32" stroke-dasharray="79.5 454.5" transform="rotate(178.1 125.0 125.0)" stroke-linecap="butt"/><circle cx="125.0" cy="125.0" r="85" fill="none" stroke="#0A6FB8" stroke-width="32" stroke-dasharray="56.8 477.3" transform="rotate(231.7 125.0 125.0)" stroke-linecap="butt"/><text x="125.0" y="121.0" font-size="24" font-weight="700" fill="var(--ink)" text-anchor="middle" font-family="'League Spartan', sans-serif">47</text><text x="125.0" y="141.0" font-size="9" fill="var(--ink-faint)" text-anchor="middle">total no período</text></svg>
-          <div class="legend">
-            <span><i style="background:#2E7D32"></i> Em dia (26)</span>
-            <span><i style="background:#0288D1"></i> Em análise (9)</span>
-            <span><i style="background:#C62828"></i> Atrasado (7)</span>
-            <span><i style="background:#0A6FB8"></i> Aprovado (5)</span>
-          </div>
-        </article>
-      </section>
-
-      <section aria-label="Vigência dos convênios">
-        <article class="card" id="vigencia">
-          <div class="card-head">
-            <h2>Vigência dos convênios (amostra)</h2>
-            <span class="card-note">janela de 12 meses · cor = situação do relatório</span>
-          </div>
-          <svg class="chart-svg" viewBox="0 0 620 206" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Linha do tempo de vigência dos convênios"><line x1="170.0" y1="18" x2="170.0" y2="196" stroke="var(--line)" stroke-width="1"/><text x="170.0" y="14" font-size="9" fill="var(--ink-faint)" text-anchor="middle">Jan</text><line x1="205.8" y1="18" x2="205.8" y2="196" stroke="var(--line)" stroke-width="1"/><text x="205.8" y="14" font-size="9" fill="var(--ink-faint)" text-anchor="middle">Fev</text><line x1="241.7" y1="18" x2="241.7" y2="196" stroke="var(--line)" stroke-width="1"/><text x="241.7" y="14" font-size="9" fill="var(--ink-faint)" text-anchor="middle">Mar</text><line x1="277.5" y1="18" x2="277.5" y2="196" stroke="var(--line)" stroke-width="1"/><text x="277.5" y="14" font-size="9" fill="var(--ink-faint)" text-anchor="middle">Abr</text><line x1="313.3" y1="18" x2="313.3" y2="196" stroke="var(--line)" stroke-width="1"/><text x="313.3" y="14" font-size="9" fill="var(--ink-faint)" text-anchor="middle">Mai</text><line x1="349.2" y1="18" x2="349.2" y2="196" stroke="var(--line)" stroke-width="1"/><text x="349.2" y="14" font-size="9" fill="var(--ink-faint)" text-anchor="middle">Jun</text><line x1="385.0" y1="18" x2="385.0" y2="196" stroke="var(--line)" stroke-width="1"/><text x="385.0" y="14" font-size="9" fill="var(--ink-faint)" text-anchor="middle">Jul</text><line x1="420.8" y1="18" x2="420.8" y2="196" stroke="var(--line)" stroke-width="1"/><text x="420.8" y="14" font-size="9" fill="var(--ink-faint)" text-anchor="middle">Ago</text><line x1="456.7" y1="18" x2="456.7" y2="196" stroke="var(--line)" stroke-width="1"/><text x="456.7" y="14" font-size="9" fill="var(--ink-faint)" text-anchor="middle">Set</text><line x1="492.5" y1="18" x2="492.5" y2="196" stroke="var(--line)" stroke-width="1"/><text x="492.5" y="14" font-size="9" fill="var(--ink-faint)" text-anchor="middle">Out</text><line x1="528.3" y1="18" x2="528.3" y2="196" stroke="var(--line)" stroke-width="1"/><text x="528.3" y="14" font-size="9" fill="var(--ink-faint)" text-anchor="middle">Nov</text><line x1="564.2" y1="18" x2="564.2" y2="196" stroke="var(--line)" stroke-width="1"/><text x="564.2" y="14" font-size="9" fill="var(--ink-faint)" text-anchor="middle">Dez</text><line x1="600.0" y1="18" x2="600.0" y2="196" stroke="var(--line)" stroke-width="1"/><text x="160" y="42.0" font-size="10" fill="var(--ink-soft)" text-anchor="end">Convênio 014/2025 · UFMA</text><rect x="170.0" y="26" width="322.5" height="26" rx="6" fill="#0A6FB8" fill-opacity="0.9"/><text x="331.2" y="42.0" font-size="9" fill="#fff" text-anchor="middle" font-weight="600">em dia</text><text x="160" y="78.0" font-size="10" fill="var(--ink-soft)" text-anchor="end">Convênio 021/2025 · IFMA</text><rect x="205.8" y="62" width="394.2" height="26" rx="6" fill="#2E7D32" fill-opacity="0.9"/><text x="402.9" y="78.0" font-size="9" fill="#fff" text-anchor="middle" font-weight="600">em dia</text><text x="160" y="114.0" font-size="10" fill="var(--ink-soft)" text-anchor="end">Convênio 033/2026 · UEMA</text><rect x="277.5" y="98" width="286.7" height="26" rx="6" fill="#F9A825" fill-opacity="0.9"/><text x="420.8" y="114.0" font-size="9" fill="#fff" text-anchor="middle" font-weight="600">análise</text><text x="160" y="150.0" font-size="10" fill="var(--ink-soft)" text-anchor="end">Convênio 040/2026 · Sec. Saúde</text><rect x="313.3" y="134" width="215.0" height="26" rx="6" fill="#C62828" fill-opacity="0.9"/><text x="420.8" y="150.0" font-size="9" fill="#fff" text-anchor="middle" font-weight="600">atrasado</text><text x="160" y="186.0" font-size="10" fill="var(--ink-soft)" text-anchor="end">Convênio 052/2026 · ONG Rede Verde</text><rect x="385.0" y="170" width="179.2" height="26" rx="6" fill="#0A6FB8" fill-opacity="0.9"/><text x="474.6" y="186.0" font-size="9" fill="#fff" text-anchor="middle" font-weight="600">em dia</text></svg>
-        </article>
-      </section>
-
-      <section aria-label="Aderência a prazos de prestação de contas">
-        <article class="card" id="aderencia">
-          <div class="card-head">
-            <h2>Aderência a prazos de prestação de contas</h2>
-            <span class="card-note">por instituição parceira · meta institucional: 90%</span>
+          <div class="kpi-strip" style="margin-bottom:1rem;">
+            <div class="kpi-card">
+              <span class="kpi-label eyebrow">Saldo total monitorado</span>
+              <strong>R$ 13,31 mi</strong>
+              <span class="kpi-delta up">▲ 1,6% no período</span>
+            </div>
+            <div class="kpi-card">
+              <span class="kpi-label eyebrow">Débito do período</span>
+              <strong>R$ 2,64 mi</strong>
+              <span class="kpi-delta flat">estável vs. lote anterior</span>
+            </div>
+            <div class="kpi-card">
+              <span class="kpi-label eyebrow">Crédito do período</span>
+              <strong>R$ 2,82 mi</strong>
+              <span class="kpi-delta up">▲ 0,9% vs. lote anterior</span>
+            </div>
+            <div class="kpi-card">
+              <span class="kpi-label eyebrow">Contas monitoradas</span>
+              <strong>4</strong>
+              <span class="kpi-delta flat">ativas no SIGEF</span>
+            </div>
           </div>
           <div class="table-wrap">
             <table class="data-table">
               <thead>
-                <tr><th>Instituição</th><th>Convênios</th><th>Aderência</th><th>Situação</th></tr>
+                <tr>
+                  <th>Conta corrente</th>
+                  <th>Conta contábil</th>
+                  <th>Débito</th>
+                  <th>Crédito</th>
+                  <th>Saldo atual</th>
+                  <th>Variação</th>
+                </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>UFMA</td>
-                  <td>14</td>
-                  <td><div class="bar-cell"><div class="bar-track"><div class="bar-fill ok" style="width:93%"></div></div><span>93%</span></div></td>
-                  <td><span class="badge ok">Acima da meta</span></td>
+                  <td>12345-6</td>
+                  <td>Convênios e Repasses – Bolsas</td>
+                  <td>R$ 1.240.000</td>
+                  <td>R$ 1.180.000</td>
+                  <td>R$ 3.420.000</td>
+                  <td><span class="badge ok">▲ 2,3%</span></td>
                 </tr>
                 <tr>
-                  <td>IFMA</td>
-                  <td>11</td>
-                  <td><div class="bar-cell"><div class="bar-track"><div class="bar-fill ok" style="width:90%"></div></div><span>90%</span></div></td>
-                  <td><span class="badge ok">Na meta</span></td>
+                  <td>98765-4</td>
+                  <td>Auxílios à Pesquisa</td>
+                  <td>R$ 512.000</td>
+                  <td>R$ 480.000</td>
+                  <td>R$ 1.150.000</td>
+                  <td><span class="badge risk">▼ 1,1%</span></td>
                 </tr>
                 <tr>
-                  <td>UEMA</td>
-                  <td>9</td>
-                  <td><div class="bar-cell"><div class="bar-track"><div class="bar-fill warn" style="width:78%"></div></div><span>78%</span></div></td>
-                  <td><span class="badge warn">Atenção</span></td>
+                  <td>55210-9</td>
+                  <td>Bolsas de Pós-Graduação</td>
+                  <td>R$ 890.000</td>
+                  <td>R$ 905.000</td>
+                  <td>R$ 2.760.000</td>
+                  <td><span class="badge ok">▲ 0,8%</span></td>
                 </tr>
                 <tr>
-                  <td>Secretaria Estadual de Saúde</td>
-                  <td>6</td>
-                  <td><div class="bar-cell"><div class="bar-track"><div class="bar-fill risk" style="width:61%"></div></div><span>61%</span></div></td>
-                  <td><span class="badge risk">Crítico</span></td>
+                  <td>33440-1</td>
+                  <td>Fundo de Reserva Institucional</td>
+                  <td>R$ 0</td>
+                  <td>R$ 250.000</td>
+                  <td>R$ 5.980.000</td>
+                  <td><span class="badge ok">▲ 4,4%</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section class="filter-bar" aria-label="Filtros do painel">
+        <div class="filter-group" role="group" aria-label="Período">
+          <span class="fg-label">Período</span>
+          <button class="chip active" type="button" aria-pressed="true">D+1</button>
+          <button class="chip" type="button" aria-pressed="false">Semanal</button>
+          <button class="chip" type="button" aria-pressed="false">Mensal</button>
+        </div>
+        <div class="filter-sep"></div>
+        <div class="filter-group" role="group" aria-label="Comparativo">
+          <span class="fg-label">Recorte</span>
+          <button class="chip active" type="button" aria-pressed="true">Bolsas</button>
+          <button class="chip" type="button" aria-pressed="false">Auxílios</button>
+        </div>
+        <span class="filter-note">Batimento por chave composta: edital + CPF (FR-4)</span>
+      </section>
+
+      <section class="chart-grid" aria-label="Tendência e comparativo">
+        <article class="card" id="tendencia">
+          <div class="card-head">
+            <h2>Taxa de conciliação por lote</h2>
+            <span class="card-note">últimos lotes D+1 · financeiro reconciliado</span>
+          </div>
+          <svg class="chart-svg" viewBox="0 0 620 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Gráfico de linhas de tendência multitemporal"><line x1="40" y1="230.0" x2="604" y2="230.0" stroke="var(--line)" stroke-width="1"/><text x="32" y="234.0" font-size="9" fill="var(--ink-faint)" text-anchor="end">0</text><line x1="40" y1="176.5" x2="604" y2="176.5" stroke="var(--line)" stroke-width="1"/><text x="32" y="180.5" font-size="9" fill="var(--ink-faint)" text-anchor="end">2</text><line x1="40" y1="123.0" x2="604" y2="123.0" stroke="var(--line)" stroke-width="1"/><text x="32" y="127.0" font-size="9" fill="var(--ink-faint)" text-anchor="end">5</text><line x1="40" y1="69.5" x2="604" y2="69.5" stroke="var(--line)" stroke-width="1"/><text x="32" y="73.5" font-size="9" fill="var(--ink-faint)" text-anchor="end">8</text><line x1="40" y1="16.0" x2="604" y2="16.0" stroke="var(--line)" stroke-width="1"/><text x="32" y="20.0" font-size="9" fill="var(--ink-faint)" text-anchor="end">10</text><text x="40.0" y="246" font-size="9" fill="var(--ink-soft)" text-anchor="middle">Ago</text><text x="91.3" y="246" font-size="9" fill="var(--ink-soft)" text-anchor="middle">Set</text><text x="142.5" y="246" font-size="9" fill="var(--ink-soft)" text-anchor="middle">Out</text><text x="193.8" y="246" font-size="9" fill="var(--ink-soft)" text-anchor="middle">Nov</text><text x="245.1" y="246" font-size="9" fill="var(--ink-soft)" text-anchor="middle">Dez</text><text x="296.4" y="246" font-size="9" fill="var(--ink-soft)" text-anchor="middle">Jan</text><text x="347.6" y="246" font-size="9" fill="var(--ink-soft)" text-anchor="middle">Fev</text><text x="398.9" y="246" font-size="9" fill="var(--ink-soft)" text-anchor="middle">Mar</text><text x="450.2" y="246" font-size="9" fill="var(--ink-soft)" text-anchor="middle">Abr</text><text x="501.5" y="246" font-size="9" fill="var(--ink-soft)" text-anchor="middle">Mai</text><text x="552.7" y="246" font-size="9" fill="var(--ink-soft)" text-anchor="middle">Jun</text><text x="604.0" y="246" font-size="9" fill="var(--ink-soft)" text-anchor="middle">Jul</text><path d="M 40.0 144.4 L 91.3 123.0 L 142.5 144.4 L 193.8 101.6 L 245.1 165.8 L 296.4 123.0 L 347.6 165.8 L 398.9 123.0 L 450.2 144.4 L 501.5 101.6 L 552.7 123.0 L 604.0 80.2" fill="none" stroke="#003F73" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><circle cx="40.0" cy="144.4" r="3" fill="#003F73"/><circle cx="91.3" cy="123.0" r="3" fill="#003F73"/><circle cx="142.5" cy="144.4" r="3" fill="#003F73"/><circle cx="193.8" cy="101.6" r="3" fill="#003F73"/><circle cx="245.1" cy="165.8" r="3" fill="#003F73"/><circle cx="296.4" cy="123.0" r="3" fill="#003F73"/><circle cx="347.6" cy="165.8" r="3" fill="#003F73"/><circle cx="398.9" cy="123.0" r="3" fill="#003F73"/><circle cx="450.2" cy="144.4" r="3" fill="#003F73"/><circle cx="501.5" cy="101.6" r="3" fill="#003F73"/><circle cx="552.7" cy="123.0" r="3" fill="#003F73"/><circle cx="604.0" cy="80.2" r="3" fill="#003F73"/><path d="M 40.0 165.8 L 91.3 144.4 L 142.5 123.0 L 193.8 144.4 L 245.1 101.6 L 296.4 123.0 L 347.6 144.4 L 398.9 101.6 L 450.2 123.0 L 501.5 80.2 L 552.7 101.6 L 604.0 58.8" fill="none" stroke="#d16b2f" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><circle cx="40.0" cy="165.8" r="3" fill="#d16b2f"/><circle cx="91.3" cy="144.4" r="3" fill="#d16b2f"/><circle cx="142.5" cy="123.0" r="3" fill="#d16b2f"/><circle cx="193.8" cy="144.4" r="3" fill="#d16b2f"/><circle cx="245.1" cy="101.6" r="3" fill="#d16b2f"/><circle cx="296.4" cy="123.0" r="3" fill="#d16b2f"/><circle cx="347.6" cy="144.4" r="3" fill="#d16b2f"/><circle cx="398.9" cy="101.6" r="3" fill="#d16b2f"/><circle cx="450.2" cy="123.0" r="3" fill="#d16b2f"/><circle cx="501.5" cy="80.2" r="3" fill="#d16b2f"/><circle cx="552.7" cy="101.6" r="3" fill="#d16b2f"/><circle cx="604.0" cy="58.8" r="3" fill="#d16b2f"/></svg>
+          <div class="legend">
+            <span><i style="background:#003F73"></i> Conciliação concluída</span>
+            <span><i style="background:#d16b2f"></i> Divergências abertas</span>
+          </div>
+        </article>
+
+        <article class="card" id="comparativo">
+          <div class="card-head">
+            <h3>Divergências por classe</h3>
+            <span class="card-note">ausência, valor e status por lote</span>
+          </div>
+          <svg class="chart-svg" viewBox="0 0 460 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Gráfico comparativo ano a ano por trimestre"><line x1="40" y1="196.0" x2="450" y2="196.0" stroke="var(--line)" stroke-width="1"/><text x="32" y="200.0" font-size="9" fill="var(--ink-faint)" text-anchor="end">0</text><line x1="40" y1="151.0" x2="450" y2="151.0" stroke="var(--line)" stroke-width="1"/><text x="32" y="155.0" font-size="9" fill="var(--ink-faint)" text-anchor="end">14</text><line x1="40" y1="106.0" x2="450" y2="106.0" stroke="var(--line)" stroke-width="1"/><text x="32" y="110.0" font-size="9" fill="var(--ink-faint)" text-anchor="end">28</text><line x1="40" y1="61.0" x2="450" y2="61.0" stroke="var(--line)" stroke-width="1"/><text x="32" y="65.0" font-size="9" fill="var(--ink-faint)" text-anchor="end">42</text><line x1="40" y1="16.0" x2="450" y2="16.0" stroke="var(--line)" stroke-width="1"/><text x="32" y="20.0" font-size="9" fill="var(--ink-faint)" text-anchor="end">56</text><rect x="61.2" y="73.9" width="28" height="122.1" rx="3" fill="#8A8A8A"/><rect x="93.2" y="61.0" width="28" height="135.0" rx="3" fill="#d16b2f"/><text x="91.2" y="212" font-size="10" fill="var(--ink-soft)" text-anchor="middle">T1</text><rect x="163.8" y="54.6" width="28" height="141.4" rx="3" fill="#8A8A8A"/><rect x="195.8" y="32.1" width="28" height="163.9" rx="3" fill="#d16b2f"/><text x="193.8" y="212" font-size="10" fill="var(--ink-soft)" text-anchor="middle">T2</text><rect x="266.2" y="44.9" width="28" height="151.1" rx="3" fill="#8A8A8A"/><rect x="298.2" y="178.0" width="28" height="18" rx="3" fill="none" stroke="var(--ink-faint)" stroke-width="1.4" stroke-dasharray="3 2"/><text x="312.2" y="172.0" font-size="8" fill="var(--ink-faint)" text-anchor="middle">em aberto</text><text x="296.2" y="212" font-size="10" fill="var(--ink-soft)" text-anchor="middle">T3</text><rect x="368.8" y="25.6" width="28" height="170.4" rx="3" fill="#8A8A8A"/><rect x="400.8" y="178.0" width="28" height="18" rx="3" fill="none" stroke="var(--ink-faint)" stroke-width="1.4" stroke-dasharray="3 2"/><text x="414.8" y="172.0" font-size="8" fill="var(--ink-faint)" text-anchor="middle">em aberto</text><text x="398.8" y="212" font-size="10" fill="var(--ink-soft)" text-anchor="middle">T4</text></svg>
+          <div class="legend">
+            <span><i style="background:#8A8A8A"></i> Lote anterior</span>
+            <span><i style="background:#d16b2f"></i> Lote atual</span>
+          </div>
+        </article>
+      </section>
+
+      <section aria-label="Créditos recebidos e outras movimentações">
+        <article class="card" id="creditos">
+          <div class="card-head">
+            <h2>Créditos Recebidos e Outras Movimentações</h2>
+            <span class="card-note">GET /sigef/guiarecebimento/ · aportes, estornos e repasses complementares</span>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Guia de recebimento</th>
+                  <th>Conta</th>
+                  <th>Evento</th>
+                  <th>Valor</th>
+                  <th>Data</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>2026GR001</td>
+                  <td>12345-6</td>
+                  <td>Estorno de bolsa não utilizada</td>
+                  <td>R$ 18.400</td>
+                  <td>08/07/2026</td>
                 </tr>
                 <tr>
-                  <td>Organizações da sociedade civil</td>
-                  <td>7</td>
-                  <td><div class="bar-cell"><div class="bar-track"><div class="bar-fill ok" style="width:88%"></div></div><span>88%</span></div></td>
-                  <td><span class="badge warn">Atenção</span></td>
+                  <td>2026GR002</td>
+                  <td>98765-4</td>
+                  <td>Repasse complementar SEPLAN-MA</td>
+                  <td>R$ 260.000</td>
+                  <td>05/07/2026</td>
+                </tr>
+                <tr>
+                  <td>2026GR003</td>
+                  <td>55210-9</td>
+                  <td>Devolução de auxílio cancelado</td>
+                  <td>R$ 7.250</td>
+                  <td>02/07/2026</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section aria-label="Alertas de desvio institucional">
+        <article class="card" id="alertas">
+          <div class="card-head">
+            <h2>Alertas de curadoria financeira</h2>
+            <span class="card-note">gerados por regra de negócio · reconciliação Patronage x SIGEF (FR-4)</span>
+          </div>
+          <div class="alert-list">
+            <div class="alert-item risk">
+              <span class="dot" aria-hidden="true"></span>
+              <div>
+                <strong>Ausência de correspondência acima do limite de controle</strong>
+                <p>O lote D+1 registrou 213 itens sem match confiável entre edital Patronage e subação/processo SIGEF. Requer curadoria antes do consolidado executivo.</p>
+              </div>
+              <time datetime="2026-07-05">05 jul 2026</time>
+            </div>
+            <div class="alert-item warn">
+              <span class="dot" aria-hidden="true"></span>
+              <div>
+                <strong>Diferença de valor acima de R$ 150 mil no lote</strong>
+                <p>Foram identificadas divergências financeiras que totalizam R$ 183 mil entre valores liquidados no SIGEF e lançamentos correspondentes no Patronage.</p>
+              </div>
+              <time datetime="2026-07-03">03 jul 2026</time>
+            </div>
+            <div class="alert-item warn">
+              <span class="dot" aria-hidden="true"></span>
+              <div>
+                <strong>Divergência de status de pagamento em alta</strong>
+                <p>138 registros apresentam status incompatível entre SIGEF e Patronage, com concentração em ordens cronológicas do último fechamento semanal.</p>
+              </div>
+              <time datetime="2026-06-28">28 jun 2026</time>
+            </div>
+            <div class="alert-item ok">
+              <span class="dot" aria-hidden="true"></span>
+              <div>
+                <strong>Taxa de conciliação acima de 92% no lote atual</strong>
+                <p>O batimento por chave composta edital + CPF manteve a maior parte da massa financeira reconciliada dentro do limite de risco aprovado.</p>
+              </div>
+              <time datetime="2026-06-20">20 jun 2026</time>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section aria-label="Trilha de auditoria por lote D+1">
+        <article class="card" id="auditoria">
+          <div class="card-head">
+            <h2>Trilha de Auditoria por Lote D+1</h2>
+            <span class="card-note">data de carga, volume processado e status · critério de homologação FR-3/FR-4</span>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Lote</th>
+                  <th>Data de carga</th>
+                  <th>Registros processados</th>
+                  <th>Registros conciliados</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>2026-07-13-01</td>
+                  <td>13/07/2026 05:42</td>
+                  <td>4.612</td>
+                  <td>4.284</td>
+                  <td><span class="badge ok">Concluído</span></td>
+                </tr>
+                <tr>
+                  <td>2026-07-12-01</td>
+                  <td>12/07/2026 05:38</td>
+                  <td>4.550</td>
+                  <td>4.201</td>
+                  <td><span class="badge ok">Concluído</span></td>
+                </tr>
+                <tr>
+                  <td>2026-07-11-01</td>
+                  <td>11/07/2026 05:51</td>
+                  <td>4.480</td>
+                  <td>4.052</td>
+                  <td><span class="badge warn">Concluído com exceções</span></td>
+                </tr>
+                <tr>
+                  <td>2026-07-10-01</td>
+                  <td>10/07/2026 06:02</td>
+                  <td>4.510</td>
+                  <td>4.190</td>
+                  <td><span class="badge ok">Concluído</span></td>
                 </tr>
               </tbody>
             </table>
@@ -757,9 +915,10 @@ h1, h2, h3, h4 {
       </section>
 
       <footer class="footer-note">
-        Painel gerencial (2 de 3) · Fontes de referência: <code>convenios</code>, <code>convenio_execucoes</code>,
-        <code>convenio_aditivos</code>, <code>convenio_financeiro</code> (Atlas SQL). Números ilustrativos — sujeitos a
-        homologação de regra de negócio junto ao PO antes da carga real via ETL D+1.
+        Painel de conciliação (3 de 4) · Alimentado pela camada Curated e pelos lotes SIGEF (contas, ordembancaria,
+        ordemcronologica, credor, guiarecebimento), cobrindo saldo de contas, créditos recebidos e batimento por
+        chave composta edital + CPF, com trilha de auditoria D+1 por lote. Regras de divergência seguem
+        homologação funcional com financeiro institucional e controle interno.
       </footer>
     </main>
   </div>

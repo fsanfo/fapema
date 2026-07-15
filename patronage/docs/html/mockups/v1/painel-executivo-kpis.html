@@ -200,7 +200,8 @@ h1, h2, h3, h4 {
   top: 1rem;
   align-self: start;
   max-height: calc(100vh - 2rem);
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.9));
   border: 1px solid rgba(255, 255, 255, 0.5);
   box-shadow: var(--shadow);
@@ -577,7 +578,8 @@ h1, h2, h3, h4 {
         <a href="./index.html"><b>00</b>&nbsp;Visão geral</a>
         <a href="./painel-operacional-chamadas-editais.html"><b>01</b>&nbsp;Operacional</a>
         <a href="./painel-gerencial-convenios-execucao.html"><b>02</b>&nbsp;Gerencial</a>
-        <a href="./painel-executivo-kpis.html" class="active"><b>03</b>&nbsp;Executivo</a>
+        <a href="./painel-conciliacao-sigef-patronage.html"><b>03</b>&nbsp;Conciliação</a>
+        <a href="./painel-executivo-kpis.html" class="active"><b>04</b>&nbsp;Executivo</a>
       </div>
     </nav>
     <div class="side-foot">
@@ -588,7 +590,7 @@ h1, h2, h3, h4 {
 
   <div class="app-main">
     <div class="topbar-inner">
-      <div class="crumb"><span class="eyebrow" style="margin:0;">patronage</span> <span class="eyebrow" style="margin:0;">/</span> <b>Painel 03 · Executivo</b></div>
+      <div class="crumb"><span class="eyebrow" style="margin:0;">patronage</span> <span class="eyebrow" style="margin:0;">/</span> <b>Painel 04 · Executivo</b></div>
       <div class="meta">
         <span class="meta-pill draft">Status: mockup</span>
         <span class="meta-pill">Perfil: C-level</span>
@@ -599,7 +601,7 @@ h1, h2, h3, h4 {
       <section class="hero" aria-labelledby="heroTitle">
         <div class="hero-grid">
           <div>
-            <p class="eyebrow">Painel mandatório 3 de 3</p>
+            <p class="eyebrow">Painel mandatório 4 de 4</p>
             <h1 id="heroTitle">KPIs institucionais</h1>
             <p>
               Leitura de alto nível para diretoria e conselho: tendência multitemporal dos indicadores oficiais,
@@ -733,7 +735,7 @@ h1, h2, h3, h4 {
       </section>
 
       <footer class="footer-note">
-        Painel executivo (3 de 3) · Alimentado pela camada Curated (agregados de <code>editais</code>,
+        Painel executivo (4 de 4) · Alimentado pela camada Curated (agregados de <code>editais</code>,
         <code>edital_chamadas</code>, <code>convenios</code> e <code>convenio_execucoes</code>) descrita no Atlas SQL.
         Catálogo de KPIs, metas e regras de alerta seguem homologação prévia com o PO (FR-4 e FR-5) — números
         ilustrativos nesta etapa de mockup.
