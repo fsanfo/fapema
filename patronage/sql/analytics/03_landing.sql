@@ -205,6 +205,18 @@ CREATE TABLE IF NOT EXISTS `lnd_patronage_convenios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
   COMMENT='Landing de patronage.convenios';
 
+CREATE TABLE IF NOT EXISTS `lnd_patronage_convenio_instituicao` (
+    `id_origem`      INT UNSIGNED NOT NULL,
+    `convenio_id`    INT UNSIGNED NOT NULL,
+    `instituicao_id` INT UNSIGNED NOT NULL,
+    `tipo`           INT UNSIGNED NOT NULL,
+    `id_lote_carga`  BIGINT UNSIGNED NOT NULL,
+    `dt_carga`       DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id_origem`),
+    KEY `ix_lnd_conv_inst_convenio` (`convenio_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+  COMMENT='Landing de patronage.convenio_instituicao - liga convenio_financeiro ao convenio via instituicao';
+
 CREATE TABLE IF NOT EXISTS `lnd_patronage_convenio_financeiro` (
     `id_origem`                    INT UNSIGNED NOT NULL,
     `despesa_corrente_custeio`     DECIMAL(10,2) NULL,
@@ -425,6 +437,7 @@ CREATE TABLE IF NOT EXISTS `lnd_sigef_ordembancaria` (
     `id_lote_carga`          BIGINT UNSIGNED NOT NULL,
     `dt_carga`               DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id_landing`),
+    UNIQUE KEY `uq_lnd_sigef_ob_numero` (`numero_ordem_bancaria`),
     KEY `ix_lnd_sigef_ob_subacao` (`cdsubacao`),
     KEY `ix_lnd_sigef_ob_credor` (`cdcredor`),
     KEY `ix_lnd_sigef_ob_dtpagamento` (`dtpagamento`)
@@ -440,9 +453,10 @@ CREATE TABLE IF NOT EXISTS `lnd_sigef_ordemcronologica` (
     `id_lote_carga`  BIGINT UNSIGNED NOT NULL,
     `dt_carga`       DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id_landing`),
+    UNIQUE KEY `uq_lnd_sigef_oc_natural` (`cpf_cnpj`, `data_pagamento`, `valor_pago`),
     KEY `ix_lnd_sigef_oc_cpf` (`cpf_cnpj`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-  COMMENT='Landing de /sigef/ordemcronologica/ - auditoria alternativa de desembolso por beneficiario (acesso restrito, conforme mapeamento tecnico)';
+  COMMENT='Landing de /sigef/ordemcronologica/ - auditoria alternativa de desembolso por beneficiario (acesso restrito, conforme mapeamento tecnico). Chave natural composta (cpf_cnpj+data+valor) e uma aproximacao - endpoint nao expoe id proprio no mapeamento disponivel.';
 
 CREATE TABLE IF NOT EXISTS `lnd_sigef_credor` (
     `id_landing`    BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -453,7 +467,7 @@ CREATE TABLE IF NOT EXISTS `lnd_sigef_credor` (
     `id_lote_carga` BIGINT UNSIGNED NOT NULL,
     `dt_carga`      DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id_landing`),
-    KEY `ix_lnd_sigef_credor_cdcredor` (`cdcredor`),
+    UNIQUE KEY `uq_lnd_sigef_credor_cdcredor` (`cdcredor`),
     KEY `ix_lnd_sigef_credor_cpf` (`cpf_cnpj`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
   COMMENT='Landing de /sigef/credor/ - de-para cdcredor <-> cpf_cnpj';
@@ -468,6 +482,7 @@ CREATE TABLE IF NOT EXISTS `lnd_sigef_execucaofinanceiranl` (
     `id_lote_carga` BIGINT UNSIGNED NOT NULL,
     `dt_carga`      DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id_landing`),
+    UNIQUE KEY `uq_lnd_sigef_nl_numero` (`numero_nl`),
     KEY `ix_lnd_sigef_nl_subacao` (`cdsubacao`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
   COMMENT='Landing de /sigef/execucaofinanceiranl/ - verificacao de empenho/liquidacao vs pago';
