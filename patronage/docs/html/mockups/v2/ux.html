@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UX Dev Handoff | FAPEMA Patronage Analytics</title>
+<meta name="description" content="Documentacao UX V2 orientada para equipe DEV: contratos de design system, acessibilidade, responsividade, rastreabilidade e criterios de implementacao Laravel.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --color-primary: #005A9C;
+  --color-primary-dark: #003F73;
+  --color-primary-light: #3B82C4;
+  --color-secondary: #0A6FB8;
+  --color-secondary-light: #7FB8E6;
+  --color-background: #FFFFFF;
+  --color-background-alt: #F5F7FA;
+  --color-surface: #FAFAFA;
+  --color-text: #333333;
+  --color-text-light: #666666;
+  --color-text-muted: #8A8A8A;
+  --color-border: #D9E1E8;
+  --color-divider: #ECEFF3;
+  --color-success: #2E7D32;
+  --color-warning: #F9A825;
+  --color-danger: #C62828;
+  --color-info: #0288D1;
+}
+
+.doc-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.code-map {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+}
+
+.code-map th,
+.code-map td {
+  text-align: left;
+  border-bottom: 1px solid rgba(23, 34, 48, 0.12);
+  padding: 0.68rem 0.7rem;
+  vertical-align: top;
+}
+
+.code-map th {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(23, 34, 48, 0.62);
+}
+
+.inline-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid rgba(23, 34, 48, 0.18);
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 999px;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.72rem;
+  color: #172230;
+}
+
+.inline-badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.inline-badge.dev {
+  color: #8f4319;
+  border-color: rgba(209, 107, 47, 0.38);
+  background: rgba(209, 107, 47, 0.14);
+}
+
+.inline-badge.done {
+  color: #2E7D32;
+  border-color: rgba(46, 125, 50, 0.4);
+  background: rgba(227, 241, 228, 0.95);
+}
+
+.inline-badge.warn {
+  color: #9c6a10;
+  border-color: rgba(156, 106, 16, 0.35);
+  background: rgba(253, 240, 218, 0.95);
+}
+
+.inline-badge.risk {
+  color: #C62828;
+  border-color: rgba(198, 40, 40, 0.38);
+  background: rgba(249, 225, 225, 0.95);
+}
+
+.checklist {
+  margin: 0;
+  padding-left: 1.15rem;
+  display: grid;
+  gap: 0.3rem;
+  color: rgba(23, 34, 48, 0.78);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 1160px) {
+  .doc-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+<link rel="stylesheet" href="./dashboard.css">
+</head>
+<body>
+<a class="skip-link" href="#conteudo">Pular para o conteudo principal</a>
+<div class="app-shell">
+  <aside class="app-sidebar">
+    <div class="brand-mark">
+      <svg width="36" height="36" viewBox="0 0 34 34" fill="none"><rect width="34" height="34" rx="9" fill="#005A9C"/><path d="M8 24V10h6.2c3 0 5 1.8 5 4.6 0 2.8-2 4.6-5 4.6h-3v4.8H8Zm3.2-7.4h2.7c1.3 0 2.1-.7 2.1-1.8s-.8-1.8-2.1-1.8h-2.7v3.6Z" fill="#fff"/></svg>
+      <div>
+        <strong>Patronage Analytics</strong>
+        <span>Prototipos FR-6</span>
+      </div>
+    </div>
+    <nav aria-label="Navegacao entre paineis">
+      <p class="side-nav-label">Paineis mandatarios</p>
+      <div class="side-nav">
+        <a href="./index.html"><b>00</b>&nbsp;Visao geral</a>
+        <a href="./painel-operacional-chamadas-editais.html"><b>01</b>&nbsp;Operacional</a>
+        <a href="./painel-gerencial-convenios-execucao.html"><b>02</b>&nbsp;Gerencial</a>
+        <a href="./painel-conciliacao-sigef-patronage.html"><b>03</b>&nbsp;Conciliacao</a>
+        <a href="./painel-executivo-kpis.html"><b>04</b>&nbsp;Executivo</a>
+        <a href="./checklist-homologacao.html"><b>05</b>&nbsp;Checklist</a>
+        <a href="./ux.html" class="active"><b>06</b>&nbsp;UX para DEV</a>
+      </div>
+    </nav>
+    <div class="side-foot">
+      <span>Uso: referencia de implementacao frontend/backend</span>
+      <span>Status: contrato UX V2 consolidado</span>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <div class="topbar-inner">
+      <div class="crumb"><span class="eyebrow" style="margin:0;">patronage</span> <span class="eyebrow" style="margin:0;">/</span> <b>UX Dev Handoff (V2)</b></div>
+      <div class="meta">
+        <span class="meta-pill">FR-5 + FR-6</span>
+        <span class="meta-pill">Equipe DEV</span>
+        <span class="meta-pill draft">Atualizado: 2026-07-17</span>
+      </div>
+    </div>
+
+    <main id="conteudo" style="display:grid; gap:1.35rem;">
+      <section class="context-panel" aria-labelledby="titulo-ux-dev">
+        <p class="eyebrow">Contrato de implementacao</p>
+        <h1 id="titulo-ux-dev">Documentacao UX V2 para desenvolvimento em Laravel</h1>
+        <p>
+          Esta pagina traduz o documento UX consolidado da fase 1 para um formato operacional de engenharia.
+          O foco e reduzir ambiguidade entre mockup e codigo final, preservando shell, design tokens, acessibilidade,
+          responsividade, semaforizacao e rastreabilidade entre PRD, epicos e historias.
+        </p>
+        <div class="context-notes">
+          <span>Fonte: ux-design-fapema-2026-07-17.md</span>
+          <span>Mockups vigentes: v2</span>
+          <span>Target: implementacao Laravel 12</span>
+        </div>
+      </section>
+
+      <section class="doc-grid" aria-label="Resumo tecnico">
+        <article class="card">
+          <div class="card-head">
+            <h2>Escopo homologado</h2>
+            <span class="card-note">o que deve existir em codigo</span>
+          </div>
+          <ul class="checklist">
+            <li>4 paineis mandatarios da fase 1 (operacional, gerencial, conciliacao, executivo).</li>
+            <li>Checklist de homologacao com consolidacao por decisao.</li>
+            <li>Navegacao lateral unica entre todas as telas.</li>
+            <li>Breadcrumb contextual por tela.</li>
+            <li>Hero com metadados e hierarquia de leitura executiva.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <h2>Prioridades DEV</h2>
+            <span class="card-note">ordem sugerida de entrega</span>
+          </div>
+          <div style="display:grid; gap:0.45rem;">
+            <span class="inline-badge dev">1. Shell compartilhado + rotas</span>
+            <span class="inline-badge dev">2. Componentes base (card, tabela, chip, badge)</span>
+            <span class="inline-badge dev">3. Regras de status e semaforizacao</span>
+            <span class="inline-badge dev">4. A11y teclado/foco/skip-link</span>
+            <span class="inline-badge dev">5. Responsividade e densidade de tabela</span>
+          </div>
+        </article>
+      </section>
+
+      <section aria-labelledby="mapa-rotas">
+        <article class="card">
+          <div class="card-head">
+            <h2 id="mapa-rotas">Mapa de telas para implementacao</h2>
+            <span class="card-note">mockup -> pagina alvo -> intencao funcional</span>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Mockup V2</th>
+                  <th>Objetivo de negocio</th>
+                  <th>Blocos obrigatorios</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="badge info">00</span></td>
+                  <td>index.html</td>
+                  <td>Ponto de entrada de homologacao e navegacao</td>
+                  <td>Context panel + launch cards + links de todos os paineis</td>
+                </tr>
+                <tr>
+                  <td><span class="badge info">01</span></td>
+                  <td>painel-operacional-chamadas-editais.html</td>
+                  <td>Leitura operacional de volume, status, ciclo e gargalos</td>
+                  <td>Filtros, KPIs, semaforos por area, tabela de rastreabilidade</td>
+                </tr>
+                <tr>
+                  <td><span class="badge info">02</span></td>
+                  <td>painel-gerencial-convenios-execucao.html</td>
+                  <td>Leitura gerencial de carteira, vigencia e prazos</td>
+                  <td>Portfolio por tipo, aderencia, desvios e contexto analitico</td>
+                </tr>
+                <tr>
+                  <td><span class="badge info">03</span></td>
+                  <td>painel-conciliacao-sigef-patronage.html</td>
+                  <td>Triagem de divergencias SIGEF x Patronage</td>
+                  <td>Lote D+1, estados parcial/falho, divergencias por tipo</td>
+                </tr>
+                <tr>
+                  <td><span class="badge info">04</span></td>
+                  <td>painel-executivo-kpis.html</td>
+                  <td>Walkthrough C-Level em ate 5 minutos</td>
+                  <td>KPI consolidado, tendencia, comparativo e alertas</td>
+                </tr>
+                <tr>
+                  <td><span class="badge info">05</span></td>
+                  <td>checklist-homologacao.html</td>
+                  <td>Registro formal de decisao por criterio</td>
+                  <td>Resumo agregado, decisoes e observacoes por item</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section class="doc-grid" aria-label="Contratos compartilhados">
+        <article class="card">
+          <div class="card-head">
+            <h2>Contrato do design system</h2>
+            <span class="card-note">nao pode regredir entre telas</span>
+          </div>
+          <table class="code-map" aria-label="Tokens e componentes obrigatorios">
+            <thead>
+              <tr>
+                <th>Grupo</th>
+                <th>Contrato</th>
+                <th>Risco se quebrar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Tokens</td>
+                <td>brand-primary, brand-secondary, paper/panel, estados semanticos</td>
+                <td><span class="inline-badge risk">Perda de consistencia visual</span></td>
+              </tr>
+              <tr>
+                <td>Tipografia</td>
+                <td>League Spartan para titulos, Poppins para corpo e metadados</td>
+                <td><span class="inline-badge warn">Queda de hierarquia editorial</span></td>
+              </tr>
+              <tr>
+                <td>Shell</td>
+                <td>Sidebar fixa + coluna principal + breadcrumb + meta-pill</td>
+                <td><span class="inline-badge risk">Quebra de navegacao entre paineis</span></td>
+              </tr>
+              <tr>
+                <td>Componentes</td>
+                <td>Cards, tabelas, badges, chips e estados active/hover/focus</td>
+                <td><span class="inline-badge warn">Inconsistencia de interacao</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <h2>Acessibilidade e responsividade</h2>
+            <span class="card-note">criterio de homologacao obrigatorio</span>
+          </div>
+          <ul class="checklist">
+            <li><span class="inline-badge done">A11y</span> Manter lang pt-BR, skip-link e foco visivel de alto contraste.</li>
+            <li><span class="inline-badge done">Teclado</span> Toda navegacao e decisoes precisam ser operaveis sem mouse.</li>
+            <li><span class="inline-badge done">Semantica</span> Estados nao podem depender apenas de cor.</li>
+            <li><span class="inline-badge done">Mobile</span> Grids devem colapsar sem perda de leitura de KPI e filtros.</li>
+            <li><span class="inline-badge done">Tabela</span> Permitir rolagem horizontal segura em densidade alta.</li>
+          </ul>
+        </article>
+      </section>
+
+      <section aria-labelledby="rastreabilidade-dev">
+        <article class="card">
+          <div class="card-head">
+            <h2 id="rastreabilidade-dev">Rastreabilidade para desenvolvimento</h2>
+            <span class="card-note">PRD -> Epicos -> Stories -> Entrega tecnica</span>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Origem</th>
+                  <th>Item</th>
+                  <th>Decisao de implementacao</th>
+                  <th>Validador</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>PRD</td>
+                  <td>FR-5</td>
+                  <td>Implementar os 4 paineis mandatarios mantendo intencao de cada leitura</td>
+                  <td>PO + SH</td>
+                </tr>
+                <tr>
+                  <td>PRD</td>
+                  <td>FR-6</td>
+                  <td>Manter fluxo de homologacao com mockups navegaveis e checklist formal</td>
+                  <td>PO</td>
+                </tr>
+                <tr>
+                  <td>Epico / Story</td>
+                  <td>2.1</td>
+                  <td>Garantir shell de navegacao unico e tokens compartilhados</td>
+                  <td>Tech lead frontend</td>
+                </tr>
+                <tr>
+                  <td>Epico / Story</td>
+                  <td>2.2</td>
+                  <td>Garantir baseline de acessibilidade e responsividade</td>
+                  <td>QA + frontend</td>
+                </tr>
+                <tr>
+                  <td>Epico / Story</td>
+                  <td>2.3 a 2.6</td>
+                  <td>Implementar contratos funcionais de cada painel</td>
+                  <td>PO + usuarios-chave</td>
+                </tr>
+                <tr>
+                  <td>Epico / Story</td>
+                  <td>2.7</td>
+                  <td>Implementar checklist com consolidacao automatica por decisao</td>
+                  <td>PO + SM</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section aria-label="Criterios de pronto para DEV">
+        <article class="card">
+          <div class="card-head">
+            <h2>Definition of done (UX para DEV)</h2>
+            <span class="card-note">sinal de pronto para avancar para homologacao</span>
+          </div>
+          <div class="alert-list">
+            <div class="alert-item ok">
+              <span class="dot" aria-hidden="true"></span>
+              <div>
+                <strong>Navegacao e shell consistentes</strong>
+                <p>Todas as telas compartilham sidebar, breadcrumb, estados active/hover/focus e hierarquia de layout.</p>
+              </div>
+              <time datetime="P0D">Obrigatorio</time>
+            </div>
+            <div class="alert-item ok">
+              <span class="dot" aria-hidden="true"></span>
+              <div>
+                <strong>Paridade visual com V2</strong>
+                <p>Tokens, tipografia, semaforizacao e contexto visual preservados sem simplificacoes nao aprovadas.</p>
+              </div>
+              <time datetime="P0D">Obrigatorio</time>
+            </div>
+            <div class="alert-item warn">
+              <span class="dot" aria-hidden="true"></span>
+              <div>
+                <strong>Fallback de dados e estados vazios</strong>
+                <p>Implementar estados parcial/falho/pendente em conciliacao e homologacao para operacao segura.</p>
+              </div>
+              <time datetime="P0D">Alta prioridade</time>
+            </div>
+            <div class="alert-item risk">
+              <span class="dot" aria-hidden="true"></span>
+              <div>
+                <strong>Rastreabilidade insuficiente</strong>
+                <p>Bloqueia aceite se nao houver conexao clara entre indicador, regra e origem de dados.</p>
+              </div>
+              <time datetime="P0D">Bloqueante</time>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <footer class="footer-note">
+        Documento tecnico de UX para DEV derivado do consolidado de 2026-07-17.
+        Referencias de mockup: <code>index.html</code>, <code>painel-operacional-chamadas-editais.html</code>,
+        <code>painel-gerencial-convenios-execucao.html</code>, <code>painel-conciliacao-sigef-patronage.html</code>,
+        <code>painel-executivo-kpis.html</code> e <code>checklist-homologacao.html</code>.
+      </footer>
+    </main>
+  </div>
+</div>
+</body>
+</html>
