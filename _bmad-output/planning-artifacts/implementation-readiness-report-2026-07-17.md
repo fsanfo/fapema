@@ -265,13 +265,17 @@ NEEDS WORK
 
 ### Recommended Next Steps
 
-1. Preparar o checkpoint de homologacao formal dos quatro paineis com aprovadores, evidencias e criterio de aceite final.
+1. Executar o checkpoint de homologacao formal preparado em `_bmad-output/planning-artifacts/checkpoint-homologacao-paineis-fase-1-2026-07-17.md`.
 2. Registrar a rodada de aceite no checklist de homologacao e vincular pendencias a responsavel e prazo, se houver ressalvas.
 3. Se a homologacao ocorrer sem bloqueios materiais, avancar para sprint planning e preparacao da implementacao.
 
 ### Final Note
 
 Esta assessment foi atualizada apos o fechamento dos tres gaps de planejamento mais relevantes: contrato textual de UX, decomposicao executavel dos epicos e baseline arquitetural da camada web em Laravel. A cobertura funcional do PRD pelos epicos segue completa. O unico ponto que ainda impede classificar o pacote como plenamente pronto e o gate operacional de homologacao final dos quatro paineis.
+
+### Homologation Checkpoint Package
+
+O pacote de homologacao formal foi preparado em `_bmad-output/planning-artifacts/checkpoint-homologacao-paineis-fase-1-2026-07-17.md`, contendo aprovadores, criterios por painel, evidencias esperadas, regra de decisao global, encaminhamentos e criterio de fechamento da rodada.
 
 **Assessment Date:** 2026-07-17
 **Assessor:** GitHub Copilot (GPT-5.4)
