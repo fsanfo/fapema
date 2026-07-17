@@ -24,6 +24,29 @@ Construir e testar de fato o ETL revelou 2 gaps reais no desenho da Fase 1, corr
 
 ## 3. Decisoes de design que merecem sua atencao
 
+### 3.0. Regra de governanca para continuidade (inferir x decidir)
+
+Para acelerar execucao, adotamos a seguinte diretriz:
+
+- Solucoes tecnicas de baixo risco e alinhadas a boas praticas podem ser inferidas e implementadas como baseline.
+- Itens de politica institucional, regra financeira oficial ou classificacao funcional final devem ficar explicitamente marcados para decisao humana.
+
+Baseline inferido por boas praticas (aplicar por padrao):
+- mascaramento nas views de consumo geral e segregacao de acesso por perfil
+- parametrizacao de regras de status e rateio em tabelas de configuracao versionadas
+- resiliencia de integracao SIGEF (retry com backoff, checkpoint incremental, validacao minima de contrato)
+- monitoramento operacional com alertas de lote, DQ bloqueante e pendencia de curadoria
+
+Decisoes humanas obrigatorias (nao inferir automaticamente):
+- dono da decisao LGPD e nivel de mascaramento por perfil
+- regra oficial de negocio para codigos de situacao
+- regra oficial de rateio financeiro de convenios
+- responsavel e SLA de curadoria de pontes
+
+Atualizacao 2026-07-17 (protocolo SIGEF):
+- item de acesso/credencial da API SIGEF encerrado (FAPEMA com user/pass recebidos)
+- pendencias restantes de SIGEF passam a ser tecnicas: homologar fluxo real de auth/paginacao/filtros com teste de ponta a ponta
+
 ### 3.1. `fato_reconciliacao_sigef_patronage` mantem historico por lote (nao e "estado atual")
 A chave unica da tabela e `(sk_edital, sk_proponente, ano_mes_competencia, id_lote_carga)` — ou seja, **cada execucao diaria gera uma nova linha** para a mesma competencia, em vez de sobrescrever a anterior. Isso foi mantido deliberadamente (nao e um bug) porque:
 - Atende ao requisito de trilha de auditoria por lote (FR-3/FR-4 do PRD): da para responder "o que a reconciliacao dizia no lote de tal dia".
@@ -79,7 +102,7 @@ A automatizacao real desse agendamento (MySQL Events e/ou cron) entra na Fase 3,
 SIGEF_BASE_URL, SIGEF_AUTH_URL, SIGEF_CLIENT_ID, SIGEF_CLIENT_SECRET
 MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE
 ```
-**Pendencia explicita:** o mecanismo real de autenticacao/paginacao da API SIGEF nao esta detalhado nos artefatos de entrada (`sigef_api.json` nao documenta o endpoint de auth). O client assume OAuth2 client-credentials e paginacao `page`/`per_page` como ponto de partida — precisa de confirmacao/ajuste da equipe responsavel pela integracao antes de ir para producao.
+**Atualizacao operacional:** com protocolo aprovado e credenciais (user/pass) recebidas pela FAPEMA, a pendencia de acesso foi encerrada. Proximo passo e homologar tecnicamente auth/paginacao/filtros no ambiente alvo e ajustar o client conforme o comportamento real da API.
 
 ## 5. Regras de qualidade de dados implementadas (13 regras ativas)
 
