@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel de Conciliação · SIGEF x Patronage | FAPEMA Patronage Analytics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ---- assets/style_colors.css ---- */
+/**
+ * FAPEMA - Color Palette
+ * Baseada na identidade visual observada no portal.
+ */
+
+:root {
+
+  /* Brand */
+  --color-primary: #005A9C;
+  --color-primary-dark: #003F73;
+  --color-primary-light: #3B82C4;
+
+  /* Secondary */
+  --color-secondary: #0A6FB8;
+  --color-secondary-light: #7FB8E6;
+
+  /* Backgrounds */
+  --color-background: #FFFFFF;
+  --color-background-alt: #F5F7FA;
+  --color-surface: #FAFAFA;
+
+  /* Text */
+  --color-text: #333333;
+  --color-text-light: #666666;
+  --color-text-muted: #8A8A8A;
+
+  /* Borders */
+  --color-border: #D9E1E8;
+  --color-divider: #ECEFF3;
+
+  /* States */
+  --color-success: #2E7D32;
+  --color-warning: #F9A825;
+  --color-danger: #C62828;
+  --color-info: #0288D1;
+
+  /* Links */
+  --color-link: var(--color-primary);
+  --color-link-hover: var(--color-primary-dark);
+
+  /* Buttons */
+  --button-primary-bg: var(--color-primary);
+  --button-primary-hover: var(--color-primary-dark);
+  --button-primary-text: #FFFFFF;
+
+  --button-secondary-bg: #FFFFFF;
+  --button-secondary-border: var(--color-primary);
+  --button-secondary-text: var(--color-primary);
+
+}
+
+/* ---- assets/dashboard.css ---- */
+/* ==========================================================================
+   FAPEMA Patronage Analytics — Design system dos protótipos (FR-6)
+   Mesma linguagem editorial premium do Atlas SQL / brief / PRD: papel quente,
+   painéis de vidro, acento terracota, League Spartan em caixa alta para
+   títulos e Poppins para o restante. Cores de marca herdadas de
+   assets/style_colors.css.
+   ========================================================================== */
+
+:root {
+  /* ---- Superfície editorial (papel quente + vidro) ---- */
+  --paper: #f4efe6;
+  --paper-strong: #ebe4d5;
+  --ink: #172230;
+  --ink-soft: rgba(23, 34, 48, 0.72);
+  --ink-faint: rgba(23, 34, 48, 0.5);
+  --line: rgba(23, 34, 48, 0.12);
+  --line-strong: rgba(23, 34, 48, 0.26);
+  --panel: rgba(255, 255, 255, 0.72);
+  --panel-strong: rgba(255, 255, 255, 0.93);
+  --shadow: 0 24px 60px rgba(24, 28, 38, 0.14);
+  --shadow-sm: 0 10px 24px rgba(24, 28, 38, 0.08);
+  --radius-xl: 32px;
+  --radius-lg: 22px;
+  --radius-md: 16px;
+  --radius-sm: 10px;
+
+  /* ---- Acento de marca (terracota) — reservado para interação/assinatura ---- */
+  --accent: #d16b2f;
+  --accent-soft: rgba(209, 107, 47, 0.16);
+  --accent-deep: #8f4319;
+
+  /* ---- Paleta institucional FAPEMA (assets/style_colors.css) ---- */
+  --brand-primary: var(--color-primary, #005A9C);
+  --brand-primary-dark: var(--color-primary-dark, #003F73);
+  --brand-primary-light: var(--color-primary-light, #3B82C4);
+  --brand-secondary: var(--color-secondary, #0A6FB8);
+  --brand-secondary-light: var(--color-secondary-light, #7FB8E6);
+  --ok-600: var(--color-success, #2E7D32);
+  --ok-100: #E3F1E4;
+  --warn-600: var(--color-warning, #F9A825);
+  --warn-deep: #9c6a10;
+  --warn-100: #FDF0DA;
+  --risk-600: var(--color-danger, #C62828);
+  --risk-100: #F9E1E1;
+  --info-600: var(--color-info, #0288D1);
+  --info-100: #DCEEFB;
+
+  --sidebar-width: 300px;
+  --font-display: "League Spartan", "Segoe UI", sans-serif;
+  --font-body: "Poppins", "Segoe UI", sans-serif;
+  --step-1: clamp(1.05rem, 1rem + 0.3vw, 1.2rem);
+  --step-2: clamp(1.3rem, 1.16rem + 0.7vw, 1.65rem);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+html, body { margin: 0; padding: 0; min-height: 100%; }
+
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at top left, rgba(209, 107, 47, 0.16), transparent 28%),
+    radial-gradient(circle at 85% 12%, rgba(0, 90, 156, 0.14), transparent 24%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 42%),
+    var(--paper);
+  min-height: 100vh;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(23, 34, 48, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(23, 34, 48, 0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(circle at center, black 45%, transparent 100%);
+  opacity: 0.5;
+}
+
+a { color: var(--brand-secondary); }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.skip-link {
+  position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden;
+}
+.skip-link:focus {
+  left: 0.9rem; top: 0.9rem; width: auto; height: auto; z-index: 100;
+  background: #fff; border: 2px solid var(--accent); border-radius: 8px;
+  padding: 0.5rem 0.75rem; font-weight: 600;
+}
+
+h1, h2, h3, h4 {
+  margin: 0;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  line-height: 0.98;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+}
+
+.eyebrow, .kicker, .metric-label, .card-note, .crumb, .footer-note {
+  font-family: var(--font-body);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  color: var(--ink-faint);
+}
+
+/* ---------- Shell ---------- */
+
+.app-shell {
+  display: grid;
+  grid-template-columns: minmax(260px, var(--sidebar-width)) 1fr;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  padding: clamp(1rem, 2vw, 1.5rem);
+  position: relative;
+  z-index: 1;
+}
+
+.app-sidebar, .app-main > * { position: relative; z-index: 1; }
+
+.app-sidebar {
+  position: sticky;
+  top: 1rem;
+  align-self: start;
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.9));
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: var(--shadow);
+  border-radius: var(--radius-xl);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+  isolation: isolate;
+}
+
+.app-sidebar::after {
+  content: "";
+  position: absolute;
+  right: -80px;
+  top: -60px;
+  width: 180px;
+  height: 180px;
+  background: conic-gradient(from 220deg, rgba(209, 107, 47, 0.16), rgba(0, 90, 156, 0.03), rgba(209, 107, 47, 0.22));
+  border-radius: 50%;
+  filter: blur(14px);
+  z-index: -1;
+}
+
+.brand-mark { display: flex; align-items: center; gap: 0.7rem; }
+.brand-mark svg { flex-shrink: 0; border-radius: 10px; box-shadow: var(--shadow-sm); }
+.brand-mark strong {
+  display: block; font-family: var(--font-display); text-transform: uppercase;
+  font-size: 1.05rem; line-height: 1; color: var(--ink);
+}
+.brand-mark span {
+  display: block; font-family: var(--font-body); font-size: 0.66rem;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); margin-top: 0.2rem;
+}
+
+.side-nav-label {
+  font-family: var(--font-body); font-size: 0.66rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--ink-faint); margin: 0 0 0.6rem;
+}
+
+.side-nav { display: grid; gap: 0.55rem; }
+
+.side-nav a {
+  display: flex; align-items: baseline; gap: 0.55rem;
+  color: var(--ink-soft); text-decoration: none; font-size: 0.86rem; font-weight: 500;
+  padding: 0.7rem 0.8rem; border-radius: var(--radius-sm);
+  border: 1px solid rgba(23, 34, 48, 0.08); background: rgba(255, 255, 255, 0.72);
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background 180ms ease, color 180ms ease;
+}
+.side-nav a b { font-family: var(--font-display); font-weight: 600; font-size: 0.72rem; color: var(--ink-faint); }
+.side-nav a:hover {
+  transform: translateY(-1px);
+  border-color: rgba(209, 107, 47, 0.28);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 245, 238, 0.96));
+  box-shadow: var(--shadow-sm);
+}
+.side-nav a.active {
+  background: var(--accent-soft);
+  border-color: rgba(209, 107, 47, 0.35);
+  color: var(--accent-deep);
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+}
+.side-nav a.active b { color: var(--accent-deep); }
+
+.side-foot {
+  margin-top: auto; font-size: 0.74rem; color: var(--ink-faint);
+  border-top: 1px solid var(--line); padding-top: 0.9rem; display: grid; gap: 0.35rem; line-height: 1.5;
+}
+.side-foot a { color: var(--brand-secondary); }
+
+/* ---------- Main column ---------- */
+
+.app-main { display: grid; gap: clamp(1rem, 2vw, 1.5rem); align-content: start; }
+
+.crumb {
+  display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;
+}
+.crumb b { color: var(--ink); font-weight: 600; text-transform: none; letter-spacing: 0; font-family: var(--font-body); font-size: 0.78rem; }
+
+.meta { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.meta-pill {
+  font-family: var(--font-body); font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase;
+  border-radius: 999px; border: 1px solid var(--line-strong); background: rgba(255, 255, 255, 0.75);
+  color: var(--ink-soft); padding: 0.35rem 0.65rem;
+}
+.meta-pill.draft { border-color: rgba(209, 107, 47, 0.4); color: var(--accent-deep); background: var(--accent-soft); }
+
+.topbar-inner {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(120deg, rgba(10, 111, 184, 0.92), rgba(0, 63, 115, 0.98)), var(--brand-primary-dark);
+  color: #fff;
+  padding: clamp(1.4rem, 2.4vw, 2.2rem);
+  box-shadow: var(--shadow);
+  isolation: isolate;
+}
+.hero::before, .hero::after {
+  content: ""; position: absolute; inset: auto; border-radius: 999px; opacity: 0.55; z-index: -1;
+}
+.hero::before {
+  width: 280px; height: 280px; right: -70px; top: -110px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.4), transparent 66%);
+}
+.hero::after {
+  width: 420px; height: 420px; right: 18%; bottom: -300px;
+  background: radial-gradient(circle, rgba(209, 107, 47, 0.32), transparent 68%);
+}
+.hero-grid {
+  display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.95fr);
+  gap: 1.25rem; align-items: end;
+}
+.hero .eyebrow { color: rgba(255, 255, 255, 0.7); }
+.hero h1 {
+  font-size: clamp(2.1rem, 3.6vw, 3.4rem);
+  max-width: 16ch;
+  margin-top: 0.2rem;
+  color: #fff;
+}
+.hero p {
+  max-width: 62ch; color: rgba(255, 255, 255, 0.86); margin: 0.85rem 0 0;
+  line-height: 1.75; font-size: 0.96rem; text-transform: none;
+}
+.mockup-flag {
+  display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 1rem;
+  font-family: var(--font-body); font-weight: 600; font-size: 0.68rem; text-transform: uppercase;
+  letter-spacing: 0.08em; color: #fff; background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.32); padding: 0.35rem 0.7rem; border-radius: 999px;
+}
+
+.stats-ribbon { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.85rem; align-self: stretch; }
+.metric-card {
+  background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 20px; padding: 1rem; min-height: 118px; display: flex; flex-direction: column;
+  justify-content: space-between; min-width: 0; overflow: hidden;
+}
+.metric-card .metric-label { color: rgba(255, 255, 255, 0.8); }
+.metric-value {
+  font-family: var(--font-display); text-transform: none; font-size: clamp(1.5rem, 2vw, 2rem);
+  line-height: 1; margin: 0.25rem 0 0; color: #fff;
+}
+.metric-delta {
+  font-size: 0.76rem; font-weight: 600; color: rgba(255, 255, 255, 0.9);
+  display: inline-flex; align-items: center; gap: 0.25rem; margin-top: 0.3rem;
+}
+.metric-delta.up::before { content: "▲ "; }
+.metric-delta.down::before { content: "▼ "; }
+
+/* ---------- Jump nav ---------- */
+
+.jump-nav { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+.jump-link {
+  color: var(--accent-deep); text-decoration: none; border: 1px solid rgba(209, 107, 47, 0.22);
+  padding: 0.5rem 0.75rem; border-radius: 999px; background: var(--accent-soft);
+  font-size: 0.8rem; font-weight: 500; transition: transform 160ms ease, box-shadow 160ms ease;
+}
+.jump-link:hover { transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+
+/* ---------- Filters ---------- */
+
+.filter-bar {
+  display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center;
+  background: var(--panel-strong); border: 1px solid rgba(23, 34, 48, 0.08);
+  border-radius: var(--radius-lg); padding: 1rem 1.1rem; box-shadow: var(--shadow-sm);
+}
+.filter-group { display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap; }
+.filter-group .fg-label {
+  font-family: var(--font-body); font-weight: 600; font-size: 0.66rem; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--ink-faint); margin-right: 0.2rem;
+}
+.chip {
+  font: inherit; font-size: 0.82rem; border: 1px solid rgba(23, 34, 48, 0.09);
+  background: rgba(255, 255, 255, 0.75); color: var(--ink-soft); padding: 0.5rem 0.85rem;
+  border-radius: 999px; cursor: pointer;
+  transition: transform 180ms ease, background 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+.chip:hover { transform: translateY(-1px); border-color: rgba(209, 107, 47, 0.28); }
+.chip.active { background: var(--accent-soft); border-color: rgba(209, 107, 47, 0.32); color: var(--accent-deep); font-weight: 600; }
+.filter-sep { width: 1px; align-self: stretch; background: var(--line); margin: 0 0.2rem; }
+.filter-note { margin-left: auto; font-size: 0.76rem; color: var(--ink-faint); font-style: italic; text-transform: none; letter-spacing: 0; }
+
+/* ---------- Cards / chart grid ---------- */
+
+.chart-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 1rem; }
+.chart-grid.thirds { grid-template-columns: 1fr 1fr; }
+
+.card {
+  background: var(--panel-strong);
+  border: 1px solid rgba(23, 34, 48, 0.08);
+  border-radius: var(--radius-xl);
+  padding: 1.25rem 1.35rem;
+  box-shadow: var(--shadow);
+  scroll-margin-top: 1.2rem;
+}
+.card-head { display: flex; justify-content: space-between; align-items: baseline; gap: 0.6rem; margin-bottom: 0.9rem; flex-wrap: wrap; }
+.card-head h2, .card-head h3 { color: var(--ink); font-size: var(--step-1); }
+.card-note { text-transform: none; letter-spacing: 0; font-size: 0.78rem; }
+
+.legend { display: flex; gap: 0.9rem; flex-wrap: wrap; font-size: 0.78rem; color: var(--ink-soft); margin-top: 0.8rem; }
+.legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
+.legend i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+
+.chart-svg { width: 100%; height: auto; display: block; }
+.chart-svg text { font-family: "Poppins", sans-serif; }
+
+/* ---------- Tables ---------- */
+
+.table-wrap {
+  overflow: auto; border-radius: var(--radius-lg); border: 1px solid rgba(23, 34, 48, 0.08);
+  background: rgba(255, 255, 255, 0.86);
+}
+.data-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; min-width: 480px; }
+.data-table thead {
+  position: sticky; top: 0;
+  background: linear-gradient(180deg, rgba(0, 90, 156, 0.94), rgba(0, 63, 115, 0.97));
+  color: #fff; z-index: 1;
+}
+.data-table th {
+  text-align: left; font-family: var(--font-body); font-weight: 600; font-size: 0.68rem;
+  letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255, 255, 255, 0.92);
+  padding: 0.8rem 0.9rem;
+}
+.data-table td { padding: 0.75rem 0.9rem; border-bottom: 1px solid var(--line); color: var(--ink); vertical-align: middle; }
+.data-table tbody tr:nth-child(even) { background: rgba(23, 34, 48, 0.025); }
+.data-table tbody tr:hover { background: var(--accent-soft); }
+
+.badge {
+  display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.72rem; font-weight: 600;
+  padding: 0.22rem 0.6rem; border-radius: 999px;
+}
+.badge.ok { background: var(--ok-100); color: var(--ok-600); }
+.badge.warn { background: var(--warn-100); color: var(--warn-deep); }
+.badge.risk { background: var(--risk-100); color: var(--risk-600); }
+.badge.info { background: var(--info-100); color: var(--brand-secondary); }
+.badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+.bar-cell { display: flex; align-items: center; gap: 0.5rem; }
+.bar-track { flex: 1; height: 6px; border-radius: 999px; background: rgba(23, 34, 48, 0.08); overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 999px; background: var(--brand-secondary); }
+.bar-fill.risk { background: var(--risk-600); }
+.bar-fill.warn { background: var(--warn-600); }
+.bar-fill.ok { background: var(--ok-600); }
+
+/* ---------- Alerts ---------- */
+
+.alert-list { display: grid; gap: 0.65rem; }
+.alert-item {
+  display: grid; grid-template-columns: auto 1fr auto; gap: 0.8rem; align-items: start;
+  padding: 0.85rem 1rem; border-radius: var(--radius-md); border: 1px solid rgba(23, 34, 48, 0.08);
+  background: rgba(255, 255, 255, 0.85);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+.alert-item:hover { transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+.alert-item .dot { width: 10px; height: 10px; border-radius: 50%; margin-top: 0.4rem; }
+.alert-item.risk .dot { background: var(--risk-600); }
+.alert-item.warn .dot { background: var(--warn-600); }
+.alert-item.ok .dot { background: var(--ok-600); }
+.alert-item strong { font-family: var(--font-body); display: block; color: var(--ink); font-size: 0.9rem; font-weight: 600; text-transform: none; }
+.alert-item p { margin: 0.2rem 0 0; color: var(--ink-soft); font-size: 0.83rem; }
+.alert-item time { font-family: var(--font-body); font-size: 0.68rem; color: var(--ink-faint); white-space: nowrap; text-transform: uppercase; letter-spacing: 0.04em; }
+
+/* ---------- KPI (fallback, panels without hero-embedded stats) ---------- */
+
+.kpi-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.9rem; }
+.kpi-card {
+  background: var(--panel-strong); border: 1px solid rgba(23, 34, 48, 0.08); border-radius: var(--radius-lg);
+  padding: 1rem 1.1rem; box-shadow: var(--shadow-sm); display: grid; gap: 0.35rem;
+}
+.kpi-card .kpi-label { font-size: 0.68rem; }
+.kpi-card strong { font-family: var(--font-display); text-transform: none; font-size: 1.7rem; color: var(--ink); line-height: 1; }
+.kpi-delta { font-size: 0.76rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.25rem; width: fit-content; padding: 0.12rem 0.5rem; border-radius: 999px; }
+.kpi-delta.up { color: var(--ok-600); background: var(--ok-100); }
+.kpi-delta.down { color: var(--risk-600); background: var(--risk-100); }
+.kpi-delta.flat { color: var(--ink-soft); background: rgba(23, 34, 48, 0.06); }
+
+/* ---------- Launch grid (index) ---------- */
+
+.launch-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.launch-card {
+  background: var(--panel-strong); border: 1px solid rgba(23, 34, 48, 0.08); border-radius: var(--radius-xl);
+  box-shadow: var(--shadow); padding: 1.4rem 1.4rem 1.15rem; display: grid; gap: 0.7rem;
+  text-decoration: none; color: inherit; position: relative; overflow: hidden;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+.launch-card::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 5px; background: var(--accent-line, var(--brand-secondary)); }
+.launch-card:hover { transform: translateY(-3px); box-shadow: 0 30px 70px rgba(24, 28, 38, 0.18); }
+.launch-card .idx { font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); }
+.launch-card h2 { font-size: 1.3rem; color: var(--ink); }
+.launch-card p { margin: 0; color: var(--ink-soft); font-size: 0.9rem; text-transform: none; }
+.launch-card ul { margin: 0; padding-left: 1.1rem; color: var(--ink-soft); font-size: 0.84rem; display: grid; gap: 0.2rem; }
+.launch-card .cta { margin-top: 0.3rem; font-family: var(--font-body); font-weight: 600; font-size: 0.8rem; color: var(--accent-deep); display: inline-flex; align-items: center; gap: 0.35rem; }
+.launch-card:nth-child(1) { --accent-line: var(--brand-secondary); }
+.launch-card:nth-child(2) { --accent-line: var(--brand-primary); }
+.launch-card:nth-child(3) { --accent-line: var(--brand-primary-dark); }
+
+.context-panel {
+  position: relative; overflow: hidden; isolation: isolate;
+  background: linear-gradient(120deg, rgba(10, 111, 184, 0.92), rgba(0, 63, 115, 0.98)), var(--brand-primary-dark);
+  color: #fff; border-radius: var(--radius-xl); padding: 1.6rem 1.8rem; box-shadow: var(--shadow);
+  display: grid; gap: 0.8rem;
+}
+.context-panel::before {
+  content: ""; position: absolute; width: 300px; height: 300px; right: -80px; top: -120px;
+  border-radius: 50%; background: radial-gradient(circle, rgba(255, 255, 255, 0.38), transparent 66%); z-index: -1;
+}
+.context-panel::after {
+  content: ""; position: absolute; width: 420px; height: 420px; right: 15%; bottom: -300px;
+  border-radius: 50%; background: radial-gradient(circle, rgba(209, 107, 47, 0.32), transparent 68%); z-index: -1;
+}
+.context-panel .eyebrow { color: rgba(255, 255, 255, 0.7); }
+.context-panel h1 { color: #fff; font-size: clamp(1.9rem, 3.4vw, 2.9rem); max-width: 30ch; line-height: 1.05; }
+.context-panel p { margin: 0; max-width: 62ch; color: rgba(255, 255, 255, 0.88); text-transform: none; font-size: 0.96rem; line-height: 1.7; }
+.context-notes { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.2rem; }
+.context-notes span {
+  font-family: var(--font-body); font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, 0.32); background: rgba(255, 255, 255, 0.1);
+  padding: 0.35rem 0.65rem; border-radius: 999px; color: #fff;
+}
+
+/* ---------- Footer / empty ---------- */
+
+.footer-note {
+  text-transform: none; letter-spacing: 0; font-size: 0.8rem; color: var(--ink-faint);
+  padding: 0.5rem 0.1rem 0; line-height: 1.6;
+}
+.footer-note code {
+  font-family: "Consolas", "Courier New", monospace; font-size: 0.85em; padding: 0.1rem 0.35rem;
+  border-radius: 6px; background: rgba(23, 34, 48, 0.08); color: var(--accent-deep);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 1160px) {
+  .app-shell { grid-template-columns: 1fr; }
+  .app-sidebar { position: relative; top: 0; max-height: none; }
+  .kpi-strip, .stats-ribbon, .hero-grid { grid-template-columns: 1fr; }
+  .chart-grid, .chart-grid.thirds { grid-template-columns: 1fr; }
+  .launch-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 720px) {
+  .app-shell { padding: 0.75rem; }
+  .app-sidebar, .hero, .card, .context-panel, .launch-card { border-radius: 24px; }
+  .kpi-strip { grid-template-columns: 1fr 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo principal</a>
+<div class="app-shell">
+  <aside class="app-sidebar">
+    <div class="brand-mark">
+      <svg width="36" height="36" viewBox="0 0 34 34" fill="none"><rect width="34" height="34" rx="9" fill="#003F73"/><path d="M8 24V10h6.2c3 0 5 1.8 5 4.6 0 2.8-2 4.6-5 4.6h-3v4.8H8Zm3.2-7.4h2.7c1.3 0 2.1-.7 2.1-1.8s-.8-1.8-2.1-1.8h-2.7v3.6Z" fill="#fff"/></svg>
+      <div>
+        <strong>Patronage Analytics</strong>
+        <span>Protótipos FR-6</span>
+      </div>
+    </div>
+    <nav aria-label="Navegação entre painéis">
+      <p class="side-nav-label">Paineis mandatórios</p>
+      <div class="side-nav">
+        <a href="./index.html"><b>00</b>&nbsp;Visão geral</a>
+        <a href="./painel-operacional-chamadas-editais.html"><b>01</b>&nbsp;Operacional</a>
+        <a href="./painel-gerencial-convenios-execucao.html"><b>02</b>&nbsp;Gerencial</a>
+        <a href="./painel-conciliacao-sigef-patronage.html" class="active"><b>03</b>&nbsp;Conciliação</a>
+        <a href="./painel-executivo-kpis.html"><b>04</b>&nbsp;Executivo</a>
+        <a href="./checklist-homologacao.html"><b>05</b>&nbsp;Checklist</a>
+      </div>
+    </nav>
+    <div class="side-foot">
+      <span>Fontes: camada Curated + lotes SIGEF (contas, ordembancaria, ordemcronologica, credor, guiarecebimento)</span>
+      <span>Granularidade: D+1 por lote financeiro</span>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <div class="topbar-inner">
+      <div class="crumb"><span class="eyebrow" style="margin:0;">patronage</span> <span class="eyebrow" style="margin:0;">/</span> <b>Painel 03 · Conciliação</b></div>
+      <div class="meta">
+        <span class="meta-pill draft">Status: mockup</span>
+        <span class="meta-pill">Perfil: Financeiro e controle interno</span>
+      </div>
+    </div>
+
+    <main id="conteudo" style="display:grid; gap:1.35rem;">
+      <section class="hero" aria-labelledby="heroTitle">
+        <div class="hero-grid">
+          <div>
+            <p class="eyebrow">Painel mandatório 3 de 4</p>
+            <h1 id="heroTitle">Conciliação SIGEF x Patronage</h1>
+            <p>
+              Leitura operacional-financeira que cobre monitoramento de saldos e contas da FAPEMA, créditos recebidos
+              e batimento de pagamentos de bolsas e auxílios usando a chave composta ID do edital + CPF do proponente.
+              O objetivo é identificar ausência de correspondência, diferença de valor e divergência de status antes
+              do consolidado executivo, com trilha de auditoria completa por lote D+1.
+            </p>
+            <span class="mockup-flag">Dados fictícios — layout para validação com o PO</span>
+          </div>
+          <div class="stats-ribbon" aria-label="Indicadores-chave institucionais">
+            <article class="metric-card">
+              <div>
+                <div class="metric-label">Registros conciliados (lote D+1)</div>
+                <div class="metric-value">4.284</div>
+              </div>
+              <span class="metric-delta up">92,7% do lote conciliado</span>
+            </article>
+            <article class="metric-card">
+              <div>
+                <div class="metric-label">Ausência no SIGEF</div>
+                <div class="metric-value">126</div>
+              </div>
+              <span class="metric-delta down">2,7% do lote</span>
+            </article>
+            <article class="metric-card">
+              <div>
+                <div class="metric-label">Ausência no Patronage</div>
+                <div class="metric-value">87</div>
+              </div>
+              <span class="metric-delta down">1,9% do lote</span>
+            </article>
+            <article class="metric-card">
+              <div>
+                <div class="metric-label">Diferença de valor</div>
+                <div class="metric-value">R$ 183 mil</div>
+              </div>
+              <span class="metric-delta warn">0,9% da massa financeira</span>
+            </article>
+            <article class="metric-card">
+              <div>
+                <div class="metric-label">Divergência de status</div>
+                <div class="metric-value">138</div>
+              </div>
+              <span class="metric-delta down">3,0% do lote</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <nav class="jump-nav" aria-label="Navegação rápida entre seções">
+        <a class="jump-link" href="#saldo-contas">Saldo de contas FAPEMA</a>
+        <a class="jump-link" href="#tendencia">Taxa de conciliação por lote</a>
+        <a class="jump-link" href="#comparativo">Divergências por classe</a>
+        <a class="jump-link" href="#creditos">Créditos recebidos</a>
+        <a class="jump-link" href="#alertas">Alertas de curadoria</a>
+        <a class="jump-link" href="#auditoria">Trilha de auditoria D+1</a>
+      </nav>
+
+      <section aria-label="Monitoramento de contas e saldos SIGEF">
+        <article class="card" id="saldo-contas">
+          <div class="card-head">
+            <h2>Saldo de Contas FAPEMA (SIGEF)</h2>
+            <span class="card-note">GET /sigef/contas/ · monitoramento contábil-financeiro</span>
+          </div>
+          <div class="kpi-strip" style="margin-bottom:1rem;">
+            <div class="kpi-card">
+              <span class="kpi-label eyebrow">Saldo total monitorado</span>
+              <strong>R$ 13,31 mi</strong>
+              <span class="kpi-delta up">▲ 1,6% no período</span>
+            </div>
+            <div class="kpi-card">
+              <span class="kpi-label eyebrow">Débito do período</span>
+              <strong>R$ 2,64 mi</strong>
+              <span class="kpi-delta flat">estável vs. lote anterior</span>
+            </div>
+            <div class="kpi-card">
+              <span class="kpi-label eyebrow">Crédito do período</span>
+              <strong>R$ 2,82 mi</strong>
+              <span class="kpi-delta up">▲ 0,9% vs. lote anterior</span>
+            </div>
+            <div class="kpi-card">
+              <span class="kpi-label eyebrow">Contas monitoradas</span>
+              <strong>4</strong>
+              <span class="kpi-delta flat">ativas no SIGEF</span>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Conta corrente</th>
+                  <th>Conta contábil</th>
+                  <th>Débito</th>
+                  <th>Crédito</th>
+                  <th>Saldo atual</th>
+                  <th>Variação</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>12345-6</td>
+                  <td>Convênios e Repasses – Bolsas</td>
+                  <td>R$ 1.240.000</td>
+                  <td>R$ 1.180.000</td>
+                  <td>R$ 3.420.000</td>
+                  <td><span class="badge ok">▲ 2,3%</span></td>
+                </tr>
+                <tr>
+                  <td>98765-4</td>
+                  <td>Auxílios à Pesquisa</td>
+                  <td>R$ 512.000</td>
+                  <td>R$ 480.000</td>
+                  <td>R$ 1.150.000</td>
+                  <td><span class="badge risk">▼ 1,1%</span></td>
+                </tr>
+                <tr>
+                  <td>55210-9</td>
+                  <td>Bolsas de Pós-Graduação</td>
+                  <td>R$ 890.000</td>
+                  <td>R$ 905.000</td>
+                  <td>R$ 2.760.000</td>
+                  <td><span class="badge ok">▲ 0,8%</span></td>
+                </tr>
+                <tr>
+                  <td>33440-1</td>
+                  <td>Fundo de Reserva Institucional</td>
+                  <td>R$ 0</td>
+                  <td>R$ 250.000</td>
+                  <td>R$ 5.980.000</td>
+                  <td><span class="badge ok">▲ 4,4%</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section class="filter-bar" aria-label="Filtros do painel">
+        <div class="filter-group" role="group" aria-label="Período">
+          <span class="fg-label">Período</span>
+          <button class="chip active" type="button" aria-pressed="true">D+1</button>
+          <button class="chip" type="button" aria-pressed="false">Semanal</button>
+          <button class="chip" type="button" aria-pressed="false">Mensal</button>
+        </div>
+        <div class="filter-sep"></div>
+        <div class="filter-group" role="group" aria-label="Comparativo">
+          <span class="fg-label">Recorte</span>
+          <button class="chip active" type="button" aria-pressed="true">Bolsas</button>
+          <button class="chip" type="button" aria-pressed="false">Auxílios</button>
+        </div>
+        <span class="filter-note">Batimento por chave composta: edital + CPF (FR-4)</span>
+      </section>
+
+      <section class="chart-grid" aria-label="Tendência e comparativo">
+        <article class="card" id="tendencia">
+          <div class="card-head">
+            <h2>Taxa de conciliação por lote</h2>
+            <span class="card-note">últimos lotes D+1 · financeiro reconciliado</span>
+          </div>
+          <svg class="chart-svg" viewBox="0 0 620 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Gráfico de linhas de tendência multitemporal"><line x1="40" y1="230.0" x2="604" y2="230.0" stroke="var(--line)" stroke-width="1"/><text x="32" y="234.0" font-size="9" fill="var(--ink-faint)" text-anchor="end">0</text><line x1="40" y1="176.5" x2="604" y2="176.5" stroke="var(--line)" stroke-width="1"/><text x="32" y="180.5" font-size="9" fill="var(--ink-faint)" text-anchor="end">2</text><line x1="40" y1="123.0" x2="604" y2="123.0" stroke="var(--line)" stroke-width="1"/><text x="32" y="127.0" font-size="9" fill="var(--ink-faint)" text-anchor="end">5</text><line x1="40" y1="69.5" x2="604" y2="69.5" stroke="var(--line)" stroke-width="1"/><text x="32" y="73.5" font-size="9" fill="var(--ink-faint)" text-anchor="end">8</text><line x1="40" y1="16.0" x2="604" y2="16.0" stroke="var(--line)" stroke-width="1"/><text x="32" y="20.0" font-size="9" fill="var(--ink-faint)" text-anchor="end">10</text><text x="40.0" y="246" font-size="9" fill="var(--ink-soft)" text-anchor="middle">Ago</text><text x="91.3" y="246" font-size="9" fill="var(--ink-soft)" text-anchor="middle">Set</text><text x="142.5" y="246" font-size="9" fill="var(--ink-soft)" text-anchor="middle">Out</text><text x="193.8" y="246" font-size="9" fill="var(--ink-soft)" text-anchor="middle">Nov</text><text x="245.1" y="246" font-size="9" fill="var(--ink-soft)" text-anchor="middle">Dez</text><text x="296.4" y="246" font-size="9" fill="var(--ink-soft)" text-anchor="middle">Jan</text><text x="347.6" y="246" font-size="9" fill="var(--ink-soft)" text-anchor="middle">Fev</text><text x="398.9" y="246" font-size="9" fill="var(--ink-soft)" text-anchor="middle">Mar</text><text x="450.2" y="246" font-size="9" fill="var(--ink-soft)" text-anchor="middle">Abr</text><text x="501.5" y="246" font-size="9" fill="var(--ink-soft)" text-anchor="middle">Mai</text><text x="552.7" y="246" font-size="9" fill="var(--ink-soft)" text-anchor="middle">Jun</text><text x="604.0" y="246" font-size="9" fill="var(--ink-soft)" text-anchor="middle">Jul</text><path d="M 40.0 144.4 L 91.3 123.0 L 142.5 144.4 L 193.8 101.6 L 245.1 165.8 L 296.4 123.0 L 347.6 165.8 L 398.9 123.0 L 450.2 144.4 L 501.5 101.6 L 552.7 123.0 L 604.0 80.2" fill="none" stroke="#003F73" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><circle cx="40.0" cy="144.4" r="3" fill="#003F73"/><circle cx="91.3" cy="123.0" r="3" fill="#003F73"/><circle cx="142.5" cy="144.4" r="3" fill="#003F73"/><circle cx="193.8" cy="101.6" r="3" fill="#003F73"/><circle cx="245.1" cy="165.8" r="3" fill="#003F73"/><circle cx="296.4" cy="123.0" r="3" fill="#003F73"/><circle cx="347.6" cy="165.8" r="3" fill="#003F73"/><circle cx="398.9" cy="123.0" r="3" fill="#003F73"/><circle cx="450.2" cy="144.4" r="3" fill="#003F73"/><circle cx="501.5" cy="101.6" r="3" fill="#003F73"/><circle cx="552.7" cy="123.0" r="3" fill="#003F73"/><circle cx="604.0" cy="80.2" r="3" fill="#003F73"/><path d="M 40.0 165.8 L 91.3 144.4 L 142.5 123.0 L 193.8 144.4 L 245.1 101.6 L 296.4 123.0 L 347.6 144.4 L 398.9 101.6 L 450.2 123.0 L 501.5 80.2 L 552.7 101.6 L 604.0 58.8" fill="none" stroke="#d16b2f" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><circle cx="40.0" cy="165.8" r="3" fill="#d16b2f"/><circle cx="91.3" cy="144.4" r="3" fill="#d16b2f"/><circle cx="142.5" cy="123.0" r="3" fill="#d16b2f"/><circle cx="193.8" cy="144.4" r="3" fill="#d16b2f"/><circle cx="245.1" cy="101.6" r="3" fill="#d16b2f"/><circle cx="296.4" cy="123.0" r="3" fill="#d16b2f"/><circle cx="347.6" cy="144.4" r="3" fill="#d16b2f"/><circle cx="398.9" cy="101.6" r="3" fill="#d16b2f"/><circle cx="450.2" cy="123.0" r="3" fill="#d16b2f"/><circle cx="501.5" cy="80.2" r="3" fill="#d16b2f"/><circle cx="552.7" cy="101.6" r="3" fill="#d16b2f"/><circle cx="604.0" cy="58.8" r="3" fill="#d16b2f"/></svg>
+          <div class="legend">
+            <span><i style="background:#003F73"></i> Conciliação concluída</span>
+            <span><i style="background:#d16b2f"></i> Divergências abertas</span>
+          </div>
+        </article>
+
+        <article class="card" id="comparativo">
+          <div class="card-head">
+            <h3>Divergências por classe</h3>
+            <span class="card-note">ausência no SIGEF, ausência no Patronage, valor e status por lote</span>
+          </div>
+          <svg class="chart-svg" viewBox="0 0 460 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Gráfico comparativo ano a ano por trimestre"><line x1="40" y1="196.0" x2="450" y2="196.0" stroke="var(--line)" stroke-width="1"/><text x="32" y="200.0" font-size="9" fill="var(--ink-faint)" text-anchor="end">0</text><line x1="40" y1="151.0" x2="450" y2="151.0" stroke="var(--line)" stroke-width="1"/><text x="32" y="155.0" font-size="9" fill="var(--ink-faint)" text-anchor="end">14</text><line x1="40" y1="106.0" x2="450" y2="106.0" stroke="var(--line)" stroke-width="1"/><text x="32" y="110.0" font-size="9" fill="var(--ink-faint)" text-anchor="end">28</text><line x1="40" y1="61.0" x2="450" y2="61.0" stroke="var(--line)" stroke-width="1"/><text x="32" y="65.0" font-size="9" fill="var(--ink-faint)" text-anchor="end">42</text><line x1="40" y1="16.0" x2="450" y2="16.0" stroke="var(--line)" stroke-width="1"/><text x="32" y="20.0" font-size="9" fill="var(--ink-faint)" text-anchor="end">56</text><rect x="61.2" y="73.9" width="28" height="122.1" rx="3" fill="#8A8A8A"/><rect x="93.2" y="61.0" width="28" height="135.0" rx="3" fill="#d16b2f"/><text x="91.2" y="212" font-size="10" fill="var(--ink-soft)" text-anchor="middle">T1</text><rect x="163.8" y="54.6" width="28" height="141.4" rx="3" fill="#8A8A8A"/><rect x="195.8" y="32.1" width="28" height="163.9" rx="3" fill="#d16b2f"/><text x="193.8" y="212" font-size="10" fill="var(--ink-soft)" text-anchor="middle">T2</text><rect x="266.2" y="44.9" width="28" height="151.1" rx="3" fill="#8A8A8A"/><rect x="298.2" y="178.0" width="28" height="18" rx="3" fill="none" stroke="var(--ink-faint)" stroke-width="1.4" stroke-dasharray="3 2"/><text x="312.2" y="172.0" font-size="8" fill="var(--ink-faint)" text-anchor="middle">em aberto</text><text x="296.2" y="212" font-size="10" fill="var(--ink-soft)" text-anchor="middle">T3</text><rect x="368.8" y="25.6" width="28" height="170.4" rx="3" fill="#8A8A8A"/><rect x="400.8" y="178.0" width="28" height="18" rx="3" fill="none" stroke="var(--ink-faint)" stroke-width="1.4" stroke-dasharray="3 2"/><text x="414.8" y="172.0" font-size="8" fill="var(--ink-faint)" text-anchor="middle">em aberto</text><text x="398.8" y="212" font-size="10" fill="var(--ink-soft)" text-anchor="middle">T4</text></svg>
+          <div class="legend">
+            <span><i style="background:#8A8A8A"></i> Lote anterior</span>
+            <span><i style="background:#d16b2f"></i> Lote atual</span>
+          </div>
+        </article>
+      </section>
+
+      <section aria-label="Créditos recebidos e outras movimentações">
+        <article class="card" id="creditos">
+          <div class="card-head">
+            <h2>Créditos Recebidos e Outras Movimentações</h2>
+            <span class="card-note">GET /sigef/guiarecebimento/ · aportes, estornos e repasses complementares</span>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Guia de recebimento</th>
+                  <th>Conta</th>
+                  <th>Evento</th>
+                  <th>Valor</th>
+                  <th>Data</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>2026GR001</td>
+                  <td>12345-6</td>
+                  <td>Estorno de bolsa não utilizada</td>
+                  <td>R$ 18.400</td>
+                  <td>08/07/2026</td>
+                </tr>
+                <tr>
+                  <td>2026GR002</td>
+                  <td>98765-4</td>
+                  <td>Repasse complementar SEPLAN-MA</td>
+                  <td>R$ 260.000</td>
+                  <td>05/07/2026</td>
+                </tr>
+                <tr>
+                  <td>2026GR003</td>
+                  <td>55210-9</td>
+                  <td>Devolução de auxílio cancelado</td>
+                  <td>R$ 7.250</td>
+                  <td>02/07/2026</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section aria-label="Alertas de desvio institucional">
+        <article class="card" id="alertas">
+          <div class="card-head">
+            <h2>Alertas de curadoria financeira</h2>
+            <span class="card-note">gerados por regra de negócio · reconciliação Patronage x SIGEF (FR-4)</span>
+          </div>
+          <div class="alert-list">
+            <div class="alert-item risk">
+              <span class="dot" aria-hidden="true"></span>
+              <div>
+                <strong>Ausências de correspondência acima do limite de controle</strong>
+                <p>O lote D+1 registrou 126 itens sem match no SIGEF e 87 sem match no Patronage. Requer curadoria antes do consolidado executivo.</p>
+              </div>
+              <time datetime="2026-07-05">05 jul 2026</time>
+            </div>
+            <div class="alert-item warn">
+              <span class="dot" aria-hidden="true"></span>
+              <div>
+                <strong>Diferença de valor acima de R$ 150 mil no lote</strong>
+                <p>Foram identificadas divergências financeiras que totalizam R$ 183 mil entre valores liquidados no SIGEF e lançamentos correspondentes no Patronage.</p>
+              </div>
+              <time datetime="2026-07-03">03 jul 2026</time>
+            </div>
+            <div class="alert-item warn">
+              <span class="dot" aria-hidden="true"></span>
+              <div>
+                <strong>Divergência de status de pagamento em alta</strong>
+                <p>138 registros apresentam status incompatível entre SIGEF e Patronage, com concentração em ordens cronológicas do último fechamento semanal.</p>
+              </div>
+              <time datetime="2026-06-28">28 jun 2026</time>
+            </div>
+            <div class="alert-item ok">
+              <span class="dot" aria-hidden="true"></span>
+              <div>
+                <strong>Taxa de conciliação acima de 92% no lote atual</strong>
+                <p>O batimento por chave composta edital + CPF manteve a maior parte da massa financeira reconciliada dentro do limite de risco aprovado.</p>
+              </div>
+              <time datetime="2026-06-20">20 jun 2026</time>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section aria-label="Trilha de auditoria por lote D+1">
+        <article class="card" id="auditoria">
+          <div class="card-head">
+            <h2>Trilha de Auditoria por Lote D+1</h2>
+            <span class="card-note">data de carga, volume processado e status · critério de homologação FR-3/FR-4</span>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Lote</th>
+                  <th>Data de carga</th>
+                  <th>Registros processados</th>
+                  <th>Registros conciliados</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>2026-07-13-01</td>
+                  <td>13/07/2026 05:42</td>
+                  <td>4.612</td>
+                  <td>4.284</td>
+                  <td><span class="badge ok">Concluído</span></td>
+                </tr>
+                <tr>
+                  <td>2026-07-12-01</td>
+                  <td>12/07/2026 05:38</td>
+                  <td>4.550</td>
+                  <td>4.201</td>
+                  <td><span class="badge ok">Concluído</span></td>
+                </tr>
+                <tr>
+                  <td>2026-07-11-01</td>
+                  <td>11/07/2026 05:51</td>
+                  <td>4.480</td>
+                  <td>4.052</td>
+                  <td><span class="badge warn">Concluído com exceções</span></td>
+                </tr>
+                <tr>
+                  <td>2026-07-10-01</td>
+                  <td>10/07/2026 06:02</td>
+                  <td>4.510</td>
+                  <td>4.190</td>
+                  <td><span class="badge ok">Concluído</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <footer class="footer-note">
+        Painel de conciliação (3 de 4) · Alimentado pela camada Curated e pelos lotes SIGEF (contas, ordembancaria,
+        ordemcronologica, credor, guiarecebimento), cobrindo saldo de contas, créditos recebidos e batimento por
+        chave composta edital + CPF, com trilha de auditoria D+1 por lote. Regras de divergência seguem
+        homologação funcional com financeiro institucional e controle interno.
+      </footer>
+    </main>
+  </div>
+</div>
+<script>
+(function () {
+  document.addEventListener('click', function (event) {
+    var chip = event.target.closest('.chip');
+    if (!chip) return;
+    var group = chip.closest('.filter-group');
+    if (!group) return;
+    group.querySelectorAll('.chip').forEach(function (el) {
+      el.classList.remove('active');
+      el.setAttribute('aria-pressed', 'false');
+    });
+    chip.classList.add('active');
+    chip.setAttribute('aria-pressed', 'true');
+  });
+})();
+</script>
+</body>
+</html>

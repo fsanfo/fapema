@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checklist de Homologação V2 | FAPEMA Patronage Analytics</title>
+<meta name="description" content="Checklist de homologação dos painéis FR-6 para discussão com SH e PO após apresentação dos mockups V2.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --color-primary: #005A9C;
+  --color-primary-dark: #003F73;
+  --color-primary-light: #3B82C4;
+  --color-secondary: #0A6FB8;
+  --color-secondary-light: #7FB8E6;
+  --color-background: #FFFFFF;
+  --color-background-alt: #F5F7FA;
+  --color-surface: #FAFAFA;
+  --color-text: #333333;
+  --color-text-light: #666666;
+  --color-text-muted: #8A8A8A;
+  --color-border: #D9E1E8;
+  --color-divider: #ECEFF3;
+  --color-success: #2E7D32;
+  --color-warning: #F9A825;
+  --color-danger: #C62828;
+  --color-info: #0288D1;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(140px, 1fr));
+  gap: 0.75rem;
+}
+
+.summary-item {
+  border: 1px solid rgba(23, 34, 48, 0.12);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 0.7rem 0.8rem;
+}
+
+.summary-item .label {
+  display: block;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(23, 34, 48, 0.62);
+}
+
+.summary-item .value {
+  display: block;
+  margin-top: 0.2rem;
+  font-family: "League Spartan", "Segoe UI", sans-serif;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: #172230;
+}
+
+.decision-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.decision-btn {
+  border: 1px solid rgba(23, 34, 48, 0.2);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #172230;
+  font-size: 0.7rem;
+  line-height: 1;
+  padding: 0.35rem 0.52rem;
+  cursor: pointer;
+}
+
+.decision-btn.active[data-value="aprovado"] {
+  border-color: rgba(46, 125, 50, 0.48);
+  background: rgba(227, 241, 228, 0.95);
+  color: #2E7D32;
+}
+
+.decision-btn.active[data-value="ressalvas"] {
+  border-color: rgba(156, 106, 16, 0.4);
+  background: rgba(253, 240, 218, 0.95);
+  color: #9c6a10;
+}
+
+.decision-btn.active[data-value="reprovado"] {
+  border-color: rgba(198, 40, 40, 0.48);
+  background: rgba(249, 225, 225, 0.95);
+  color: #C62828;
+}
+
+.decision-btn.active[data-value="pendente"] {
+  border-color: rgba(2, 136, 209, 0.45);
+  background: rgba(220, 238, 251, 0.95);
+  color: #0288D1;
+}
+
+@media (max-width: 980px) {
+  .summary-grid { grid-template-columns: repeat(2, minmax(140px, 1fr)); }
+}
+</style>
+<link rel="stylesheet" href="./dashboard.css">
+</head>
+<body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo principal</a>
+<div class="app-shell">
+  <aside class="app-sidebar">
+    <div class="brand-mark">
+      <svg width="36" height="36" viewBox="0 0 34 34" fill="none"><rect width="34" height="34" rx="9" fill="#005A9C"/><path d="M8 24V10h6.2c3 0 5 1.8 5 4.6 0 2.8-2 4.6-5 4.6h-3v4.8H8Zm3.2-7.4h2.7c1.3 0 2.1-.7 2.1-1.8s-.8-1.8-2.1-1.8h-2.7v3.6Z" fill="#fff"/></svg>
+      <div>
+        <strong>Patronage Analytics</strong>
+        <span>Protótipos FR-6</span>
+      </div>
+    </div>
+    <nav aria-label="Navegação entre painéis">
+      <p class="side-nav-label">Paineis mandatórios</p>
+      <div class="side-nav">
+        <a href="./index.html"><b>00</b>&nbsp;Visão geral</a>
+        <a href="./painel-operacional-chamadas-editais.html"><b>01</b>&nbsp;Operacional</a>
+        <a href="./painel-gerencial-convenios-execucao.html"><b>02</b>&nbsp;Gerencial</a>
+        <a href="./painel-conciliacao-sigef-patronage.html"><b>03</b>&nbsp;Conciliação</a>
+        <a href="./painel-executivo-kpis.html"><b>04</b>&nbsp;Executivo</a>
+        <a href="./checklist-homologacao.html" class="active"><b>05</b>&nbsp;Checklist</a>
+      </div>
+    </nav>
+    <div class="side-foot">
+      <span>Uso: revisão com SH e PO após apresentação</span>
+      <span>Status inicial: pendente de aceite formal</span>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <div class="topbar-inner">
+      <div class="crumb"><span class="eyebrow" style="margin:0;">patronage</span> <span class="eyebrow" style="margin:0;">/</span> <b>Checklist de Homologação (V2)</b></div>
+      <div class="meta">
+        <span class="meta-pill">FR-6</span>
+        <span class="meta-pill">Reunião SH + PO</span>
+        <span class="meta-pill draft">Status: em validação</span>
+      </div>
+    </div>
+
+    <main id="conteudo" style="display:grid; gap:1.35rem;">
+      <section class="context-panel" aria-labelledby="titulo-checklist">
+        <p class="eyebrow">Roteiro pós-apresentação</p>
+        <h1 id="titulo-checklist">Checklist de homologação dos painéis V2</h1>
+        <p>
+          Use esta página para registrar decisão durante a reunião com stakeholders e Product Owner.
+          O objetivo é confirmar aderência aos critérios mandatórios do PRD, consolidar pendências e definir
+          responsáveis com prazo para fechamento da fase de UX.
+        </p>
+        <div class="context-notes">
+          <span>Base: PRD fase 1 (FR-5 e FR-6)</span>
+          <span>Aceite esperado: aprovado por painel</span>
+          <span>Próximo passo: arquitetura (CA)</span>
+        </div>
+      </section>
+
+      <section aria-label="Resumo das decisões da rodada">
+        <article class="card">
+          <div class="card-head">
+            <h2>Resumo da rodada</h2>
+            <span class="card-note">atualização automática conforme decisões por item</span>
+          </div>
+          <div class="summary-grid">
+            <div class="summary-item">
+              <span class="label">Total de itens</span>
+              <span class="value" id="sum-total">0</span>
+            </div>
+            <div class="summary-item">
+              <span class="label">Aprovado</span>
+              <span class="value" id="sum-aprovado">0</span>
+            </div>
+            <div class="summary-item">
+              <span class="label">Com ressalvas</span>
+              <span class="value" id="sum-ressalvas">0</span>
+            </div>
+            <div class="summary-item">
+              <span class="label">Reprovado</span>
+              <span class="value" id="sum-reprovado">0</span>
+            </div>
+            <div class="summary-item">
+              <span class="label">Pendente</span>
+              <span class="value" id="sum-pendente">0</span>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section aria-label="Checklist por painel">
+        <article class="card">
+          <div class="card-head">
+            <h2>Painel 01 · Operacional (Chamadas e Editais)</h2>
+            <span class="card-note">Aprovador: gerência de chamadas e editais</span>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr><th>Critério de homologação</th><th>Evidência no mockup V2</th><th>Responsável provável</th><th>Decisão rápida</th><th>Observações SH/PO</th></tr>
+              </thead>
+              <tbody>
+                <tr data-decision-row>
+                  <td>Filtros por período, edital, status e área</td>
+                  <td>Filtro completo com segmentador de edital incluído</td>
+                  <td>Gerência de chamadas e editais</td>
+                  <td>
+                    <div class="decision-group" role="group" aria-label="Decisão do item operacional 1">
+                      <button class="decision-btn" type="button" data-value="aprovado">Aprovado</button>
+                      <button class="decision-btn" type="button" data-value="ressalvas">Ressalvas</button>
+                      <button class="decision-btn" type="button" data-value="reprovado">Reprovado</button>
+                      <button class="decision-btn active" type="button" data-value="pendente">Pendente</button>
+                    </div>
+                  </td>
+                  <td>Validar nomenclatura final dos editais</td>
+                </tr>
+                <tr data-decision-row>
+                  <td>Volume, status e tempo médio de ciclo</td>
+                  <td>Cards e gráficos de volume/status/ciclo presentes</td>
+                  <td>Coordenação operacional + PO</td>
+                  <td>
+                    <div class="decision-group" role="group" aria-label="Decisão do item operacional 2">
+                      <button class="decision-btn" type="button" data-value="aprovado">Aprovado</button>
+                      <button class="decision-btn" type="button" data-value="ressalvas">Ressalvas</button>
+                      <button class="decision-btn" type="button" data-value="reprovado">Reprovado</button>
+                      <button class="decision-btn active" type="button" data-value="pendente">Pendente</button>
+                    </div>
+                  </td>
+                  <td>Confirmar regra de cálculo com operação</td>
+                </tr>
+                <tr data-decision-row>
+                  <td>Gargalos por segmentador principal</td>
+                  <td>Tabela de gargalos por área com semaforização</td>
+                  <td>SH da operação + PO</td>
+                  <td>
+                    <div class="decision-group" role="group" aria-label="Decisão do item operacional 3">
+                      <button class="decision-btn" type="button" data-value="aprovado">Aprovado</button>
+                      <button class="decision-btn" type="button" data-value="ressalvas">Ressalvas</button>
+                      <button class="decision-btn" type="button" data-value="reprovado">Reprovado</button>
+                      <button class="decision-btn active" type="button" data-value="pendente">Pendente</button>
+                    </div>
+                  </td>
+                  <td>Checar segmentador principal oficial</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section aria-label="Checklist painel gerencial">
+        <article class="card">
+          <div class="card-head">
+            <h2>Painel 02 · Gerencial (Convênios e Execução)</h2>
+            <span class="card-note">Aprovador: gerência de convênios e prestação de contas</span>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr><th>Critério de homologação</th><th>Evidência no mockup V2</th><th>Responsável provável</th><th>Decisão rápida</th><th>Observações SH/PO</th></tr>
+              </thead>
+              <tbody>
+                <tr data-decision-row>
+                  <td>Carteira por tipo e vigência com cobertura do recorte</td>
+                  <td>Seções de quantidade por tipo e linha do tempo de vigência</td>
+                  <td>Gerência de convênios</td>
+                  <td>
+                    <div class="decision-group" role="group" aria-label="Decisão do item gerencial 1">
+                      <button class="decision-btn" type="button" data-value="aprovado">Aprovado</button>
+                      <button class="decision-btn" type="button" data-value="ressalvas">Ressalvas</button>
+                      <button class="decision-btn" type="button" data-value="reprovado">Reprovado</button>
+                      <button class="decision-btn active" type="button" data-value="pendente">Pendente</button>
+                    </div>
+                  </td>
+                  <td>Confirmar recortes da fase 1</td>
+                </tr>
+                <tr data-decision-row>
+                  <td>Situação de relatórios e desvios de prazo</td>
+                  <td>Rosca de relatórios + tabela de aderência com semáforo</td>
+                  <td>Controle de prestação de contas</td>
+                  <td>
+                    <div class="decision-group" role="group" aria-label="Decisão do item gerencial 2">
+                      <button class="decision-btn" type="button" data-value="aprovado">Aprovado</button>
+                      <button class="decision-btn" type="button" data-value="ressalvas">Ressalvas</button>
+                      <button class="decision-btn" type="button" data-value="reprovado">Reprovado</button>
+                      <button class="decision-btn active" type="button" data-value="pendente">Pendente</button>
+                    </div>
+                  </td>
+                  <td>Revisar faixas de semaforização</td>
+                </tr>
+                <tr data-decision-row>
+                  <td>Rastreabilidade indicador -> regra -> origem</td>
+                  <td>Nova seção de rastreabilidade incluída</td>
+                  <td>Líder de dados + PO</td>
+                  <td>
+                    <div class="decision-group" role="group" aria-label="Decisão do item gerencial 3">
+                      <button class="decision-btn" type="button" data-value="aprovado">Aprovado</button>
+                      <button class="decision-btn" type="button" data-value="ressalvas">Ressalvas</button>
+                      <button class="decision-btn" type="button" data-value="reprovado">Reprovado</button>
+                      <button class="decision-btn active" type="button" data-value="pendente">Pendente</button>
+                    </div>
+                  </td>
+                  <td>Validar nomes finais das tabelas curated</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section aria-label="Checklist painel conciliacao">
+        <article class="card">
+          <div class="card-head">
+            <h2>Painel 03 · Conciliação (SIGEF x Patronage)</h2>
+            <span class="card-note">Aprovador: liderança financeira e controle interno</span>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr><th>Critério de homologação</th><th>Evidência no mockup V2</th><th>Responsável provável</th><th>Decisão rápida</th><th>Observações SH/PO</th></tr>
+              </thead>
+              <tbody>
+                <tr data-decision-row>
+                  <td>Batimento por chave composta edital + CPF</td>
+                  <td>Regra explicitada em filtros e narrativa do painel</td>
+                  <td>Liderança financeira institucional</td>
+                  <td>
+                    <div class="decision-group" role="group" aria-label="Decisão do item conciliação 1">
+                      <button class="decision-btn" type="button" data-value="aprovado">Aprovado</button>
+                      <button class="decision-btn" type="button" data-value="ressalvas">Ressalvas</button>
+                      <button class="decision-btn" type="button" data-value="reprovado">Reprovado</button>
+                      <button class="decision-btn active" type="button" data-value="pendente">Pendente</button>
+                    </div>
+                  </td>
+                  <td>Confirmar tratamento de exceções</td>
+                </tr>
+                <tr data-decision-row>
+                  <td>Classificação de divergências por ausência/valor/status</td>
+                  <td>Separação em ausência no SIGEF e ausência no Patronage + valor + status</td>
+                  <td>Controle interno</td>
+                  <td>
+                    <div class="decision-group" role="group" aria-label="Decisão do item conciliação 2">
+                      <button class="decision-btn" type="button" data-value="aprovado">Aprovado</button>
+                      <button class="decision-btn" type="button" data-value="ressalvas">Ressalvas</button>
+                      <button class="decision-btn" type="button" data-value="reprovado">Reprovado</button>
+                      <button class="decision-btn active" type="button" data-value="pendente">Pendente</button>
+                    </div>
+                  </td>
+                  <td>Validar taxonomia com controle interno</td>
+                </tr>
+                <tr data-decision-row>
+                  <td>Trilha de auditoria por lote D+1</td>
+                  <td>Seção com data de carga e volume conciliado por lote</td>
+                  <td>Financeiro + equipe de dados</td>
+                  <td>
+                    <div class="decision-group" role="group" aria-label="Decisão do item conciliação 3">
+                      <button class="decision-btn" type="button" data-value="aprovado">Aprovado</button>
+                      <button class="decision-btn" type="button" data-value="ressalvas">Ressalvas</button>
+                      <button class="decision-btn" type="button" data-value="reprovado">Reprovado</button>
+                      <button class="decision-btn active" type="button" data-value="pendente">Pendente</button>
+                    </div>
+                  </td>
+                  <td>Confirmar formato de lote oficial</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section aria-label="Checklist painel executivo">
+        <article class="card">
+          <div class="card-head">
+            <h2>Painel 04 · Executivo (KPIs Institucionais)</h2>
+            <span class="card-note">Aprovador: patrocinador executivo do programa</span>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr><th>Critério de homologação</th><th>Evidência no mockup V2</th><th>Responsável provável</th><th>Decisão rápida</th><th>Observações SH/PO</th></tr>
+              </thead>
+              <tbody>
+                <tr data-decision-row>
+                  <td>KPIs mínimos institucionais exigidos no PRD</td>
+                  <td>Cards revisados: orçamento, ciclo, convênios, divergência, alertas críticos</td>
+                  <td>PO + patrocinador executivo</td>
+                  <td>
+                    <div class="decision-group" role="group" aria-label="Decisão do item executivo 1">
+                      <button class="decision-btn" type="button" data-value="aprovado">Aprovado</button>
+                      <button class="decision-btn" type="button" data-value="ressalvas">Ressalvas</button>
+                      <button class="decision-btn" type="button" data-value="reprovado">Reprovado</button>
+                      <button class="decision-btn active" type="button" data-value="pendente">Pendente</button>
+                    </div>
+                  </td>
+                  <td>Conferir definição de meta por KPI</td>
+                </tr>
+                <tr data-decision-row>
+                  <td>Tendências mensal, trimestral, semestral e anual</td>
+                  <td>Filtro de período inclui mensal + demais granularidades</td>
+                  <td>PO + diretoria patrocinadora</td>
+                  <td>
+                    <div class="decision-group" role="group" aria-label="Decisão do item executivo 2">
+                      <button class="decision-btn" type="button" data-value="aprovado">Aprovado</button>
+                      <button class="decision-btn" type="button" data-value="ressalvas">Ressalvas</button>
+                      <button class="decision-btn" type="button" data-value="reprovado">Reprovado</button>
+                      <button class="decision-btn active" type="button" data-value="pendente">Pendente</button>
+                    </div>
+                  </td>
+                  <td>Definir padrão de abertura inicial</td>
+                </tr>
+                <tr data-decision-row>
+                  <td>Sinalização executiva da conciliação financeira</td>
+                  <td>Nova seção com semáforo e limites aprovados</td>
+                  <td>Patrocinador executivo + controle interno</td>
+                  <td>
+                    <div class="decision-group" role="group" aria-label="Decisão do item executivo 3">
+                      <button class="decision-btn" type="button" data-value="aprovado">Aprovado</button>
+                      <button class="decision-btn" type="button" data-value="ressalvas">Ressalvas</button>
+                      <button class="decision-btn" type="button" data-value="reprovado">Reprovado</button>
+                      <button class="decision-btn active" type="button" data-value="pendente">Pendente</button>
+                    </div>
+                  </td>
+                  <td>Revisar limites de risco com diretoria</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section aria-label="Decisão da rodada">
+        <article class="card">
+          <div class="card-head">
+            <h2>Encaminhamentos da reunião</h2>
+            <span class="card-note">decisão e responsáveis</span>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr><th>Tópico</th><th>Responsável</th><th>Prazo</th><th>Decisão rápida</th></tr>
+              </thead>
+              <tbody>
+                <tr data-decision-row>
+                  <td>Consolidar feedback SH/PO nos mockups V2</td>
+                  <td>Equipe de produto + dados</td>
+                  <td>___/___/2026</td>
+                  <td>
+                    <div class="decision-group" role="group" aria-label="Decisão do encaminhamento 1">
+                      <button class="decision-btn" type="button" data-value="aprovado">Aprovado</button>
+                      <button class="decision-btn" type="button" data-value="ressalvas">Ressalvas</button>
+                      <button class="decision-btn" type="button" data-value="reprovado">Reprovado</button>
+                      <button class="decision-btn active" type="button" data-value="pendente">Pendente</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr data-decision-row>
+                  <td>Registrar aceite formal por painel</td>
+                  <td>Aprovadores designados</td>
+                  <td>___/___/2026</td>
+                  <td>
+                    <div class="decision-group" role="group" aria-label="Decisão do encaminhamento 2">
+                      <button class="decision-btn" type="button" data-value="aprovado">Aprovado</button>
+                      <button class="decision-btn" type="button" data-value="ressalvas">Ressalvas</button>
+                      <button class="decision-btn" type="button" data-value="reprovado">Reprovado</button>
+                      <button class="decision-btn active" type="button" data-value="pendente">Pendente</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr data-decision-row>
+                  <td>Liberar transição para arquitetura (CA)</td>
+                  <td>PO + patrocinador executivo</td>
+                  <td>___/___/2026</td>
+                  <td>
+                    <div class="decision-group" role="group" aria-label="Decisão do encaminhamento 3">
+                      <button class="decision-btn" type="button" data-value="aprovado">Aprovado</button>
+                      <button class="decision-btn" type="button" data-value="ressalvas">Ressalvas</button>
+                      <button class="decision-btn" type="button" data-value="reprovado">Reprovado</button>
+                      <button class="decision-btn active" type="button" data-value="pendente">Pendente</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <footer class="footer-note">
+        Checklist de homologação V2 para discussão com SH e PO. Atualize status e observações durante a reunião para
+        registrar aceite formal da fase de UX antes da sequência do fluxo BMad.
+      </footer>
+    </main>
+  </div>
+</div>
+<script>
+(function () {
+  function updateSummary() {
+    var rows = document.querySelectorAll('[data-decision-row]');
+    var count = {
+      total: rows.length,
+      aprovado: 0,
+      ressalvas: 0,
+      reprovado: 0,
+      pendente: 0
+    };
+
+    rows.forEach(function (row) {
+      var active = row.querySelector('.decision-btn.active');
+      var value = active ? active.getAttribute('data-value') : 'pendente';
+      if (!count[value]) {
+        count.pendente += 1;
+        return;
+      }
+      count[value] += 1;
+    });
+
+    document.getElementById('sum-total').textContent = String(count.total);
+    document.getElementById('sum-aprovado').textContent = String(count.aprovado);
+    document.getElementById('sum-ressalvas').textContent = String(count.ressalvas);
+    document.getElementById('sum-reprovado').textContent = String(count.reprovado);
+    document.getElementById('sum-pendente').textContent = String(count.pendente);
+  }
+
+  document.addEventListener('click', function (event) {
+    var button = event.target.closest('.decision-btn');
+    if (!button) return;
+
+    var group = button.closest('.decision-group');
+    if (!group) return;
+
+    group.querySelectorAll('.decision-btn').forEach(function (item) {
+      item.classList.remove('active');
+    });
+    button.classList.add('active');
+    updateSummary();
+  });
+
+  updateSummary();
+})();
+</script>
+</body>
+</html>

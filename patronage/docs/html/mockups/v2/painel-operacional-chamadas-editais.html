@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel Operacional · Chamadas e Editais | FAPEMA Patronage Analytics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ---- assets/style_colors.css ---- */
+/**
+ * FAPEMA - Color Palette
+ * Baseada na identidade visual observada no portal.
+ */
+
+:root {
+
+  /* Brand */
+  --color-primary: #005A9C;
+  --color-primary-dark: #003F73;
+  --color-primary-light: #3B82C4;
+
+  /* Secondary */
+  --color-secondary: #0A6FB8;
+  --color-secondary-light: #7FB8E6;
+
+  /* Backgrounds */
+  --color-background: #FFFFFF;
+  --color-background-alt: #F5F7FA;
+  --color-surface: #FAFAFA;
+
+  /* Text */
+  --color-text: #333333;
+  --color-text-light: #666666;
+  --color-text-muted: #8A8A8A;
+
+  /* Borders */
+  --color-border: #D9E1E8;
+  --color-divider: #ECEFF3;
+
+  /* States */
+  --color-success: #2E7D32;
+  --color-warning: #F9A825;
+  --color-danger: #C62828;
+  --color-info: #0288D1;
+
+  /* Links */
+  --color-link: var(--color-primary);
+  --color-link-hover: var(--color-primary-dark);
+
+  /* Buttons */
+  --button-primary-bg: var(--color-primary);
+  --button-primary-hover: var(--color-primary-dark);
+  --button-primary-text: #FFFFFF;
+
+  --button-secondary-bg: #FFFFFF;
+  --button-secondary-border: var(--color-primary);
+  --button-secondary-text: var(--color-primary);
+
+}
+
+/* ---- assets/dashboard.css ---- */
+/* ==========================================================================
+   FAPEMA Patronage Analytics — Design system dos protótipos (FR-6)
+   Mesma linguagem editorial premium do Atlas SQL / brief / PRD: papel quente,
+   painéis de vidro, acento terracota, League Spartan em caixa alta para
+   títulos e Poppins para o restante. Cores de marca herdadas de
+   assets/style_colors.css.
+   ========================================================================== */
+
+:root {
+  /* ---- Superfície editorial (papel quente + vidro) ---- */
+  --paper: #f4efe6;
+  --paper-strong: #ebe4d5;
+  --ink: #172230;
+  --ink-soft: rgba(23, 34, 48, 0.72);
+  --ink-faint: rgba(23, 34, 48, 0.5);
+  --line: rgba(23, 34, 48, 0.12);
+  --line-strong: rgba(23, 34, 48, 0.26);
+  --panel: rgba(255, 255, 255, 0.72);
+  --panel-strong: rgba(255, 255, 255, 0.93);
+  --shadow: 0 24px 60px rgba(24, 28, 38, 0.14);
+  --shadow-sm: 0 10px 24px rgba(24, 28, 38, 0.08);
+  --radius-xl: 32px;
+  --radius-lg: 22px;
+  --radius-md: 16px;
+  --radius-sm: 10px;
+
+  /* ---- Acento de marca (terracota) — reservado para interação/assinatura ---- */
+  --accent: #d16b2f;
+  --accent-soft: rgba(209, 107, 47, 0.16);
+  --accent-deep: #8f4319;
+
+  /* ---- Paleta institucional FAPEMA (assets/style_colors.css) ---- */
+  --brand-primary: var(--color-primary, #005A9C);
+  --brand-primary-dark: var(--color-primary-dark, #003F73);
+  --brand-primary-light: var(--color-primary-light, #3B82C4);
+  --brand-secondary: var(--color-secondary, #0A6FB8);
+  --brand-secondary-light: var(--color-secondary-light, #7FB8E6);
+  --ok-600: var(--color-success, #2E7D32);
+  --ok-100: #E3F1E4;
+  --warn-600: var(--color-warning, #F9A825);
+  --warn-deep: #9c6a10;
+  --warn-100: #FDF0DA;
+  --risk-600: var(--color-danger, #C62828);
+  --risk-100: #F9E1E1;
+  --info-600: var(--color-info, #0288D1);
+  --info-100: #DCEEFB;
+
+  --sidebar-width: 300px;
+  --font-display: "League Spartan", "Segoe UI", sans-serif;
+  --font-body: "Poppins", "Segoe UI", sans-serif;
+  --step-1: clamp(1.05rem, 1rem + 0.3vw, 1.2rem);
+  --step-2: clamp(1.3rem, 1.16rem + 0.7vw, 1.65rem);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+html, body { margin: 0; padding: 0; min-height: 100%; }
+
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at top left, rgba(209, 107, 47, 0.16), transparent 28%),
+    radial-gradient(circle at 85% 12%, rgba(0, 90, 156, 0.14), transparent 24%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 42%),
+    var(--paper);
+  min-height: 100vh;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(23, 34, 48, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(23, 34, 48, 0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(circle at center, black 45%, transparent 100%);
+  opacity: 0.5;
+}
+
+a { color: var(--brand-secondary); }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.skip-link {
+  position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden;
+}
+.skip-link:focus {
+  left: 0.9rem; top: 0.9rem; width: auto; height: auto; z-index: 100;
+  background: #fff; border: 2px solid var(--accent); border-radius: 8px;
+  padding: 0.5rem 0.75rem; font-weight: 600;
+}
+
+h1, h2, h3, h4 {
+  margin: 0;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  line-height: 0.98;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+}
+
+.eyebrow, .kicker, .metric-label, .card-note, .crumb, .footer-note {
+  font-family: var(--font-body);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  color: var(--ink-faint);
+}
+
+/* ---------- Shell ---------- */
+
+.app-shell {
+  display: grid;
+  grid-template-columns: minmax(260px, var(--sidebar-width)) 1fr;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  padding: clamp(1rem, 2vw, 1.5rem);
+  position: relative;
+  z-index: 1;
+}
+
+.app-sidebar, .app-main > * { position: relative; z-index: 1; }
+
+.app-sidebar {
+  position: sticky;
+  top: 1rem;
+  align-self: start;
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.9));
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: var(--shadow);
+  border-radius: var(--radius-xl);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+  isolation: isolate;
+}
+
+.app-sidebar::after {
+  content: "";
+  position: absolute;
+  right: -80px;
+  top: -60px;
+  width: 180px;
+  height: 180px;
+  background: conic-gradient(from 220deg, rgba(209, 107, 47, 0.16), rgba(0, 90, 156, 0.03), rgba(209, 107, 47, 0.22));
+  border-radius: 50%;
+  filter: blur(14px);
+  z-index: -1;
+}
+
+.brand-mark { display: flex; align-items: center; gap: 0.7rem; }
+.brand-mark svg { flex-shrink: 0; border-radius: 10px; box-shadow: var(--shadow-sm); }
+.brand-mark strong {
+  display: block; font-family: var(--font-display); text-transform: uppercase;
+  font-size: 1.05rem; line-height: 1; color: var(--ink);
+}
+.brand-mark span {
+  display: block; font-family: var(--font-body); font-size: 0.66rem;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); margin-top: 0.2rem;
+}
+
+.side-nav-label {
+  font-family: var(--font-body); font-size: 0.66rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--ink-faint); margin: 0 0 0.6rem;
+}
+
+.side-nav { display: grid; gap: 0.55rem; }
+
+.side-nav a {
+  display: flex; align-items: baseline; gap: 0.55rem;
+  color: var(--ink-soft); text-decoration: none; font-size: 0.86rem; font-weight: 500;
+  padding: 0.7rem 0.8rem; border-radius: var(--radius-sm);
+  border: 1px solid rgba(23, 34, 48, 0.08); background: rgba(255, 255, 255, 0.72);
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background 180ms ease, color 180ms ease;
+}
+.side-nav a b { font-family: var(--font-display); font-weight: 600; font-size: 0.72rem; color: var(--ink-faint); }
+.side-nav a:hover {
+  transform: translateY(-1px);
+  border-color: rgba(209, 107, 47, 0.28);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 245, 238, 0.96));
+  box-shadow: var(--shadow-sm);
+}
+.side-nav a.active {
+  background: var(--accent-soft);
+  border-color: rgba(209, 107, 47, 0.35);
+  color: var(--accent-deep);
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+}
+.side-nav a.active b { color: var(--accent-deep); }
+
+.side-foot {
+  margin-top: auto; font-size: 0.74rem; color: var(--ink-faint);
+  border-top: 1px solid var(--line); padding-top: 0.9rem; display: grid; gap: 0.35rem; line-height: 1.5;
+}
+.side-foot a { color: var(--brand-secondary); }
+
+/* ---------- Main column ---------- */
+
+.app-main { display: grid; gap: clamp(1rem, 2vw, 1.5rem); align-content: start; }
+
+.crumb {
+  display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;
+}
+.crumb b { color: var(--ink); font-weight: 600; text-transform: none; letter-spacing: 0; font-family: var(--font-body); font-size: 0.78rem; }
+
+.meta { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.meta-pill {
+  font-family: var(--font-body); font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase;
+  border-radius: 999px; border: 1px solid var(--line-strong); background: rgba(255, 255, 255, 0.75);
+  color: var(--ink-soft); padding: 0.35rem 0.65rem;
+}
+.meta-pill.draft { border-color: rgba(209, 107, 47, 0.4); color: var(--accent-deep); background: var(--accent-soft); }
+
+.topbar-inner {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(120deg, rgba(10, 111, 184, 0.92), rgba(0, 63, 115, 0.98)), var(--brand-primary-dark);
+  color: #fff;
+  padding: clamp(1.4rem, 2.4vw, 2.2rem);
+  box-shadow: var(--shadow);
+  isolation: isolate;
+}
+.hero::before, .hero::after {
+  content: ""; position: absolute; inset: auto; border-radius: 999px; opacity: 0.55; z-index: -1;
+}
+.hero::before {
+  width: 280px; height: 280px; right: -70px; top: -110px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.4), transparent 66%);
+}
+.hero::after {
+  width: 420px; height: 420px; right: 18%; bottom: -300px;
+  background: radial-gradient(circle, rgba(209, 107, 47, 0.32), transparent 68%);
+}
+.hero-grid {
+  display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.95fr);
+  gap: 1.25rem; align-items: end;
+}
+.hero .eyebrow { color: rgba(255, 255, 255, 0.7); }
+.hero h1 {
+  font-size: clamp(2.1rem, 3.6vw, 3.4rem);
+  max-width: 16ch;
+  margin-top: 0.2rem;
+  color: #fff;
+}
+.hero p {
+  max-width: 62ch; color: rgba(255, 255, 255, 0.86); margin: 0.85rem 0 0;
+  line-height: 1.75; font-size: 0.96rem; text-transform: none;
+}
+.mockup-flag {
+  display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 1rem;
+  font-family: var(--font-body); font-weight: 600; font-size: 0.68rem; text-transform: uppercase;
+  letter-spacing: 0.08em; color: #fff; background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.32); padding: 0.35rem 0.7rem; border-radius: 999px;
+}
+
+.stats-ribbon { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.85rem; align-self: stretch; }
+.metric-card {
+  background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 20px; padding: 1rem; min-height: 118px; display: flex; flex-direction: column;
+  justify-content: space-between; min-width: 0; overflow: hidden;
+}
+.metric-card .metric-label { color: rgba(255, 255, 255, 0.8); }
+.metric-value {
+  font-family: var(--font-display); text-transform: none; font-size: clamp(1.5rem, 2vw, 2rem);
+  line-height: 1; margin: 0.25rem 0 0; color: #fff;
+}
+.metric-delta {
+  font-size: 0.76rem; font-weight: 600; color: rgba(255, 255, 255, 0.9);
+  display: inline-flex; align-items: center; gap: 0.25rem; margin-top: 0.3rem;
+}
+.metric-delta.up::before { content: "▲ "; }
+.metric-delta.down::before { content: "▼ "; }
+
+/* ---------- Jump nav ---------- */
+
+.jump-nav { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+.jump-link {
+  color: var(--accent-deep); text-decoration: none; border: 1px solid rgba(209, 107, 47, 0.22);
+  padding: 0.5rem 0.75rem; border-radius: 999px; background: var(--accent-soft);
+  font-size: 0.8rem; font-weight: 500; transition: transform 160ms ease, box-shadow 160ms ease;
+}
+.jump-link:hover { transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+
+/* ---------- Filters ---------- */
+
+.filter-bar {
+  display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center;
+  background: var(--panel-strong); border: 1px solid rgba(23, 34, 48, 0.08);
+  border-radius: var(--radius-lg); padding: 1rem 1.1rem; box-shadow: var(--shadow-sm);
+}
+.filter-group { display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap; }
+.filter-group .fg-label {
+  font-family: var(--font-body); font-weight: 600; font-size: 0.66rem; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--ink-faint); margin-right: 0.2rem;
+}
+.chip {
+  font: inherit; font-size: 0.82rem; border: 1px solid rgba(23, 34, 48, 0.09);
+  background: rgba(255, 255, 255, 0.75); color: var(--ink-soft); padding: 0.5rem 0.85rem;
+  border-radius: 999px; cursor: pointer;
+  transition: transform 180ms ease, background 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+.chip:hover { transform: translateY(-1px); border-color: rgba(209, 107, 47, 0.28); }
+.chip.active { background: var(--accent-soft); border-color: rgba(209, 107, 47, 0.32); color: var(--accent-deep); font-weight: 600; }
+.filter-sep { width: 1px; align-self: stretch; background: var(--line); margin: 0 0.2rem; }
+.filter-note { margin-left: auto; font-size: 0.76rem; color: var(--ink-faint); font-style: italic; text-transform: none; letter-spacing: 0; }
+
+/* ---------- Cards / chart grid ---------- */
+
+.chart-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 1rem; }
+.chart-grid.thirds { grid-template-columns: 1fr 1fr; }
+
+.card {
+  background: var(--panel-strong);
+  border: 1px solid rgba(23, 34, 48, 0.08);
+  border-radius: var(--radius-xl);
+  padding: 1.25rem 1.35rem;
+  box-shadow: var(--shadow);
+  scroll-margin-top: 1.2rem;
+}
+.card-head { display: flex; justify-content: space-between; align-items: baseline; gap: 0.6rem; margin-bottom: 0.9rem; flex-wrap: wrap; }
+.card-head h2, .card-head h3 { color: var(--ink); font-size: var(--step-1); }
+.card-note { text-transform: none; letter-spacing: 0; font-size: 0.78rem; }
+
+.legend { display: flex; gap: 0.9rem; flex-wrap: wrap; font-size: 0.78rem; color: var(--ink-soft); margin-top: 0.8rem; }
+.legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
+.legend i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+
+.chart-svg { width: 100%; height: auto; display: block; }
+.chart-svg text { font-family: "Poppins", sans-serif; }
+
+/* ---------- Tables ---------- */
+
+.table-wrap {
+  overflow: auto; border-radius: var(--radius-lg); border: 1px solid rgba(23, 34, 48, 0.08);
+  background: rgba(255, 255, 255, 0.86);
+}
+.data-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; min-width: 480px; }
+.data-table thead {
+  position: sticky; top: 0;
+  background: linear-gradient(180deg, rgba(0, 90, 156, 0.94), rgba(0, 63, 115, 0.97));
+  color: #fff; z-index: 1;
+}
+.data-table th {
+  text-align: left; font-family: var(--font-body); font-weight: 600; font-size: 0.68rem;
+  letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255, 255, 255, 0.92);
+  padding: 0.8rem 0.9rem;
+}
+.data-table td { padding: 0.75rem 0.9rem; border-bottom: 1px solid var(--line); color: var(--ink); vertical-align: middle; }
+.data-table tbody tr:nth-child(even) { background: rgba(23, 34, 48, 0.025); }
+.data-table tbody tr:hover { background: var(--accent-soft); }
+
+.badge {
+  display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.72rem; font-weight: 600;
+  padding: 0.22rem 0.6rem; border-radius: 999px;
+}
+.badge.ok { background: var(--ok-100); color: var(--ok-600); }
+.badge.warn { background: var(--warn-100); color: var(--warn-deep); }
+.badge.risk { background: var(--risk-100); color: var(--risk-600); }
+.badge.info { background: var(--info-100); color: var(--brand-secondary); }
+.badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+.bar-cell { display: flex; align-items: center; gap: 0.5rem; }
+.bar-track { flex: 1; height: 6px; border-radius: 999px; background: rgba(23, 34, 48, 0.08); overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 999px; background: var(--brand-secondary); }
+.bar-fill.risk { background: var(--risk-600); }
+.bar-fill.warn { background: var(--warn-600); }
+.bar-fill.ok { background: var(--ok-600); }
+
+/* ---------- Alerts ---------- */
+
+.alert-list { display: grid; gap: 0.65rem; }
+.alert-item {
+  display: grid; grid-template-columns: auto 1fr auto; gap: 0.8rem; align-items: start;
+  padding: 0.85rem 1rem; border-radius: var(--radius-md); border: 1px solid rgba(23, 34, 48, 0.08);
+  background: rgba(255, 255, 255, 0.85);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+.alert-item:hover { transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+.alert-item .dot { width: 10px; height: 10px; border-radius: 50%; margin-top: 0.4rem; }
+.alert-item.risk .dot { background: var(--risk-600); }
+.alert-item.warn .dot { background: var(--warn-600); }
+.alert-item.ok .dot { background: var(--ok-600); }
+.alert-item strong { font-family: var(--font-body); display: block; color: var(--ink); font-size: 0.9rem; font-weight: 600; text-transform: none; }
+.alert-item p { margin: 0.2rem 0 0; color: var(--ink-soft); font-size: 0.83rem; }
+.alert-item time { font-family: var(--font-body); font-size: 0.68rem; color: var(--ink-faint); white-space: nowrap; text-transform: uppercase; letter-spacing: 0.04em; }
+
+/* ---------- KPI (fallback, panels without hero-embedded stats) ---------- */
+
+.kpi-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.9rem; }
+.kpi-card {
+  background: var(--panel-strong); border: 1px solid rgba(23, 34, 48, 0.08); border-radius: var(--radius-lg);
+  padding: 1rem 1.1rem; box-shadow: var(--shadow-sm); display: grid; gap: 0.35rem;
+}
+.kpi-card .kpi-label { font-size: 0.68rem; }
+.kpi-card strong { font-family: var(--font-display); text-transform: none; font-size: 1.7rem; color: var(--ink); line-height: 1; }
+.kpi-delta { font-size: 0.76rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.25rem; width: fit-content; padding: 0.12rem 0.5rem; border-radius: 999px; }
+.kpi-delta.up { color: var(--ok-600); background: var(--ok-100); }
+.kpi-delta.down { color: var(--risk-600); background: var(--risk-100); }
+.kpi-delta.flat { color: var(--ink-soft); background: rgba(23, 34, 48, 0.06); }
+
+/* ---------- Launch grid (index) ---------- */
+
+.launch-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.launch-card {
+  background: var(--panel-strong); border: 1px solid rgba(23, 34, 48, 0.08); border-radius: var(--radius-xl);
+  box-shadow: var(--shadow); padding: 1.4rem 1.4rem 1.15rem; display: grid; gap: 0.7rem;
+  text-decoration: none; color: inherit; position: relative; overflow: hidden;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+.launch-card::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 5px; background: var(--accent-line, var(--brand-secondary)); }
+.launch-card:hover { transform: translateY(-3px); box-shadow: 0 30px 70px rgba(24, 28, 38, 0.18); }
+.launch-card .idx { font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); }
+.launch-card h2 { font-size: 1.3rem; color: var(--ink); }
+.launch-card p { margin: 0; color: var(--ink-soft); font-size: 0.9rem; text-transform: none; }
+.launch-card ul { margin: 0; padding-left: 1.1rem; color: var(--ink-soft); font-size: 0.84rem; display: grid; gap: 0.2rem; }
+.launch-card .cta { margin-top: 0.3rem; font-family: var(--font-body); font-weight: 600; font-size: 0.8rem; color: var(--accent-deep); display: inline-flex; align-items: center; gap: 0.35rem; }
+.launch-card:nth-child(1) { --accent-line: var(--brand-secondary); }
+.launch-card:nth-child(2) { --accent-line: var(--brand-primary); }
+.launch-card:nth-child(3) { --accent-line: var(--brand-primary-dark); }
+
+.context-panel {
+  position: relative; overflow: hidden; isolation: isolate;
+  background: linear-gradient(120deg, rgba(10, 111, 184, 0.92), rgba(0, 63, 115, 0.98)), var(--brand-primary-dark);
+  color: #fff; border-radius: var(--radius-xl); padding: 1.6rem 1.8rem; box-shadow: var(--shadow);
+  display: grid; gap: 0.8rem;
+}
+.context-panel::before {
+  content: ""; position: absolute; width: 300px; height: 300px; right: -80px; top: -120px;
+  border-radius: 50%; background: radial-gradient(circle, rgba(255, 255, 255, 0.38), transparent 66%); z-index: -1;
+}
+.context-panel::after {
+  content: ""; position: absolute; width: 420px; height: 420px; right: 15%; bottom: -300px;
+  border-radius: 50%; background: radial-gradient(circle, rgba(209, 107, 47, 0.32), transparent 68%); z-index: -1;
+}
+.context-panel .eyebrow { color: rgba(255, 255, 255, 0.7); }
+.context-panel h1 { color: #fff; font-size: clamp(1.9rem, 3.4vw, 2.9rem); max-width: 30ch; line-height: 1.05; }
+.context-panel p { margin: 0; max-width: 62ch; color: rgba(255, 255, 255, 0.88); text-transform: none; font-size: 0.96rem; line-height: 1.7; }
+.context-notes { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.2rem; }
+.context-notes span {
+  font-family: var(--font-body); font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, 0.32); background: rgba(255, 255, 255, 0.1);
+  padding: 0.35rem 0.65rem; border-radius: 999px; color: #fff;
+}
+
+/* ---------- Footer / empty ---------- */
+
+.footer-note {
+  text-transform: none; letter-spacing: 0; font-size: 0.8rem; color: var(--ink-faint);
+  padding: 0.5rem 0.1rem 0; line-height: 1.6;
+}
+.footer-note code {
+  font-family: "Consolas", "Courier New", monospace; font-size: 0.85em; padding: 0.1rem 0.35rem;
+  border-radius: 6px; background: rgba(23, 34, 48, 0.08); color: var(--accent-deep);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 1160px) {
+  .app-shell { grid-template-columns: 1fr; }
+  .app-sidebar { position: relative; top: 0; max-height: none; }
+  .kpi-strip, .stats-ribbon, .hero-grid { grid-template-columns: 1fr; }
+  .chart-grid, .chart-grid.thirds { grid-template-columns: 1fr; }
+  .launch-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 720px) {
+  .app-shell { padding: 0.75rem; }
+  .app-sidebar, .hero, .card, .context-panel, .launch-card { border-radius: 24px; }
+  .kpi-strip { grid-template-columns: 1fr 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo principal</a>
+<div class="app-shell">
+  <aside class="app-sidebar">
+    <div class="brand-mark">
+      <svg width="36" height="36" viewBox="0 0 34 34" fill="none"><rect width="34" height="34" rx="9" fill="#0A6FB8"/><path d="M8 24V10h6.2c3 0 5 1.8 5 4.6 0 2.8-2 4.6-5 4.6h-3v4.8H8Zm3.2-7.4h2.7c1.3 0 2.1-.7 2.1-1.8s-.8-1.8-2.1-1.8h-2.7v3.6Z" fill="#fff"/></svg>
+      <div>
+        <strong>Patronage Analytics</strong>
+        <span>Protótipos FR-6</span>
+      </div>
+    </div>
+    <nav aria-label="Navegação entre painéis">
+      <p class="side-nav-label">Paineis mandatórios</p>
+      <div class="side-nav">
+        <a href="./index.html"><b>00</b>&nbsp;Visão geral</a>
+        <a href="./painel-operacional-chamadas-editais.html" class="active"><b>01</b>&nbsp;Operacional</a>
+        <a href="./painel-gerencial-convenios-execucao.html"><b>02</b>&nbsp;Gerencial</a>
+        <a href="./painel-conciliacao-sigef-patronage.html"><b>03</b>&nbsp;Conciliação</a>
+        <a href="./painel-executivo-kpis.html"><b>04</b>&nbsp;Executivo</a>
+        <a href="./checklist-homologacao.html"><b>05</b>&nbsp;Checklist</a>
+      </div>
+    </nav>
+    <div class="side-foot">
+      <span>Fontes: editais, edital_chamadas, chamada_execucoes, chamada_areas</span>
+      <span>Granularidade: mensal (D+1)</span>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <div class="topbar-inner">
+      <div class="crumb"><span class="eyebrow" style="margin:0;">patronage</span> <span class="eyebrow" style="margin:0;">/</span> <b>Painel 01 · Operacional</b></div>
+      <div class="meta">
+        <span class="meta-pill draft">Status: mockup</span>
+        <span class="meta-pill">Perfil: operacional</span>
+      </div>
+    </div>
+
+    <main id="conteudo" style="display:grid; gap:1.35rem;">
+      <section class="hero" aria-labelledby="heroTitle">
+        <div class="hero-grid">
+          <div>
+            <p class="eyebrow">Painel mandatório 1 de 4</p>
+            <h1 id="heroTitle">Chamadas e editais</h1>
+            <p>
+              Leitura do dia a dia da operação: quanto está sendo publicado, em que status cada frente está e onde o
+              ciclo está travando. Uso esperado: coordenação e equipe operacional, atualização D+1.
+            </p>
+            <span class="mockup-flag">Dados fictícios — layout para validação com o PO</span>
+          </div>
+          <div class="stats-ribbon" aria-label="Indicadores-chave">
+            <article class="metric-card">
+              <div>
+                <div class="metric-label">Editais publicados (tri.)</div>
+                <div class="metric-value">18</div>
+              </div>
+              <span class="metric-delta up">22% vs. tri. anterior</span>
+            </article>
+            <article class="metric-card">
+              <div>
+                <div class="metric-label">Chamadas em aberto</div>
+                <div class="metric-value">44</div>
+              </div>
+              <span class="metric-delta up">6 novas na semana</span>
+            </article>
+            <article class="metric-card">
+              <div>
+                <div class="metric-label">Tempo médio de ciclo</div>
+                <div class="metric-value">57 dias</div>
+              </div>
+              <span class="metric-delta down">4 dias vs. meta de 53</span>
+            </article>
+            <article class="metric-card">
+              <div>
+                <div class="metric-label">Chamadas com gargalo</div>
+                <div class="metric-value">9</div>
+              </div>
+              <span class="metric-delta">≈ estável na semana</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <nav class="jump-nav" aria-label="Navegação rápida entre seções">
+        <a class="jump-link" href="#volume">Volume por período</a>
+        <a class="jump-link" href="#status">Status / publicação</a>
+        <a class="jump-link" href="#ciclo">Ciclo por etapa</a>
+        <a class="jump-link" href="#gargalos">Gargalos por área</a>
+      </nav>
+
+      <section class="filter-bar" aria-label="Filtros do painel">
+        <div class="filter-group" role="group" aria-label="Período">
+          <span class="fg-label">Período</span>
+          <button class="chip" type="button" aria-pressed="false">Mensal</button>
+          <button class="chip active" type="button" aria-pressed="true">Trimestral</button>
+          <button class="chip" type="button" aria-pressed="false">Semestral</button>
+          <button class="chip" type="button" aria-pressed="false">Anual</button>
+        </div>
+        <div class="filter-sep"></div>
+        <div class="filter-group" role="group" aria-label="Área / segmentador">
+          <span class="fg-label">Área</span>
+          <button class="chip active" type="button" aria-pressed="true">Todas</button>
+          <button class="chip" type="button" aria-pressed="false">Ciência e Tecnologia</button>
+          <button class="chip" type="button" aria-pressed="false">Saúde</button>
+          <button class="chip" type="button" aria-pressed="false">Educação</button>
+        </div>
+        <div class="filter-sep"></div>
+        <div class="filter-group" role="group" aria-label="Status de publicação">
+          <span class="fg-label">Status</span>
+          <button class="chip active" type="button" aria-pressed="true">Todos</button>
+          <button class="chip" type="button" aria-pressed="false">Publicado</button>
+          <button class="chip" type="button" aria-pressed="false">Em avaliação</button>
+        </div>
+        <div class="filter-sep"></div>
+        <div class="filter-group" role="group" aria-label="Edital">
+          <span class="fg-label">Edital</span>
+          <button class="chip active" type="button" aria-pressed="true">Todos</button>
+          <button class="chip" type="button" aria-pressed="false">FAPEMA 01/2026</button>
+          <button class="chip" type="button" aria-pressed="false">FAPEMA 02/2026</button>
+          <button class="chip" type="button" aria-pressed="false">FAPEMA 03/2026</button>
+        </div>
+        <span class="filter-note">Segmentadores conforme FR-5 · governança analítica</span>
+      </section>
+
+      <section class="chart-grid" aria-label="Volume e distribuição">
+        <article class="card" id="volume">
+          <div class="card-head">
+            <h2>Volume por período</h2>
+            <span class="card-note">editais x chamadas · últimos 6 meses</span>
+          </div>
+          <svg class="chart-svg" viewBox="0 0 620 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Gráfico de barras de volume de editais e chamadas por mês"><line x1="40" y1="226.0" x2="610" y2="226.0" stroke="var(--line)" stroke-width="1"/><text x="32" y="230.0" font-size="9" fill="var(--ink-faint)" text-anchor="end">0</text><line x1="40" y1="173.5" x2="610" y2="173.5" stroke="var(--line)" stroke-width="1"/><text x="32" y="177.5" font-size="9" fill="var(--ink-faint)" text-anchor="end">5</text><line x1="40" y1="121.0" x2="610" y2="121.0" stroke="var(--line)" stroke-width="1"/><text x="32" y="125.0" font-size="9" fill="var(--ink-faint)" text-anchor="end">10</text><line x1="40" y1="68.5" x2="610" y2="68.5" stroke="var(--line)" stroke-width="1"/><text x="32" y="72.5" font-size="9" fill="var(--ink-faint)" text-anchor="end">15</text><line x1="40" y1="16.0" x2="610" y2="16.0" stroke="var(--line)" stroke-width="1"/><text x="32" y="20.0" font-size="9" fill="var(--ink-faint)" text-anchor="end">20</text><rect x="69.5" y="194.5" width="16" height="31.5" rx="3" fill="#003F73"/><rect x="89.5" y="142.0" width="16" height="84.0" rx="3" fill="#0A6FB8"/><text x="87.5" y="242" font-size="10" fill="var(--ink-soft)" text-anchor="middle">Fev</text><rect x="164.5" y="173.5" width="16" height="52.5" rx="3" fill="#003F73"/><rect x="184.5" y="110.5" width="16" height="115.5" rx="3" fill="#0A6FB8"/><text x="182.5" y="242" font-size="10" fill="var(--ink-soft)" text-anchor="middle">Mar</text><rect x="259.5" y="184.0" width="16" height="42.0" rx="3" fill="#003F73"/><rect x="279.5" y="131.5" width="16" height="94.5" rx="3" fill="#0A6FB8"/><text x="277.5" y="242" font-size="10" fill="var(--ink-soft)" text-anchor="middle">Abr</text><rect x="354.5" y="163.0" width="16" height="63.0" rx="3" fill="#003F73"/><rect x="374.5" y="79.0" width="16" height="147.0" rx="3" fill="#0A6FB8"/><text x="372.5" y="242" font-size="10" fill="var(--ink-soft)" text-anchor="middle">Mai</text><rect x="449.5" y="173.5" width="16" height="52.5" rx="3" fill="#003F73"/><rect x="469.5" y="100.0" width="16" height="126.0" rx="3" fill="#0A6FB8"/><text x="467.5" y="242" font-size="10" fill="var(--ink-soft)" text-anchor="middle">Jun</text><rect x="544.5" y="152.5" width="16" height="73.5" rx="3" fill="#003F73"/><rect x="564.5" y="58.0" width="16" height="168.0" rx="3" fill="#d16b2f"/><text x="562.5" y="242" font-size="10" fill="var(--ink-soft)" text-anchor="middle">Jul</text></svg>
+          <div class="legend">
+            <span><i style="background:#003F73"></i> Editais publicados</span>
+            <span><i style="background:#0A6FB8"></i> Chamadas abertas</span>
+            <span><i style="background:#d16b2f"></i> Mês corrente</span>
+          </div>
+        </article>
+
+        <article class="card" id="status">
+          <div class="card-head">
+            <h3>Status / publicação</h3>
+            <span class="card-note">chamadas no trimestre</span>
+          </div>
+          <svg class="chart-svg" viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Gráfico de rosca da distribuição de chamadas por status"><circle cx="130.0" cy="130.0" r="90" fill="none" stroke="rgba(23,34,48,0.08)" stroke-width="34"/><circle cx="130.0" cy="130.0" r="90" fill="none" stroke="#0A6FB8" stroke-width="34" stroke-dasharray="231.3 334.2" transform="rotate(-90.0 130.0 130.0)" stroke-linecap="butt"/><circle cx="130.0" cy="130.0" r="90" fill="none" stroke="#3B82C4" stroke-width="34" stroke-dasharray="115.7 449.8" transform="rotate(57.3 130.0 130.0)" stroke-linecap="butt"/><circle cx="130.0" cy="130.0" r="90" fill="none" stroke="#F9A825" stroke-width="34" stroke-dasharray="64.3 501.2" transform="rotate(130.9 130.0 130.0)" stroke-linecap="butt"/><circle cx="130.0" cy="130.0" r="90" fill="none" stroke="#8A8A8A" stroke-width="34" stroke-dasharray="154.2 411.3" transform="rotate(171.8 130.0 130.0)" stroke-linecap="butt"/><text x="130.0" y="126.0" font-size="24" font-weight="700" fill="var(--ink)" text-anchor="middle" font-family="'League Spartan', sans-serif">44</text><text x="130.0" y="146.0" font-size="9" fill="var(--ink-faint)" text-anchor="middle">total no período</text></svg>
+          <div class="legend">
+            <span><i style="background:#0A6FB8"></i> Publicado (18)</span>
+            <span><i style="background:#3B82C4"></i> Em avaliação (9)</span>
+            <span><i style="background:#F9A825"></i> Rascunho (5)</span>
+            <span><i style="background:#8A8A8A"></i> Encerrado (12)</span>
+          </div>
+        </article>
+      </section>
+
+      <section class="chart-grid" aria-label="Ciclo e gargalos">
+        <article class="card" id="ciclo">
+          <div class="card-head">
+            <h3>Tempo médio de ciclo por etapa</h3>
+            <span class="card-note">meta institucional: 53 dias · fim a fim</span>
+          </div>
+          <svg class="chart-svg" viewBox="0 0 560 148" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Gráfico de barras horizontais do tempo médio por etapa"><text x="130" y="28.0" font-size="10" fill="var(--ink-soft)" text-anchor="end">Submissão</text><rect x="140" y="14" width="370" height="22" rx="4" fill="rgba(23,34,48,0.08)"/><rect x="140" y="14" width="92.5" height="22" rx="4" fill="#3B82C4"/><text x="240.5" y="28.0" font-size="10" font-weight="600" fill="var(--ink)">6 dias</text><text x="130" y="62.0" font-size="10" fill="var(--ink-soft)" text-anchor="end">Avaliação</text><rect x="140" y="48" width="370" height="22" rx="4" fill="rgba(23,34,48,0.08)"/><rect x="140" y="48" width="277.5" height="22" rx="4" fill="#0A6FB8"/><text x="425.5" y="62.0" font-size="10" font-weight="600" fill="var(--ink)">18 dias</text><text x="130" y="96.0" font-size="10" fill="var(--ink-soft)" text-anchor="end">Contratação</text><rect x="140" y="82" width="370" height="22" rx="4" fill="rgba(23,34,48,0.08)"/><rect x="140" y="82" width="138.8" height="22" rx="4" fill="#005A9C"/><text x="286.8" y="96.0" font-size="10" font-weight="600" fill="var(--ink)">9 dias</text><text x="130" y="130.0" font-size="10" fill="var(--ink-soft)" text-anchor="end">Execução (parcial)</text><rect x="140" y="116" width="370" height="22" rx="4" fill="rgba(23,34,48,0.08)"/><rect x="140" y="116" width="370.0" height="22" rx="4" fill="#d16b2f"/><text x="518.0" y="130.0" font-size="10" font-weight="600" fill="var(--ink)">24 dias</text></svg>
+        </article>
+
+        <article class="card" id="gargalos">
+          <div class="card-head">
+            <h3>Gargalos por segmentador (área)</h3>
+            <span class="card-note">chamadas com atraso &gt; SLA de etapa</span>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr><th>Área</th><th>Em atraso</th><th>Espera média</th><th>Situação</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Ciência e Tecnologia</td>
+                  <td>4</td>
+                  <td><div class="bar-cell"><div class="bar-track"><div class="bar-fill risk" style="width:82%"></div></div><span>19 dias</span></div></td>
+                  <td><span class="badge risk">Crítico</span></td>
+                </tr>
+                <tr>
+                  <td>Saúde</td>
+                  <td>2</td>
+                  <td><div class="bar-cell"><div class="bar-track"><div class="bar-fill warn" style="width:55%"></div></div><span>12 dias</span></div></td>
+                  <td><span class="badge warn">Atenção</span></td>
+                </tr>
+                <tr>
+                  <td>Educação</td>
+                  <td>2</td>
+                  <td><div class="bar-cell"><div class="bar-track"><div class="bar-fill warn" style="width:44%"></div></div><span>9 dias</span></div></td>
+                  <td><span class="badge warn">Atenção</span></td>
+                </tr>
+                <tr>
+                  <td>Meio Ambiente</td>
+                  <td>1</td>
+                  <td><div class="bar-cell"><div class="bar-track"><div class="bar-fill ok" style="width:20%"></div></div><span>4 dias</span></div></td>
+                  <td><span class="badge ok">Dentro do SLA</span></td>
+                </tr>
+                <tr>
+                  <td>Cultura</td>
+                  <td>0</td>
+                  <td><div class="bar-cell"><div class="bar-track"><div class="bar-fill ok" style="width:10%"></div></div><span>2 dias</span></div></td>
+                  <td><span class="badge ok">Dentro do SLA</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <footer class="footer-note">
+        Painel operacional (1 de 4) · Fontes de referência: <code>editais</code>, <code>edital_chamadas</code>,
+        <code>chamada_execucoes</code>, <code>chamada_areas</code> (Atlas SQL). Números ilustrativos — sujeitos a
+        homologação de regra de negócio junto ao PO antes da carga real via ETL D+1.
+      </footer>
+    </main>
+  </div>
+</div>
+<script>
+(function () {
+  document.addEventListener('click', function (event) {
+    var chip = event.target.closest('.chip');
+    if (!chip) return;
+    var group = chip.closest('.filter-group');
+    if (!group) return;
+    group.querySelectorAll('.chip').forEach(function (el) {
+      el.classList.remove('active');
+      el.setAttribute('aria-pressed', 'false');
+    });
+    chip.classList.add('active');
+    chip.setAttribute('aria-pressed', 'true');
+  });
+})();
+</script>
+</body>
+</html>
