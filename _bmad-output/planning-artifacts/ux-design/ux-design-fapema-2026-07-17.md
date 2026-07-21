@@ -7,7 +7,7 @@
 
 ## Objetivo do artefato
 
-Consolidar em texto o contrato de UX implicito nos mockups V2 para que PRD, epicos, arquitetura e implementacao Laravel tenham uma referencia rastreavel unica. Este documento nao substitui os mockups HTML; ele descreve as decisoes de experiencia, estrutura e homologacao ja representadas neles.
+Consolidar em texto o contrato de UX implicito nos mockups V2 para que PRD, epicos, arquitetura e a equipe do Patronage tenham uma referencia rastreavel unica de segmentadores, filtros e desagregacoes. Este documento nao substitui os mockups HTML; ele descreve as decisoes de experiencia, estrutura e homologacao ja representadas neles. A partir do reescopo de 2026-07-21, este time nao implementa mais a UI definitiva — o documento passa a ser consumido pela equipe do Patronage como contrato de referencia, priorizando os paineis de Conciliacao e Executivo no ciclo 1.
 
 ## Evidencias fonte
 
@@ -26,6 +26,8 @@ Este artefato cobre os quatro paineis mandatarios da fase 1 e a tela de checklis
 - `painel-conciliacao-sigef-patronage.html`
 - `painel-executivo-kpis.html`
 - `checklist-homologacao.html`
+
+Prioridade do ciclo 1: `painel-conciliacao-sigef-patronage.html` (principal) e `painel-executivo-kpis.html` (secundaria). Os paineis operacional e gerencial permanecem documentados neste artefato como referencia, mas ficam fora do ciclo 1 e adiados para ciclo futuro.
 
 ## Direcao visual homologada
 
@@ -185,17 +187,19 @@ Requisitos:
 - Stories 2.3 a 2.6: este documento descreve o comportamento e a intencao de cada painel mandatorio.
 - Story 2.7: este documento confirma o contrato funcional do checklist de homologacao.
 
-## Criticos para implementacao Laravel
+## Criticos para a equipe do Patronage considerar na implementacao
 
-Para evitar divergencia entre mockup e tela final, a implementacao deve preservar explicitamente:
+Para evitar divergencia entre mockup de referencia e tela final implementada pela equipe do Patronage, a implementacao deve preservar explicitamente:
 
 - o shell compartilhado de navegacao;
 - os tokens de marca e estados semanticos;
 - o comportamento de foco, `skip-link` e navegacao por teclado;
 - a responsividade da malha principal, cards e tabelas;
 - a sinalizacao de status parcial ou bloqueante em conciliacao e homologacao;
-- a consistencia de rotulagem entre os quatro paineis e o checklist.
+- a consistencia de rotulagem entre os paineis priorizados (Conciliacao, Executivo) e o checklist.
+
+Esta secao e uma recomendacao a ser comunicada a equipe do Patronage; a validacao final de aderencia e responsabilidade dela.
 
 ## Decisao para fluxo BMad
 
-Este artefato substitui o registro resumido anterior como referencia textual de UX para o projeto. O CU permanece concluido, agora com especificacao suficiente para rastreabilidade de implementacao e nova rodada de readiness.
+Este artefato substitui o registro resumido anterior como referencia textual de UX para o projeto. O CU permanece concluido. A partir do reescopo de 2026-07-21, o documento deixa de ser especificacao de implementacao deste time e passa a ser contrato de referencia para a equipe do Patronage, com prioridade nos paineis de Conciliacao e Executivo.
