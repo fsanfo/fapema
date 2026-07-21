@@ -1,5 +1,7 @@
 # Checkpoint de Homologacao dos Paineis da Fase 1
 
+> **Obsoleto a partir de 2026-07-21** — este checkpoint foi substituido por `checkpoint-homologacao-contrato-dados-ciclo1-2026-07-21.md` apos reescopo do ciclo 1 (ver `change-trigger-reescopo-paineis-2026-07-21.md`). Mantido como registro historico e como fonte dos criterios originais de Operacional e Gerencial para retomada em ciclo futuro.
+
 **Data de preparo:** 2026-07-17
 **Status do checkpoint:** pronto para execucao
 **Objetivo:** conduzir o aceite formal dos quatro paineis mandatarios do PRD antes da implementacao definitiva no ecossistema Laravel.

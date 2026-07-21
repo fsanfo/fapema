@@ -1,5 +1,7 @@
 # Checkpoint Executivo de Homologacao - Paineis Fase 1
 
+> **Obsoleto a partir de 2026-07-21** — este checkpoint foi substituido por `checkpoint-homologacao-contrato-dados-ciclo1-2026-07-21-executivo.md` apos reescopo do ciclo 1 (ver `change-trigger-reescopo-paineis-2026-07-21.md`). Mantido como registro historico e como fonte dos criterios originais de Operacional e Gerencial para retomada em ciclo futuro.
+
 **Data sugerida:** ___/___/2026  
 **Duracao sugerida:** 45 a 60 minutos  
 **Objetivo:** sair da reuniao com decisao clara por painel: `aprovado`, `ressalvas`, `reprovado` ou `pendente`.

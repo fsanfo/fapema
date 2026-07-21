@@ -31,8 +31,8 @@ FR1: Inventariar entidades e relacionamentos prioritarios de Patronage e SIGEF, 
 FR2: Definir Star Schema inicial com fatos e dimensoes conformadas para indicadores prioritarios e conciliacao financeira, incluindo granularidade mensal, trimestral, semestral e anual.
 FR3: Executar cargas ETL recorrentes (D+1) para camada Curated com logs de execucao, origem de lote e contagem de registros processados.
 FR4: Validar qualidade de dados por lote (integridade, completude, consistencia e batimento financeiro), classificar divergencias e tratar excecoes de mapeamento.
-FR5: Entregar paineis iniciais com filtros principais/secundarios e KPIs aprovados para perfis operacional, gerencial, financeiro e C-Level, com criterios formais de homologacao.
-FR6: Prototipar e validar interfaces HTML dos paineis prioritarios antes da implementacao definitiva no ecossistema Laravel.
+FR5: Entregar contrato de dados homologado (views/marts na camada semantica do DW) para os paineis prioritarios do ciclo 1 - Conciliacao (prioridade principal) e Executivo (prioridade secundaria) - para consumo da equipe do Patronage na implementacao da UI Laravel.
+FR6: Manter os mockups HTML V2 como contrato de referencia de segmentadores, filtros e desagregacoes para a equipe do Patronage, responsavel pela definicao e implementacao da UI definitiva.
 
 ### NonFunctional Requirements
 
@@ -65,6 +65,13 @@ NFR12: Usabilidade executiva: leitura de KPIs institucionais prioritarios em ate
 - Criar alerta diario para pendencias de curadoria da ponte acima do SLA.
 - As historias 1.5 a 1.8 cobrem governanca LGPD, parametrizacao de regras de negocio, robustez da integracao SIGEF e operacao de curadoria de pontes.
 - Registrar como dependencias humanas de decisao: dono formal LGPD, regra oficial de status, regra oficial de rateio, dono/SLA da curadoria.
+- [Reescopo 2026-07-21] Fronteira de responsabilidade: a entrega deste time termina na camada semantica do DW (views/contratos de dados homologados); a equipe do Patronage assume a definicao e implementacao da UI Laravel a partir dos mockups V2 como contrato de referencia.
+- Definir SLA de consulta das views de Conciliacao e Executivo junto com a equipe do Patronage, ja que a experiencia final de filtro sem recarregamento depende da performance da camada exposta.
+- Executar teste de carga com volumetria real (centenas de milhares de registros) como pre-requisito do handoff formal, com atencao a `fato_eventos_operacionais_diario` e as procedures de reconciliacao.
+- Um painel do dia so deve ser tratado como confiavel pela UI do Patronage quando `ctl_lote_carga` do dominio `orquestracao_d1` para a data de referencia estiver `concluido` ou `concluido_com_erro`.
+- Views criticas devem registrar versao do lote/timestamp de atualizacao e explicitar o motivo quando o dado estiver bloqueado por regra de qualidade ou dependencia externa (nao apenas omitir o dado).
+- Sinalizacao de erro de carregamento e log tecnico de falha de UI passam a ser responsabilidade da equipe do Patronage.
+- Paineis Operacional e Gerencial: contrato de dados nao priorizado neste ciclo; views ja mapeadas (`vw_painel_operacional_*`, `vw_painel_gerencial_convenios`) ficam disponiveis para retomada em ciclo futuro.
 
 ### UX Design Requirements
 
@@ -78,8 +85,9 @@ UX-DR7: Aplicar sistema de estados semanticos reutilizavel (sucesso, alerta, ris
 UX-DR8: Garantir responsividade das telas V2 para desktop e mobile com quebras previstas (ex.: grids de resumo e distribuicao de colunas), mantendo legibilidade e acao principal acessivel.
 UX-DR9: Estruturar padrao de tabelas de dados com cabecalhos claros, largura minima controlada, rolagem horizontal segura e hierarquia visual para leitura rapida.
 UX-DR10: Preservar direcao de linguagem visual editorial definida nos mockups V2 (papel quente, vidro, acento terracota, League Spartan + Poppins), evitando regressao para UI generica.
-UX-DR11: Garantir que os quatro paineis mandatarios e o checklist possuam navegacao cruzada e consistencia de rotulagem para suportar homologacao com SH/PO sem ambiguidade.
-UX-DR12: Incorporar no front-end os criterios de homologacao por painel como elementos verificaveis na interface (filtros obrigatorios, KPIs minimos, regras de semaforizacao e trilha de evidencias).
+UX-DR11: [Reescopo 2026-07-21] Priorizar consistencia de rotulagem e navegacao cruzada entre os paineis prioritarios do ciclo 1 (Conciliacao, Executivo) e o checklist; Operacional e Gerencial permanecem documentados como referencia, mas fora do ciclo 1.
+UX-DR12: [Reescopo 2026-07-21] Documentar (nao implementar) os criterios de homologacao por painel como contrato verificavel - filtros obrigatorios, KPIs minimos, regras de semaforizacao e trilha de evidencias - a ser comunicado formalmente a equipe do Patronage.
+UX-DR13: [Novo 2026-07-21] A validacao final de aderencia da UI implementada pelo Patronage ao contrato de referencia (shell, tokens, foco/skip-link, responsividade, sinalizacao de status parcial, rotulagem) e responsabilidade dessa equipe; este time entrega apenas a referencia documentada.
 
 ### FR Coverage Map
 
@@ -87,8 +95,8 @@ FR1: Epic 1 - Inventario e mapeamento de entidades e relacionamentos prioritario
 FR2: Epic 1 - Definicao do Star Schema inicial com fatos, dimensoes e granularidades oficiais.
 FR3: Epic 1 - Pipeline ETL D+1 com rastreabilidade de lotes e checkpoints de processamento.
 FR4: Epic 1 - Qualidade de dados, batimento financeiro e tratamento de excecoes de reconciliacao.
-FR5: Epic 2 - Entrega dos paineis mandatarios com filtros, KPIs e criterios de homologacao.
-FR6: Epic 2 - Prototipos HTML validados e fluxo formal de homologacao com SH/PO.
+FR5: Epic 2 - Entrega do contrato de dados/views dos paineis prioritarios (Conciliacao, Executivo) com filtros, KPIs e criterios de homologacao sobre o contrato de dados.
+FR6: Epic 2 - Mockups V2 mantidos como contrato de referencia para a equipe do Patronage, com fluxo formal de homologacao com SH/PO sobre o contrato de dados.
 
 ## Epic List
 
@@ -96,8 +104,8 @@ FR6: Epic 2 - Prototipos HTML validados e fluxo formal de homologacao com SH/PO.
 Entregar uma base analitica confiavel para equipes tecnica e financeira, com dados modelados, curados e conciliados entre Patronage e SIGEF, permitindo rastreabilidade operacional e confianca nos indicadores.
 **FRs covered:** FR1, FR2, FR3, FR4
 
-### Epic 2: Paineis Institucionais para Decisao e Homologacao
-Entregar paineis operacionais, gerenciais, financeiros e executivos com filtros e criterios de homologacao formal, permitindo decisoes institucionais rapidas e validadas.
+### Epic 2: Contrato de Dados para Painéis Prioritários e Homologação
+Entregar contrato de dados/views homologadas para os painéis de Conciliação (prioridade principal) e Executivo (prioridade secundária), para consumo da equipe do Patronage na implementação da UI, com critérios de homologação formal sobre o contrato de dados.
 **FRs covered:** FR5, FR6
 
 ## Epic 1: Base Analitica Confiavel e Conciliacao Financeira
@@ -213,38 +221,39 @@ So that a reconciliacao financeira opere com resiliencia e previsibilidade.
 **And** retries com backoff, timeout e checkpoint incremental devem permitir retomada segura sem duplicacao indevida
 **And** em indisponibilidade SIGEF a carga Patronage deve poder seguir, marcando a reconciliacao como dependencia externa e acionando fallback operacional documentado.
 
-## Epic 2: Paineis Institucionais para Decisao e Homologacao
+## Epic 2: Contrato de Dados para Painéis Prioritários e Homologação
 
-Disponibilizar experiencia analitica institucional com paineis mandatarios homologaveis, mantendo consistencia visual, acessibilidade e rastreabilidade de decisao.
+Entregar contrato de dados/views homologadas para os painéis de Conciliação (prioridade principal) e Executivo (prioridade secundária), para consumo da equipe do Patronage na implementação da UI, com critérios de homologação formal sobre o contrato de dados.
 
-### Story 2.1: Consolidar design system e shell de navegacao dos paineis
+### Story 2.1: Empacotar contrato de design system e shell de navegacao para o Patronage
 
-As a usuario institucional,
-I want uma interface consistente entre os paineis,
-So that eu navegue com baixo esforco cognitivo e compreenda rapidamente o contexto de cada tela.
-
-**Acceptance Criteria:**
-
-**Given** os mockups V2 e contrato UX disponiveis
-**When** o front-end base for implementado
-**Then** tokens de design, tipografia, componentes base e shell de navegacao (sidebar, breadcrumb e metadata pills) devem ser compartilhados entre telas
-**And** deve existir evidencia de reutilizacao desses elementos em CSS/componentes compartilhados entre os quatro paineis e o checklist.
-
-### Story 2.2: Validar acessibilidade e responsividade base dos paineis
-
-As a usuario institucional,
-I want acessar os paineis com navegacao clara em desktop e mobile,
-So that a experiencia homologada nos mockups nao se perca na implementacao final.
+As a equipe de produto,
+I want empacotar e formalizar o contrato de design system (tokens, shell de navegacao, componentes) presente nos mockups V2,
+So that a equipe do Patronage tenha uma referencia unica e completa para implementar a UI sem ambiguidade.
 
 **Acceptance Criteria:**
 
-**Given** os paineis mandatarios implementados sobre a base visual comum
-**When** a validacao de UX tecnico for executada
-**Then** `lang` pt-BR, skip link funcional, foco visivel e navegacao completa por teclado devem estar verificados em checklist rastreavel
-**And** os breakpoints principais devem preservar legibilidade, filtros acessiveis e acao principal visivel nas telas homologadas
-**And** estados semanticos nao podem depender exclusivamente de cor para comunicar risco, sucesso, alerta ou pendencia.
+**Given** os mockups V2 e o contrato UX disponiveis
+**When** o pacote de referencia for formalizado
+**Then** tokens de design, tipografia, componentes base e shell de navegacao devem estar documentados e referenciaveis em um unico artefato
+**And** o pacote deve ser entregue e comunicado formalmente a equipe do Patronage como contrato de referencia, nao como implementacao deste time.
+
+### Story 2.2: Documentar requisitos de acessibilidade e responsividade como contrato de referencia
+
+As a equipe de produto,
+I want documentar explicitamente os requisitos de acessibilidade e responsividade observados nos mockups V2,
+So that a equipe do Patronage tenha criterios claros e verificaveis para nao regredir a experiencia homologada ao implementar a UI final.
+
+**Acceptance Criteria:**
+
+**Given** os mockups V2 dos paineis prioritarios (Conciliacao, Executivo)
+**When** o contrato de acessibilidade e responsividade for formalizado
+**Then** `lang` pt-BR, skip link funcional, foco visivel e navegacao completa por teclado devem estar descritos em checklist rastreavel entregue a equipe do Patronage
+**And** os breakpoints principais e o tratamento de estados semanticos sem dependencia exclusiva de cor devem estar documentados como criterio de aceite para a implementacao externa.
 
 ### Story 2.3: Entregar painel operacional de chamadas e editais
+
+**[ADIADA PARA CICLO FUTURO — fora do ciclo 1 a partir de 2026-07-21. Conteudo abaixo preservado sem alteracao para retomada posterior.]**
 
 As a gestor operacional,
 I want acompanhar volume, status, ciclo e gargalos por filtros oficiais,
@@ -259,6 +268,8 @@ So that eu identifique rapidamente desvios e priorize acoes corretivas.
 
 ### Story 2.4: Entregar painel gerencial de convenios e execucao
 
+**[ADIADA PARA CICLO FUTURO — fora do ciclo 1 a partir de 2026-07-21. Conteudo abaixo preservado sem alteracao para retomada posterior.]**
+
 As a gestor gerencial,
 I want visualizar carteira de convenios, vigencia e aderencia de relatorios,
 So that eu acompanhe risco de prazo e conformidade da execucao.
@@ -270,43 +281,43 @@ So that eu acompanhe risco de prazo e conformidade da execucao.
 **Then** a carteira por tipo e vigencia deve cobrir integralmente o recorte da fase 1
 **And** desvios de prazo e status de relatorios devem ser apresentados com rastreabilidade ate a origem analitica.
 
-### Story 2.5: Entregar painel de conciliacao SIGEF x Patronage
+### Story 2.5: Entregar contrato de dados/views de conciliacao SIGEF x Patronage
 
-As a analista financeiro institucional,
-I want analisar divergencias de pagamentos entre SIGEF e Patronage,
-So that eu trate excecoes com trilha de auditoria por lote.
+As a equipe de dados,
+I want expor uma view/contrato de dados de conciliacao com divergencias e trilha de auditoria por lote,
+So that a equipe do Patronage implemente o painel de conciliacao consumindo dados prontos e confiaveis, e o analista financeiro trate excecoes com rastreabilidade.
 
 **Acceptance Criteria:**
 
 **Given** batimento financeiro por edital + CPF executado na camada analitica
-**When** eu acessar o painel de conciliacao
-**Then** divergencias devem ser classificadas por ausencia no SIGEF, ausencia no Patronage e diferenca de valor/status
-**And** cada resultado deve exibir referencia de lote D+1 com data de carga e quantidade conciliada
-**And** quando o ultimo lote estiver parcial, falho ou dependente de fonte externa, o painel deve sinalizar a restricao e impedir interpretacao de reconciliacao como consolidada.
+**When** a view/contrato de conciliacao for consumido
+**Then** divergencias devem estar classificadas por ausencia no SIGEF, ausencia no Patronage e diferenca de valor/status
+**And** cada resultado deve expor referencia de lote D+1 com data de carga e quantidade conciliada
+**And** quando o ultimo lote estiver parcial, falho ou dependente de fonte externa, a view deve sinalizar a restricao para que a UI do Patronage impeca interpretacao de reconciliacao como consolidada.
 
-### Story 2.6: Entregar painel executivo C-Level com KPIs institucionais
+### Story 2.6: Entregar contrato de dados/views executivas com KPIs institucionais
 
-As a lideranca executiva,
-I want uma visao consolidada dos KPIs institucionais prioritarios,
-So that eu tome decisoes estrategicas em poucos minutos com base em dados confiaveis.
+As a equipe de dados,
+I want expor uma view/contrato de dados com os KPIs executivos consolidados,
+So that a equipe do Patronage implemente o painel executivo e a lideranca tome decisoes estrategicas em poucos minutos com base em dados confiaveis.
 
 **Acceptance Criteria:**
 
 **Given** os KPIs executivos definidos para a fase 1
-**When** eu abrir o painel executivo
-**Then** devo visualizar tendencias, comparativos, alertas e semaforizacao para orcamento, ciclo, convenios, divergencia SIGEF x Patronage e alertas criticos
-**And** o walkthrough executivo deve ser concluivel em ate 5 minutos por representante da alta gestao.
+**When** a view/contrato executivo for consumido
+**Then** devem estar disponiveis tendencias, comparativos, alertas e semaforizacao precomputados para orcamento, ciclo, convenios, divergencia SIGEF x Patronage e alertas criticos
+**And** o payload exposto deve ser enxuto o suficiente para sustentar um walkthrough executivo concluivel em ate 5 minutos na UI final.
 
-### Story 2.7: Operacionalizar checklist de homologacao e aceite formal
+### Story 2.7: Operacionalizar checklist de homologacao e aceite formal do contrato de dados
 
 As a Product Owner,
-I want registrar decisoes de homologacao por criterio e por painel,
-So that o aceite formal da fase seja auditavel e acionavel.
+I want registrar decisoes de homologacao por criterio e por painel sobre o contrato de dados exposto,
+So that o aceite formal do ciclo 1 seja auditavel, acionavel e compartilhado com a equipe do Patronage.
 
 **Acceptance Criteria:**
 
-**Given** os quatro paineis mandatarios disponibilizados
-**When** a reuniao de homologacao com SH/PO ocorrer
+**Given** o contrato de dados dos dois paineis prioritarios (Conciliacao, Executivo) disponibilizado
+**When** a reuniao de homologacao com SH/PO e a equipe do Patronage ocorrer
 **Then** cada criterio deve permitir decisao explicita (aprovado, ressalvas, reprovado, pendente) com consolidacao de resumo da rodada
 **And** pendencias devem ser vinculadas a responsavel e prazo para fechamento do aceite formal
 **And** qualquer painel com criterio `reprovado` ou `pendente` deve impedir fechamento do aceite geral sem plano de acao registrado e nova data de revisao.
