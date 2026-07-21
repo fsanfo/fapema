@@ -459,19 +459,19 @@
           <h1 id="hero-title">O que já está fechado e o que ainda precisa de decisão humana.</h1>
         </div>
         <p>
-          Esta página resume a posição arquitetural do patronage analytics para execução: base técnica definida,
-          pendências tratadas por melhores práticas e os poucos pontos que precisam de aprovação institucional.
+          Esta pagina resume a posicao arquitetural do patronage analytics para execucao no reescopo de 2026-07-21:
+          a entrega deste time termina na camada semantica do DW (contrato de dados) e a UI final fica com a equipe do Patronage.
         </p>
       </div>
 
       <div class="hero-signature">
         <article class="callout">
           <strong>Status de CA</strong>
-          <p>Aderente com ressalvas controladas e trilha clara de decisão para avançar ao CE.</p>
+          <p>Aderente com ressalvas controladas e trilha clara de decisao para avancar ao CE.</p>
         </article>
         <article class="callout">
-          <strong>Critério prático</strong>
-          <p>Implementar baseline técnico agora, abrir itens humanos com dono e prazo no backlog.</p>
+          <strong>Fronteira de entrega</strong>
+          <p>Contrato de dados para Conciliacao e Executivo pronto para handoff; implementacao da UI fica fora desta entrega.</p>
         </article>
         <a class="callout" href="./index.html" aria-label="Voltar ao índice editorial">
           <strong>Voltar ao índice</strong>
@@ -485,7 +485,7 @@
       <div class="kpi-grid">
         <article class="kpi-item">
           <h3>Camadas e modelo</h3>
-          <p>Landing, curated e marts semânticos definidos, com modelo dimensional orientado aos 4 painéis.</p>
+          <p>Landing, curated e marts semanticos definidos, com modelo dimensional e contrato formal para os 2 paineis prioritarios do ciclo 1.</p>
         </article>
         <article class="kpi-item">
           <h3>Orquestração D+1</h3>
@@ -496,12 +496,12 @@
           <p>Histórico por lote preservado e snapshot de estado atual para consumo de painel.</p>
         </article>
         <article class="kpi-item">
-          <h3>Prontidão operacional</h3>
-          <p>Runbook, critérios de aceite e eventos de agendamento descritos para transição controlada.</p>
+          <h3>SLA e prontidao operacional</h3>
+          <p>SLA de consulta das views em menos de 2s e gate de teste de carga com volumetria real antes do handoff formal.</p>
         </article>
         <article class="kpi-item">
           <h3>SIGEF com acesso liberado</h3>
-          <p>Protocolo FAPEMA concluído e credenciais recebidas; pendência humana de acesso encerrada.</p>
+          <p>Protocolo FAPEMA concluido e credenciais recebidas; pendencia humana de acesso encerrada, restando homologacao tecnica operacional.</p>
         </article>
       </div>
     </section>
@@ -517,6 +517,7 @@
             <li>Parâmetros de regra de negócio em tabela versionada.</li>
             <li>Resiliência SIGEF com retry, checkpoint e validação de payload.</li>
             <li>Alertas operacionais para lote, DQ bloqueante e curadoria de ponte.</li>
+            <li>Rastreabilidade de lote/status nas views para evitar leitura enganosa na camada de consumo.</li>
           </ul>
         </article>
         <article class="list-box">
@@ -610,14 +611,20 @@
             <span>BMad output</span>
           </a>
         </li>
+        <li>
+          <a href="../../../_bmad-output/planning-artifacts/sprint-change-proposal-2026-07-21.md">
+            <span>Sprint change proposal - reescopo de paineis</span>
+            <span>BMad output</span>
+          </a>
+        </li>
       </ul>
     </section>
 
     <footer class="footer">
       <strong>Architecture CA · patronage analytics</strong>
       <p>
-        Página editorial para orientar execução técnica com clareza: o que já está pronto para construir e o que precisa
-        de validação humana antes da produção.
+        Pagina editorial para orientar execucao tecnica com clareza: o que ja esta pronto para handoff do contrato de dados,
+        o que depende de validacao humana e quais gates permanecem antes de producao.
       </p>
     </footer>
   </main>

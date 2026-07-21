@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UX Dev Handoff | FAPEMA Patronage Analytics</title>
-<meta name="description" content="Documentacao UX V2 orientada para equipe DEV: contratos de design system, acessibilidade, responsividade, rastreabilidade e criterios de implementacao Laravel.">
+<title>UX Contract Reference | FAPEMA Patronage Analytics</title>
+<meta name="description" content="Documentação UX V2 como contrato de referência para a equipe do Patronage: design system, acessibilidade, responsividade, rastreabilidade e handoff de consumo.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -118,70 +118,71 @@
 <link rel="stylesheet" href="./dashboard.css">
 </head>
 <body>
-<a class="skip-link" href="#conteudo">Pular para o conteudo principal</a>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo principal</a>
 <div class="app-shell">
   <aside class="app-sidebar">
     <div class="brand-mark">
       <svg width="36" height="36" viewBox="0 0 34 34" fill="none"><rect width="34" height="34" rx="9" fill="#005A9C"/><path d="M8 24V10h6.2c3 0 5 1.8 5 4.6 0 2.8-2 4.6-5 4.6h-3v4.8H8Zm3.2-7.4h2.7c1.3 0 2.1-.7 2.1-1.8s-.8-1.8-2.1-1.8h-2.7v3.6Z" fill="#fff"/></svg>
       <div>
         <strong>Patronage Analytics</strong>
-        <span>Prototipos FR-6</span>
+        <span>Contrato UX V2</span>
       </div>
     </div>
-    <nav aria-label="Navegacao entre paineis">
-      <p class="side-nav-label">Paineis mandatarios</p>
+    <nav aria-label="Navegação entre painéis">
+      <p class="side-nav-label">Painéis mandatórios</p>
       <div class="side-nav">
-        <a href="./index.html"><b>00</b>&nbsp;Visao geral</a>
+        <a href="./index.html"><b>00</b>&nbsp;Visão geral</a>
         <a href="./painel-operacional-chamadas-editais.html"><b>01</b>&nbsp;Operacional</a>
         <a href="./painel-gerencial-convenios-execucao.html"><b>02</b>&nbsp;Gerencial</a>
-        <a href="./painel-conciliacao-sigef-patronage.html"><b>03</b>&nbsp;Conciliacao</a>
+        <a href="./painel-conciliacao-sigef-patronage.html"><b>03</b>&nbsp;Conciliação</a>
         <a href="./painel-executivo-kpis.html"><b>04</b>&nbsp;Executivo</a>
         <a href="./checklist-homologacao.html"><b>05</b>&nbsp;Checklist</a>
-        <a href="./ux.html" class="active"><b>06</b>&nbsp;UX para DEV</a>
+        <a href="./ux.html" class="active"><b>06</b>&nbsp;Contrato UX</a>
       </div>
     </nav>
     <div class="side-foot">
-      <span>Uso: referencia de implementacao frontend/backend</span>
-      <span>Status: contrato UX V2 consolidado</span>
+      <span>Uso: referência para handoff do ciclo 1</span>
+      <span>Status: atualizado para reescopo 2026-07-21</span>
     </div>
   </aside>
 
   <div class="app-main">
     <div class="topbar-inner">
-      <div class="crumb"><span class="eyebrow" style="margin:0;">patronage</span> <span class="eyebrow" style="margin:0;">/</span> <b>UX Dev Handoff (V2)</b></div>
+      <div class="crumb"><span class="eyebrow" style="margin:0;">patronage</span> <span class="eyebrow" style="margin:0;">/</span> <b>UX Contract Reference (V2)</b></div>
       <div class="meta">
         <span class="meta-pill">FR-5 + FR-6</span>
-        <span class="meta-pill">Equipe DEV</span>
-        <span class="meta-pill draft">Atualizado: 2026-07-17</span>
+        <span class="meta-pill">Handoff Patronage</span>
+        <span class="meta-pill draft">Atualizado: 2026-07-21</span>
       </div>
     </div>
 
     <main id="conteudo" style="display:grid; gap:1.35rem;">
       <section class="context-panel" aria-labelledby="titulo-ux-dev">
-        <p class="eyebrow">Contrato de implementacao</p>
-        <h1 id="titulo-ux-dev">Documentacao UX V2 para desenvolvimento em Laravel</h1>
+        <p class="eyebrow">Contrato de implementação</p>
+        <h1 id="titulo-ux-dev">Documentação UX V2 como contrato de referência</h1>
         <p>
-          Esta pagina traduz o documento UX consolidado da fase 1 para um formato operacional de engenharia.
-          O foco e reduzir ambiguidade entre mockup e codigo final, preservando shell, design tokens, acessibilidade,
-          responsividade, semaforizacao e rastreabilidade entre PRD, epicos e historias.
+          Esta página traduz o documento UX consolidado da fase 1 para o modelo de handoff do reescopo de 2026-07-21.
+          A responsabilidade deste time termina no contrato de dados e no contrato de referência UX; a implementação da UI final
+          em Laravel é responsabilidade da equipe que mantém o Patronage.
         </p>
         <div class="context-notes">
           <span>Fonte: ux-design-fapema-2026-07-17.md</span>
-          <span>Mockups vigentes: v2</span>
-          <span>Target: implementacao Laravel 12</span>
+          <span>Mockups vigentes: v2 (reescopo ciclo 1)</span>
+          <span>Target: consumo pela equipe Patronage</span>
         </div>
       </section>
 
-      <section class="doc-grid" aria-label="Resumo tecnico">
+      <section class="doc-grid" aria-label="Resumo técnico">
         <article class="card">
           <div class="card-head">
             <h2>Escopo homologado</h2>
-            <span class="card-note">o que deve existir em codigo</span>
+            <span class="card-note">o que deve ser preservado no handoff</span>
           </div>
           <ul class="checklist">
-            <li>4 paineis mandatarios da fase 1 (operacional, gerencial, conciliacao, executivo).</li>
-            <li>Checklist de homologacao com consolidacao por decisao.</li>
-            <li>Navegacao lateral unica entre todas as telas.</li>
+            <li>Ciclo 1 prioriza 2 painéis: conciliação (principal) e executivo (secundário).</li>
+            <li>Painéis operacional e gerencial ficam adiados para ciclo futuro, mantendo referência de UX.</li>
+            <li>Checklist de homologação permanece como artefato formal por decisão.</li>
+            <li>Navegação lateral única entre todas as telas do pacote de mockups.</li>
             <li>Breadcrumb contextual por tela.</li>
             <li>Hero com metadados e hierarquia de leitura executiva.</li>
           </ul>
@@ -189,15 +190,15 @@
 
         <article class="card">
           <div class="card-head">
-            <h2>Prioridades DEV</h2>
-            <span class="card-note">ordem sugerida de entrega</span>
+            <h2>Prioridades de handoff</h2>
+            <span class="card-note">ordem sugerida para alinhamento com Patronage</span>
           </div>
           <div style="display:grid; gap:0.45rem;">
-            <span class="inline-badge dev">1. Shell compartilhado + rotas</span>
-            <span class="inline-badge dev">2. Componentes base (card, tabela, chip, badge)</span>
-            <span class="inline-badge dev">3. Regras de status e semaforizacao</span>
-            <span class="inline-badge dev">4. A11y teclado/foco/skip-link</span>
-            <span class="inline-badge dev">5. Responsividade e densidade de tabela</span>
+            <span class="inline-badge dev">1. Fechar contrato de dados de Conciliação e Executivo</span>
+            <span class="inline-badge dev">2. Comunicar design tokens e shell compartilhado</span>
+            <span class="inline-badge dev">3. Alinhar status/semaforização e comportamento de filtro</span>
+            <span class="inline-badge dev">4. Preservar baseline de a11y e responsividade no handoff</span>
+            <span class="inline-badge dev">5. Registrar riscos e gaps antes da homologação final</span>
           </div>
         </article>
       </section>
@@ -205,8 +206,8 @@
       <section aria-labelledby="mapa-rotas">
         <article class="card">
           <div class="card-head">
-            <h2 id="mapa-rotas">Mapa de telas para implementacao</h2>
-            <span class="card-note">mockup -> pagina alvo -> intencao funcional</span>
+            <h2 id="mapa-rotas">Mapa de telas para implementação</h2>
+            <span class="card-note">mockup -> página alvo -> intenção funcional</span>
           </div>
           <div class="table-wrap">
             <table class="data-table">
@@ -214,8 +215,8 @@
                 <tr>
                   <th>ID</th>
                   <th>Mockup V2</th>
-                  <th>Objetivo de negocio</th>
-                  <th>Blocos obrigatorios</th>
+                  <th>Objetivo de negócio</th>
+                  <th>Blocos obrigatórios</th>
                 </tr>
               </thead>
               <tbody>
@@ -229,25 +230,25 @@
                   <td><span class="badge info">01</span></td>
                   <td>painel-operacional-chamadas-editais.html</td>
                   <td>Leitura operacional de volume, status, ciclo e gargalos</td>
-                  <td>Filtros, KPIs, semaforos por area, tabela de rastreabilidade</td>
+                  <td>Referencia preservada para ciclo futuro (fora do ciclo 1)</td>
                 </tr>
                 <tr>
                   <td><span class="badge info">02</span></td>
                   <td>painel-gerencial-convenios-execucao.html</td>
                   <td>Leitura gerencial de carteira, vigencia e prazos</td>
-                  <td>Portfolio por tipo, aderencia, desvios e contexto analitico</td>
+                  <td>Referencia preservada para ciclo futuro (fora do ciclo 1)</td>
                 </tr>
                 <tr>
                   <td><span class="badge info">03</span></td>
                   <td>painel-conciliacao-sigef-patronage.html</td>
                   <td>Triagem de divergencias SIGEF x Patronage</td>
-                  <td>Lote D+1, estados parcial/falho, divergencias por tipo</td>
+                  <td>Prioridade ciclo 1: lote D+1, estados parcial/falho, divergencias por tipo</td>
                 </tr>
                 <tr>
                   <td><span class="badge info">04</span></td>
                   <td>painel-executivo-kpis.html</td>
                   <td>Walkthrough C-Level em ate 5 minutos</td>
-                  <td>KPI consolidado, tendencia, comparativo e alertas</td>
+                  <td>Prioridade ciclo 1: KPI consolidado, tendencia, comparativo e alertas</td>
                 </tr>
                 <tr>
                   <td><span class="badge info">05</span></td>
@@ -335,13 +336,13 @@
                 <tr>
                   <td>PRD</td>
                   <td>FR-5</td>
-                  <td>Implementar os 4 paineis mandatarios mantendo intencao de cada leitura</td>
-                  <td>PO + SH</td>
+                  <td>Entregar contrato de dados/views para Conciliacao e Executivo com homologacao formal</td>
+                  <td>PO + aprovadores + equipe Patronage</td>
                 </tr>
                 <tr>
                   <td>PRD</td>
                   <td>FR-6</td>
-                  <td>Manter fluxo de homologacao com mockups navegaveis e checklist formal</td>
+                  <td>Usar mockups V2 como contrato de referencia para a equipe Patronage implementar a UI final</td>
                   <td>PO</td>
                 </tr>
                 <tr>
@@ -359,8 +360,8 @@
                 <tr>
                   <td>Epico / Story</td>
                   <td>2.3 a 2.6</td>
-                  <td>Implementar contratos funcionais de cada painel</td>
-                  <td>PO + usuarios-chave</td>
+                  <td>Priorizar validacao de contrato nos paineis Conciliacao e Executivo no ciclo 1</td>
+                  <td>PO + usuarios-chave + equipe Patronage</td>
                 </tr>
                 <tr>
                   <td>Epico / Story</td>
@@ -377,31 +378,31 @@
       <section aria-label="Criterios de pronto para DEV">
         <article class="card">
           <div class="card-head">
-            <h2>Definition of done (UX para DEV)</h2>
-            <span class="card-note">sinal de pronto para avancar para homologacao</span>
+            <h2>Gate de handoff (UX + contrato de dados)</h2>
+            <span class="card-note">sinal de pronto para homologacao final do ciclo 1</span>
           </div>
           <div class="alert-list">
             <div class="alert-item ok">
               <span class="dot" aria-hidden="true"></span>
               <div>
-                <strong>Navegacao e shell consistentes</strong>
-                <p>Todas as telas compartilham sidebar, breadcrumb, estados active/hover/focus e hierarquia de layout.</p>
+                <strong>Contrato priorizado validado</strong>
+                <p>Views e segmentadores de Conciliacao e Executivo validados contra os mockups de referencia.</p>
               </div>
               <time datetime="P0D">Obrigatorio</time>
             </div>
             <div class="alert-item ok">
               <span class="dot" aria-hidden="true"></span>
               <div>
-                <strong>Paridade visual com V2</strong>
-                <p>Tokens, tipografia, semaforizacao e contexto visual preservados sem simplificacoes nao aprovadas.</p>
+                <strong>Paridade de contrato UX V2</strong>
+                <p>Tokens, tipografia, shell, acessibilidade e responsividade comunicados sem perda semantica no handoff.</p>
               </div>
               <time datetime="P0D">Obrigatorio</time>
             </div>
             <div class="alert-item warn">
               <span class="dot" aria-hidden="true"></span>
               <div>
-                <strong>Fallback de dados e estados vazios</strong>
-                <p>Implementar estados parcial/falho/pendente em conciliacao e homologacao para operacao segura.</p>
+                <strong>Estados operacionais explicitos</strong>
+                <p>Contrato deve explicitar parcial/falho/dependencia externa para evitar leitura enganosa na UI consumidora.</p>
               </div>
               <time datetime="P0D">Alta prioridade</time>
             </div>
@@ -409,7 +410,7 @@
               <span class="dot" aria-hidden="true"></span>
               <div>
                 <strong>Rastreabilidade insuficiente</strong>
-                <p>Bloqueia aceite se nao houver conexao clara entre indicador, regra e origem de dados.</p>
+                <p>Bloqueia aceite se nao houver conexao clara entre indicador, regra, lote e origem de dados.</p>
               </div>
               <time datetime="P0D">Bloqueante</time>
             </div>
@@ -418,7 +419,7 @@
       </section>
 
       <footer class="footer-note">
-        Documento tecnico de UX para DEV derivado do consolidado de 2026-07-17.
+        Documento tecnico de UX como contrato de referencia derivado do consolidado de 2026-07-17 e atualizado no reescopo de 2026-07-21.
         Referencias de mockup: <code>index.html</code>, <code>painel-operacional-chamadas-editais.html</code>,
         <code>painel-gerencial-convenios-execucao.html</code>, <code>painel-conciliacao-sigef-patronage.html</code>,
         <code>painel-executivo-kpis.html</code> e <code>checklist-homologacao.html</code>.

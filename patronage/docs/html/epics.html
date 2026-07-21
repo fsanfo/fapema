@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Epics | Guia DEV e Tech Lead</title>
+  <meta name="description" content="Página compacta de epics para DEV e Tech Lead: escopo executável, fronteira de entrega, referências de layout/UI e critérios de handoff.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/style.colors.css">
+  <style>
+    :root {
+      --navy-deep: #0d2138;
+      --blue-atlas: #16568b;
+      --teal-signal: #0b7d7a;
+      --sand-paper: #f2eee6;
+      --rust-seal: #b45b2e;
+      --ink-main: #1a2a3a;
+      --ink-soft: #4f5f70;
+      --line: rgba(26, 42, 58, 0.16);
+      --panel: rgba(255, 255, 255, 0.84);
+      --panel-strong: #ffffff;
+      --radius-xl: 26px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --shadow-soft: 0 14px 44px rgba(13, 33, 56, 0.12);
+      --shadow-crisp: 0 6px 18px rgba(13, 33, 56, 0.1);
+      --site-max: 1200px;
+      --step--1: clamp(0.82rem, 0.79rem + 0.2vw, 0.95rem);
+      --step-0: clamp(0.98rem, 0.92rem + 0.33vw, 1.14rem);
+      --step-1: clamp(1.2rem, 1.07rem + 0.66vw, 1.58rem);
+      --step-2: clamp(1.55rem, 1.28rem + 1.15vw, 2.22rem);
+      --step-3: clamp(2.1rem, 1.48rem + 2.5vw, 3.2rem);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      color: var(--ink-main);
+      font-family: "Poppins", sans-serif;
+      font-size: var(--step-0);
+      line-height: 1.52;
+      background:
+        radial-gradient(circle at 84% 10%, rgba(11, 125, 122, 0.14), transparent 34%),
+        radial-gradient(circle at 10% 22%, rgba(22, 86, 139, 0.18), transparent 30%),
+        linear-gradient(155deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0) 46%),
+        var(--sand-paper);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        repeating-linear-gradient(
+          -32deg,
+          rgba(26, 42, 58, 0.035) 0,
+          rgba(26, 42, 58, 0.035) 1px,
+          transparent 1px,
+          transparent 17px
+        );
+      opacity: 0.42;
+      z-index: 0;
+    }
+
+    a { color: var(--blue-atlas); }
+
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: auto;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+
+    .skip-link:focus {
+      left: 1rem;
+      top: 1rem;
+      width: auto;
+      height: auto;
+      z-index: 100;
+      background: #fff;
+      border: 2px solid var(--blue-atlas);
+      border-radius: 10px;
+      padding: 0.5rem 0.75rem;
+      font-weight: 700;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      background: rgba(242, 238, 230, 0.9);
+      border-bottom: 1px solid rgba(13, 33, 56, 0.1);
+    }
+
+    .topbar-inner {
+      max-width: var(--site-max);
+      margin: 0 auto;
+      padding: 0.72rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      min-width: 0;
+    }
+
+    .brand img {
+      width: 92px;
+      height: auto;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.85);
+      padding: 0.35rem;
+      border: 1px solid rgba(13, 33, 56, 0.14);
+      box-shadow: var(--shadow-crisp);
+      flex-shrink: 0;
+    }
+
+    .brand-copy strong {
+      display: block;
+      font-family: "League Spartan", sans-serif;
+      font-size: var(--step-1);
+      line-height: 1;
+      color: var(--navy-deep);
+    }
+
+    .brand-copy span {
+      display: block;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+
+    .meta {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .meta-pill {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.42rem 0.7rem;
+      border: 1px solid rgba(13, 33, 56, 0.13);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.76);
+      color: var(--ink-soft);
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: var(--site-max);
+      margin: 0 auto;
+      padding: clamp(1rem, 1.6vw, 1.5rem);
+      display: grid;
+      gap: 1rem;
+    }
+
+    .hero {
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(13, 33, 56, 0.12);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      background: var(--panel-strong);
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
+    }
+
+    .hero-copy {
+      padding: clamp(1.25rem, 2vw, 2rem);
+      background: linear-gradient(135deg, rgba(13, 33, 56, 0.98), rgba(22, 86, 139, 0.92));
+      color: #f8fbff;
+      display: grid;
+      gap: 0.95rem;
+      align-content: center;
+    }
+
+    .eyebrow {
+      margin: 0;
+      font-size: 0.72rem;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      opacity: 0.88;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-family: "League Spartan", sans-serif;
+      font-size: var(--step-3);
+      line-height: 0.93;
+      max-width: 14ch;
+      text-wrap: balance;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 56ch;
+      color: rgba(248, 251, 255, 0.9);
+    }
+
+    .hero-side {
+      padding: 1.2rem;
+      background:
+        radial-gradient(circle at 78% 24%, rgba(11, 125, 122, 0.16), transparent 48%),
+        radial-gradient(circle at 20% 78%, rgba(180, 91, 46, 0.14), transparent 42%),
+        var(--panel);
+      display: grid;
+      gap: 0.7rem;
+      align-content: center;
+    }
+
+    .note {
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(13, 33, 56, 0.12);
+      background: rgba(255, 255, 255, 0.9);
+      padding: 0.75rem 0.85rem;
+    }
+
+    .note strong {
+      display: block;
+      font-family: "League Spartan", sans-serif;
+      font-size: 1.05rem;
+      line-height: 1;
+      color: var(--navy-deep);
+      margin-bottom: 0.2rem;
+    }
+
+    .note p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: var(--step--1);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid rgba(13, 33, 56, 0.12);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      padding: 1rem;
+      display: grid;
+      gap: 0.7rem;
+      align-content: start;
+    }
+
+    .card h2 {
+      margin: 0;
+      font-family: "League Spartan", sans-serif;
+      font-size: var(--step-1);
+      line-height: 1;
+      color: var(--navy-deep);
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--ink-soft);
+    }
+
+    .compact-list {
+      margin: 0;
+      padding-left: 1.15rem;
+      display: grid;
+      gap: 0.35rem;
+      color: var(--ink-main);
+      font-size: var(--step--1);
+    }
+
+    .trace-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(13, 33, 56, 0.12);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    .trace-table th,
+    .trace-table td {
+      text-align: left;
+      padding: 0.72rem 0.78rem;
+      border-bottom: 1px solid rgba(13, 33, 56, 0.1);
+      vertical-align: top;
+      font-size: var(--step--1);
+    }
+
+    .trace-table th {
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      background: rgba(242, 238, 230, 0.75);
+    }
+
+    .trace-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .footer {
+      border-top: 1px solid rgba(13, 33, 56, 0.12);
+      padding-top: 0.7rem;
+      color: var(--ink-soft);
+      font-size: var(--step--1);
+      display: grid;
+      gap: 0.4rem;
+    }
+
+    .footer strong {
+      color: var(--navy-deep);
+      font-family: "League Spartan", sans-serif;
+      font-size: 1rem;
+    }
+
+    @media (max-width: 1040px) {
+      .hero,
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar-inner {
+        padding-inline: 0.85rem;
+      }
+
+      main {
+        padding: 0.85rem;
+      }
+
+      .brand img {
+        width: 78px;
+      }
+
+      .trace-table,
+      .trace-table tbody,
+      .trace-table tr,
+      .trace-table td {
+        display: block;
+        width: 100%;
+      }
+
+      .trace-table thead {
+        display: none;
+      }
+
+      .trace-table td {
+        border-bottom: 0;
+        padding: 0.45rem 0.7rem;
+      }
+
+      .trace-table tr {
+        border-bottom: 1px solid rgba(13, 33, 56, 0.1);
+        padding: 0.45rem 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <img src="./assets/logo-fapema.png" alt="Logo da FAPEMA">
+        <div class="brand-copy">
+          <strong>patronage</strong>
+          <span>Epics para DEV e Tech Lead</span>
+        </div>
+      </div>
+
+      <div class="meta" aria-label="Resumo da página">
+        <span class="meta-pill">Reescopo 2026-07-21</span>
+        <span class="meta-pill">Ciclo 1</span>
+        <span class="meta-pill">Conciliação + Executivo</span>
+      </div>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">Execução orientada</p>
+        <h1 id="hero-title">Epics compactos para entrega técnica.</h1>
+        <p>
+          Esta página resume somente o necessário para o time DEV e para o Tech Lead executar com clareza:
+          prioridade de epics, fronteira de responsabilidade e referências de layout/UI para handoff.
+        </p>
+      </div>
+      <div class="hero-side">
+        <article class="note">
+          <strong>Fronteira</strong>
+          <p>Este time encerra na camada semântica do DW (views e contrato de dados homologado).</p>
+        </article>
+        <article class="note">
+          <strong>UI Final</strong>
+          <p>A implementação da UI Laravel é responsabilidade da equipe Patronage.</p>
+        </article>
+        <article class="note">
+          <strong>Layout/UI</strong>
+          <p>Mockups V2 funcionam como contrato de referência visual e funcional.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="grid" aria-label="Epics priorizados">
+      <article class="card">
+        <h2>Epic 1 - Base analítica confiável</h2>
+        <p>
+          Construir a espinha técnica de dados com inventário, modelagem, ETL D+1, qualidade, governança e observabilidade.
+        </p>
+        <ul class="compact-list">
+          <li>Story cluster: 1.1 a 1.8 (catálogo, schema, ETL, qualidade, LGPD, parâmetros, runbook, resiliência SIGEF).</li>
+          <li>Meta operacional: carga até 07:00 e refresh de marts até 08:00.</li>
+          <li>Gate técnico: lote com status confiável e trilha auditável por execução.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Epic 2 - Contrato de dados para painéis prioritários</h2>
+        <p>
+          Entregar contrato de dados homologado para Conciliação (principal) e Executivo (secundário), com critérios de aceite.
+        </p>
+        <ul class="compact-list">
+          <li>Story cluster: 2.1+ (contrato UX, acessibilidade/responsividade, critérios de homologação).</li>
+          <li>Painéis Operacional e Gerencial: referência preservada, fora do ciclo 1.</li>
+          <li>Gate de handoff: checklist de contrato de dados + checklist de referência UX.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="card" aria-labelledby="tech-lead-title">
+      <h2 id="tech-lead-title">Plano rápido para Tech Lead</h2>
+      <table class="trace-table">
+        <thead>
+          <tr>
+            <th>Janela</th>
+            <th>Foco técnico</th>
+            <th>Evidência mínima</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Semana 1</td>
+            <td>Concluir baseline do Epic 1 (modelo, ETL, quality gates).</td>
+            <td>Catálogo versionado + logs de lote + validações bloqueantes registradas.</td>
+          </tr>
+          <tr>
+            <td>Semana 2</td>
+            <td>Fechar views semânticas de Conciliação e Executivo.</td>
+            <td>Views homologáveis com metadado de lote/timestamp e status parcial explícito.</td>
+          </tr>
+          <tr>
+            <td>Semana 3</td>
+            <td>Preparar handoff para Patronage (dados + referência UX).</td>
+            <td>Pacote final com critérios de aceite, limites de escopo e registro de riscos abertos.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="grid" aria-label="Referências de layout e UI">
+      <article class="card">
+        <h2>Referências de layout/UI (somente o necessário)</h2>
+        <ul class="compact-list">
+          <li>Shell único: sidebar, breadcrumb e metadata pills consistentes.</li>
+          <li>A11y base: lang pt-BR, skip link e foco visível por teclado.</li>
+          <li>Responsividade: manter legibilidade e ação principal em mobile.</li>
+          <li>Semaforização: sucesso, alerta, risco e informação com rótulo textual.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Links de referência</h2>
+        <ul class="compact-list">
+          <li><a href="./prd.html">PRD consolidado</a> (FR-1 a FR-6 e critérios).</li>
+          <li><a href="./arch.html">Architecture CA</a> (decisões e fronteira técnica).</li>
+          <li><a href="./mockups/v2/ux.html">Contrato UX V2</a> (hints de layout/UI).</li>
+          <li><a href="./mockups/v2/index.html">Mockups FR-6 V2</a> (navegação entre telas).</li>
+        </ul>
+      </article>
+    </section>
+
+    <footer class="footer">
+      <strong>Resumo de uso</strong>
+      <p>
+        Esta página não substitui PRD/Architecture. Ela acelera a execução técnica com foco em prioridades, limites e handoff.
+      </p>
+    </footer>
+  </main>
+</body>
+</html>

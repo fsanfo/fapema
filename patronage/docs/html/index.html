@@ -783,10 +783,11 @@
       <div class="topbar-meta" aria-label="Resumo do portal">
         <span class="meta-pill">Brief</span>
         <span class="meta-pill">PRD</span>
+        <span class="meta-pill">Epics</span>
         <span class="meta-pill">Architecture CA</span>
         <span class="meta-pill">Mapping SIGEF</span>
         <span class="meta-pill">Atlas SQL</span>
-        <span class="meta-pill">Mockups FR-6 v1</span>
+        <span class="meta-pill">Mockups FR-6 v2</span>
       </div>
     </div>
   </header>
@@ -801,8 +802,9 @@
 
         <p>
           Este índice organiza a documentação HTML do patronage em uma sequência sugerida de leitura: primeiro o
-          briefing executivo em [brief.html](brief.html), depois a definição de produto em [prd.html](prd.html) e,
-          quando houver dúvidas sobre o estado atual do banco, a documentação atualizada em [sgbd.html](sgbd.html).
+          briefing executivo em <a href="./brief.html">brief.html</a>, depois a definição de produto em
+          <a href="./prd.html">prd.html</a> e, quando houver dúvidas sobre o estado atual do banco,
+          a documentação atualizada em <a href="./sgbd.html">sgbd.html</a>.
         </p>
 
         <div class="hero-notes" aria-label="Trilha recomendada">
@@ -810,7 +812,7 @@
           <div>2. Confirme escopo, métricas e entregas no PRD</div>
           <div>3. Revise o Mapping SIGEF para regras de integração e conciliação</div>
           <div>4. Consulte o Atlas SQL quando precisar validar a base existente</div>
-          <div>5. Abra os Mockups FR-6 v1 para homologar os painéis com o PO</div>
+          <div>5. Abra os Mockups FR-6 v2 para homologar o contrato de referência com o PO e a equipe Patronage</div>
         </div>
       </div>
 
@@ -900,6 +902,27 @@
 
         <article class="page-card">
           <div class="card-top">
+            <span class="tag">Execução técnica</span>
+            <h3>Epics</h3>
+          </div>
+          <div class="card-body">
+            <p>
+              Leitura compacta para DEV e Tech Lead com foco no que executar agora: prioridade de epics,
+              limites de responsabilidade e referências mínimas de layout/UI para handoff.
+            </p>
+            <ul class="bullet-list">
+              <li>Epic 1: base analítica, ETL D+1 e qualidade.</li>
+              <li>Epic 2: contrato de dados para conciliação e executivo.</li>
+              <li>Resumo objetivo de gate técnico e handoff.</li>
+            </ul>
+          </div>
+          <div class="card-footer">
+            <a class="card-link" href="./epics.html">Abrir Epics</a>
+          </div>
+        </article>
+
+        <article class="page-card">
+          <div class="card-top">
             <span class="tag">Base de referência</span>
             <h3>Atlas SQL</h3>
           </div>
@@ -964,19 +987,18 @@
         <article class="page-card">
           <div class="card-top">
             <span class="tag">Homologação FR-6</span>
-            <h3>Mockups v1</h3>
+            <h3>Mockups v2</h3>
           </div>
           <div class="card-body">
             <p>
-              Protótipos estáticos para validação dos quatro painéis mandatórios (operacional, gerencial, conciliação e executivo),
-              com dados fictícios para revisão de layout e leitura com o Product Owner.
+              Protótipos estáticos V2 como contrato de referência para handoff do ciclo 1: Conciliação (prioritário)
+              e Executivo (secundário), com Operacional e Gerencial preservados para ciclo futuro.
             </p>
             <ul class="bullet-list">
               <li>Índice de protótipos FR-6.</li>
-              <li>Painel operacional de chamadas e editais.</li>
-              <li>Painel gerencial de convênios e execução.</li>
-              <li>Painel de conciliação SIGEF x Patronage.</li>
-              <li>Painel executivo de KPIs institucionais.</li>
+              <li>Painéis prioritários do ciclo 1: conciliação e executivo.</li>
+              <li>Painel operacional e gerencial mantidos como referência.</li>
+              <li>Checklist formal para decisão de homologação.</li>
             </ul>
           </div>
           <div class="card-footer">
@@ -1018,13 +1040,21 @@
           <li>
             <span class="menu-index">04</span>
             <div>
+              <strong>Epics</strong>
+              <span>Resumo para DEV e Tech Lead com execução priorizada, fronteira de entrega e referências de UI.</span>
+            </div>
+            <a href="./epics.html">Abrir</a>
+          </li>
+          <li>
+            <span class="menu-index">05</span>
+            <div>
               <strong>Architecture CA</strong>
               <span>Ponto único da arquitetura consolidada: decisões técnicas fechadas e itens pendentes de decisão humana.</span>
             </div>
             <a href="./arch.html">Abrir</a>
           </li>
           <li>
-            <span class="menu-index">05</span>
+            <span class="menu-index">06</span>
             <div>
               <strong>Mapping API SIGEF</strong>
               <span>Mapeamento técnico de endpoints e regra de conciliação para batimento transacional.</span>
@@ -1032,10 +1062,10 @@
             <a href="./mapping.html">Abrir</a>
           </li>
           <li>
-            <span class="menu-index">06</span>
+            <span class="menu-index">07</span>
             <div>
               <strong>Mockups FR-6</strong>
-              <span>Protótipos HTML para homologar os painéis operacional, gerencial, conciliação e executivo.</span>
+              <span>Protótipos HTML v2 para homologar o contrato de referência, com prioridade em conciliação e executivo.</span>
             </div>
             <a href="./mockups/v2/index.html">Abrir</a>
           </li>
@@ -1052,10 +1082,11 @@
         <div class="mini-grid">
           <div class="mini-chip">1. Brief primeiro</div>
           <div class="mini-chip">2. PRD depois</div>
-          <div class="mini-chip">3. Architecture CA para decisões técnicas</div>
-          <div class="mini-chip">4. Mapping SIGEF para integração</div>
-          <div class="mini-chip">5. SGBD quando necessário</div>
-          <div class="mini-chip">6. Mockups FR-6 para homologar</div>
+          <div class="mini-chip">3. Epics para DEV e Tech Lead</div>
+          <div class="mini-chip">4. Architecture CA para decisões técnicas</div>
+          <div class="mini-chip">5. Mapping SIGEF para integração</div>
+          <div class="mini-chip">6. SGBD quando necessário</div>
+          <div class="mini-chip">7. Mockups FR-6 v2 para homologar</div>
           <div class="mini-chip">Base do projeto: MySQL</div>
         </div>
       </aside>
