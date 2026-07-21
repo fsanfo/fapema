@@ -4,6 +4,8 @@ Data: 2026-07-17
 Status geral: Aderente com ressalvas
 Escopo analisado: patronage/sql/analytics (Fases 1 a 3)
 
+Atualizacao 2026-07-21: bloco "Complemento arquitetural para FR5 e FR6" reescrito para refletir o reescopo do Ciclo 1 (2 paineis prioritarios, fronteira de entrega termina na camada semantica do DW, UI fica com a equipe do Patronage). Ver `sprint-change-proposal-2026-07-21.md` Secao 4.2. Restante do documento (LGPD, regras de negocio, integracao SIGEF, curadoria de pontes) permanece sem alteracao.
+
 ## Conclusao executiva
 
 Os artefatos ja implementam o nucleo de arquitetura esperado para CA:
@@ -56,68 +58,83 @@ Ajuste recomendado:
 3. Congelar contrato SIGEF e atualizar 12_client_sigef.py com o padrao oficial.
 4. Definir runbook de curadoria de pontes com SLA e responsavel funcional.
 
-## Complemento arquitetural para FR5 e FR6
+## Complemento arquitetural para FR5 e FR6 (contrato de dados para consumo do Patronage)
+
+> **Reescopo 2026-07-21**: bloco reescrito por decisao do patrocinador/PO — ver `change-trigger-reescopo-paineis-2026-07-21.md` e `sprint-change-proposal-2026-07-21.md` (Secao 4.2). A versao anterior (entrega de camada web em Laravel, 4 paineis) fica preservada no historico do git; este bloco e a versao vigente.
 
 ### Objetivo
 
-Fechar explicitamente a arquitetura da camada web que entregara os quatro paineis mandatarios e o checklist de homologacao no ecossistema Laravel, preservando o contrato de UX aprovado nos mockups V2.
+Fechar explicitamente a arquitetura da camada semantica do Data Warehouse que expoe o contrato de dados para os dois paineis prioritarios do ciclo 1 (Conciliacao e Executivo), a ser consumido pela equipe que ja mantem o Patronage na implementacao da UI em Laravel.
 
 ### Decisao arquitetural
 
-- A entrega final dos paineis deve ocorrer no ecossistema Laravel existente, sem duplicar uma aplicacao front-end separada para a fase 1.
-- O Laravel deve atuar como camada de composicao web, autorizacao, roteamento e entrega de assets/componentes, enquanto a camada analytics permanece responsavel pela verdade dos dados em marts/views e tabelas de apoio.
-- Os mockups V2 funcionam como contrato visual e funcional; a implementacao final pode trocar HTML estatico por templates/componentes Laravel, desde que preserve o shell, a navegacao, a semantica visual e os estados de homologacao descritos no artefato de UX.
+- A responsabilidade deste time termina nas views/marts de consumo da camada semantica; nao ha entrega de camada web, rotas ou componentes Laravel por este time.
+- A equipe do Patronage e responsavel pela definicao e implementacao da UI final em Laravel, consumindo o contrato de dados exposto por este projeto.
+- Os mockups V2 funcionam como contrato de referencia de segmentadores, filtros e desagregacoes para a equipe do Patronage; nao sao mais especificacao de tela a ser implementada por este time.
 
-### Modelo de entrega web
+### Modelo de contrato de dados exposto
 
-- Rotas Laravel dedicadas para os cinco destinos de UX: visao geral, painel operacional, painel gerencial, painel de conciliacao, painel executivo e checklist.
-- Layout base compartilhado para sidebar, breadcrumb, meta pills e estrutura principal de conteudo.
-- Assets compartilhados para tokens visuais, estados semanticos, tipografia, acessibilidade e responsividade.
-- Componentes reaproveitaveis para hero, KPI cards, chips de filtro, tabelas analiticas, badges de status e bloco de resumo de homologacao.
+- Views/marts dedicadas para os dois paineis prioritarios do ciclo 1: Conciliacao e Executivo.
+- Schema documentado por view: colunas, granularidade, segmentadores principais/secundarios e regra de calculo de cada indicador (ver "Schema formal das views expostas" abaixo).
+- Nomenclatura e versionamento de views estaveis o suficiente para consumo externo, com trilha de mudanca quando o contrato evoluir.
+- Paineis Operacional e Gerencial: contrato de dados nao priorizado neste ciclo; retomar a partir das views ja mapeadas (`vw_painel_operacional_*`, `vw_painel_gerencial_convenios`) quando o ciclo futuro for iniciado.
 
-### Contrato entre UI e camada analitica
+### Schema formal das views expostas
 
-- O front-end Laravel nao deve calcular KPI critico em tela; os indicadores devem chegar prontos ou quase prontos da camada curated/marts, com regra de negocio centralizada no analytics.
-- Cada painel deve consumir datasets derivados de views/materializadas com rastreabilidade minima de periodo, lote, status e regra de calculo.
-- O painel de conciliacao deve receber, alem dos agregados, o status operacional do ultimo lote para distinguir resultado consolidado de resultado parcial, falho ou dependente de fonte externa.
-- O checklist de homologacao deve persistir decisoes, observacoes, responsavel e prazo em estrutura rastreavel fora do HTML estatico, preferencialmente em tabela de aplicacao ou artefato operacional versionado.
+As views abaixo ja estao implementadas em `patronage/sql/analytics/15_views_paineis.sql` (camada "presentation" do blueprint, script 00) e sao ratificadas aqui como o contrato formal de dados do ciclo 1 — nenhuma coluna nova foi inferida, a lista reflete o `SELECT` real de cada view.
 
-### Requisitos tecnicos derivados do contrato de UX
+**Conciliacao SIGEF x Patronage**
 
-#### Shell e navegacao
-- Preservar sidebar fixa com destaque de tela ativa e navegacao cruzada entre os quatro paineis e o checklist.
-- Preservar breadcrumb contextual e meta pills de status por tela.
+| View | Fonte | Colunas | Uso |
+|---|---|---|---|
+| `vw_painel_conciliacao_atual` | `mv_reconciliacao_atual` (materializada, ja resolve "ultimo lote por chave") | `id_edital_origem`, `edital`, `documento_proponente`, `nome_proponente`, `ano_mes_competencia`, `valor_patronage`, `valor_sigef`, `diferenca_valor`, `status_patronage`, `status_sigef`, `flag_divergencia`, `tipo_divergencia`, `id_lote_carga_origem`, `dt_atualizacao` | Consumo principal do painel (estado atual) |
+| `vw_painel_conciliacao_historico` | `fato_reconciliacao_sigef_patronage` (preserva todas as execucoes) | `id_edital_origem`, `edital`, `documento_proponente`, `nome_proponente`, `ano_mes_competencia`, `valor_patronage`, `valor_sigef`, `diferenca_valor`, `status_patronage`, `status_sigef`, `flag_divergencia`, `tipo_divergencia`, `id_lote_carga`, `data_lote`, `dt_conciliacao` | Auditoria / drill-down por lote |
+| `vw_painel_conciliacao_excecoes` | `exc_reconciliacao_sigef_patronage` | `id_excecao`, `tipo_excecao`, `edital`, `documento_proponente`, `nome_proponente`, `ano_mes_competencia`, `valor_patronage`, `valor_sigef`, `status_patronage`, `status_sigef`, `status_tratativa`, `responsavel_curadoria`, `dt_identificacao`, `dt_tratativa`, `dias_em_aberto` | Fila de curadoria (FR-4) |
+| `vw_painel_conciliacao_idade_divergencias` | `exc_reconciliacao_sigef_patronage` (agregada) | `faixa_idade`, `qtd_casos`, `valor_total` | Indicador de velocidade de resolucao |
 
-#### Acessibilidade
-- Manter `lang` pt-BR, skip link funcional, foco visivel e navegacao completa por teclado.
-- Garantir que semaforizacao e badges nao dependam exclusivamente de cor para comunicar estado.
+**Executivo (KPIs institucionais)**
 
-#### Responsividade
-- Preservar leitura em desktop e mobile sem esconder filtros obrigatorios, acao principal ou contexto institucional.
-- Tratar tabelas densas com estrategia segura de largura minima, quebra de layout e rolagem horizontal quando necessario.
+| View | Fonte | Colunas | Uso |
+|---|---|---|---|
+| `vw_painel_executivo_kpis_mensal` | `mv_kpi_executivo_mensal` | `ano_mes`, `ano`, `mes`, `qtd_editais_publicados`, `qtd_convenios_firmados`, `valor_investimento_total`, `tempo_medio_ciclo_chamadas`, `qtd_divergencias_abertas`, `valor_divergencias_abertas`, `qtd_processos_recebidos`, `qtd_processos_aprovados`, `pct_aprovacao`, `dt_atualizacao` | Serie mensal (tendencia multitemporal) |
+| `vw_painel_executivo_comparativo_anual` | Agregada a partir da view mensal acima | `ano`, `qtd_editais_publicados_ano`, `qtd_convenios_firmados_ano`, `valor_investimento_total_ano`, `tempo_medio_ciclo_chamadas_ano`, `qtd_processos_recebidos_ano`, `qtd_processos_aprovados_ano` | Comparativo ano a ano |
 
-#### Performance percebida
-- Filtros devem responder sem recarregamento inconsistente; isso pode ser atendido por refresh parcial, query assíncrona ou composicao incremental, desde que a interacao nao pareca uma troca de pagina quebrada.
-- O painel executivo deve sustentar walkthrough de leitura em ate 5 minutos, o que implica prioridade a consultas agregadas, payload enxuto e hierarquia visual clara.
+Convencao ja aplicada nas 9 views existentes e vinculante para qualquer nova view do contrato: nenhuma `sk_*` (chave tecnica) exposta como coluna principal, sempre resolvida para nome/descricao via dimensao.
 
-### Estrategia de dados para consumo web
+### Contrato entre views e camada de consumo (Patronage)
 
-- Painel operacional e gerencial: consumir agregados de marts/views com filtros por periodo, edital, status, area, tipo e vigencia.
-- Painel de conciliacao: consumir dataset reconciliado com classificacao de divergencia, referencia de lote D+1, data de carga, quantidade conciliada e flag de dependencia externa.
-- Painel executivo: consumir visao agregada de KPIs institucionais com tendencias e semaforizacao precomputadas sempre que possivel.
-- Checklist: consumir definicao dos criterios homologatorios e persistir o resultado da rodada de aceite por item e por painel.
+- As views nao devem exigir que a UI calcule KPI critico; os indicadores devem chegar prontos ou quase prontos, com regra de negocio centralizada no analytics.
+- Cada view deve expor rastreabilidade minima de periodo, lote, status e regra de calculo.
+- A view de conciliacao deve expor, alem dos agregados, o status operacional do ultimo lote para distinguir resultado consolidado de resultado parcial, falho ou dependente de fonte externa.
+- Decisoes de homologacao (aprovado/ressalvas/reprovado/pendente) por criterio e por painel podem continuar sendo persistidas em estrutura rastreavel a ser definida junto com a equipe do Patronage; este time garante apenas a origem dos dados usados nessa decisao.
 
-### Observabilidade da camada web
+### Requisitos de UX preservados como referencia para o time do Patronage
 
-- Erros de carregamento de painel, falha de consulta e estado de lote parcial devem produzir sinalizacao clara ao usuario e log tecnico para diagnostico.
-- Quando o dado exibido estiver bloqueado por regra de qualidade ou dependencia externa, a UI deve explicitar o motivo e evitar leitura enganosa de consolidado.
-- A camada web deve registrar versao do lote ou timestamp de atualizacao exibida ao usuario em cada painel critico.
+Os itens abaixo pertencem ao artefato de UX e a implementacao da UI; sao listados aqui apenas como referencia de contrato a comunicar a equipe do Patronage, sem serem requisito arquitetural deste time: shell e navegacao (sidebar, breadcrumb, meta pills), acessibilidade (`lang` pt-BR, skip link, foco visivel, navegacao por teclado), responsividade (desktop/mobile, tabelas densas) e comportamento de filtro sem recarregamento inconsistente.
+
+### SLA de consulta do contrato de dados
+
+- Target ratificado a partir do criterio de aceite ja definido em `06_criterios_aceite_validacao.md` (Secao 5, criterios transversais): toda consulta as views do contrato deve responder em **menos de 2 segundos** com o volume real do `patronage`.
+- Status de validacao: os testes existentes cobrem apenas volume sintetico minimo; um teste de carga com a volumetria real (centenas de milhares de processos/pagamentos, conforme `volumetria.md`) e pendente antes de producao — em especial para `fato_eventos_operacionais_diario` e as procedures de reconciliacao (`GROUP BY`/`ROW_NUMBER()`), que se beneficiam de indices adicionais dependendo do volume observado. Este teste de carga e pre-requisito do handoff formal para o Patronage, nao apenas recomendacao.
+- Frescor do dado: o contrato segue a orquestracao D+1 ja implementada (`13_orquestracao_d1.sql`). Um painel do dia so deve ser tratado como confiavel pela UI do Patronage quando `ctl_lote_carga` do dominio `orquestracao_d1` para `data_referencia = CURDATE()` estiver `concluido` ou `concluido_com_erro` (nunca `iniciado` residual) — mesmo criterio ja usado nos testes de aceite internos.
+- O painel executivo deve poder sustentar walkthrough de leitura em ate 5 minutos; isso reforca a prioridade por consultas agregadas e payload enxuto nas views expostas (ja refletido no schema acima: series pre-agregadas mensal/anual, sem necessidade de agregacao em tela).
+
+### Estrategia de dados para consumo do Patronage
+
+- View de conciliacao: dataset reconciliado com classificacao de divergencia, referencia de lote D+1, data de carga, quantidade conciliada e flag de dependencia externa.
+- View executiva: visao agregada de KPIs institucionais com tendencias e semaforizacao precomputadas sempre que possivel.
+
+### Observabilidade da camada de dados exposta
+
+- Cada view critica deve registrar versao do lote ou timestamp de atualizacao para exibicao pela UI do Patronage.
+- Quando o dado exposto estiver bloqueado por regra de qualidade ou dependencia externa, a view deve explicitar o motivo (nao apenas omitir o dado), para que a UI evite leitura enganosa de consolidado.
+- Sinalizacao de erro de carregamento e log tecnico de falha de UI passam a ser responsabilidade da equipe do Patronage.
 
 ### Gate de implementacao
 
 - A implementacao de FR5 e FR6 pode prosseguir com esta arquitetura como baseline.
-- O aceite final para producao permanece condicionado a homologacao formal dos quatro paineis pelos aprovadores definidos no PRD.
-- Qualquer divergencia entre mockup homologado e tela Laravel deve ser reconciliada no artefato de UX antes do aceite final.
+- O aceite final do contrato de dados permanece condicionado a homologacao formal dos dois paineis prioritarios (Conciliacao, Executivo) pelos aprovadores definidos no PRD e pela equipe do Patronage, e ao teste de carga com volume real descrito acima.
+- Qualquer divergencia entre mockup de referencia e contrato de dados exposto deve ser reconciliada no artefato de UX antes do aceite final.
 
 ## Solucoes inferidas por melhores praticas (executar por padrao)
 
