@@ -2,7 +2,7 @@
 title: Addendum Tecnico - PRD FAPEMA Patronage Analytics
 status: final
 created: 2026-07-08
-updated: 2026-07-13
+updated: 2026-07-21
 ---
 
 # Addendum Tecnico
@@ -50,7 +50,7 @@ Regra de identidade e reconciliacao:
 - Endpoints de maior prioridade para o recorte funcional SIGEF: ordembancaria, ordemcronologica e credor, conforme mapeamento tecnico vigente.
 - Janela de refresh confirmada: batch diario (D+1), inicio as 5h, finalizacao ate 7h e disponibilidade curada ate 8h.
 - Estrategia de particionamento e retenao para tabelas volumosas.
-- Estrategia de embed de paineis no ecossistema Laravel.
+- [Obsoleto a partir de 2026-07-21] Estrategia de embed de paineis no ecossistema Laravel — deixou de ser decisao deste time apos reescopo de fronteira de entrega (ver `change-trigger-reescopo-paineis-2026-07-21.md`). A entrega deste time termina no contrato de dados/views da camada semantica; a equipe do Patronage decide como consumir/embutir a UI.
 
 ## 5. Mapeamento Inicial de Riscos
 
@@ -59,7 +59,9 @@ Regra de identidade e reconciliacao:
 - Risco de sobrecarga de escopo por tentativa de cobrir todos os indicadores na fase 1.
 - Risco de baixa adocao se os paineis nao refletirem as perguntas reais dos decisores.
 - Risco de colisao ou baixa confiabilidade no mapeamento entre edital do Patronage e subacao/processo equivalente no SIGEF.
+- [Novo a partir de 2026-07-21] Risco de baixo alinhamento ou atraso na implementacao da UI pela equipe do Patronage a partir do contrato de dados entregue — este time nao tem visibilidade nem controle sobre o roadmap de implementacao apos o handoff do contrato.
 
 Mitigacoes iniciais:
 - Manter tabela versionada de de-para edital Patronage x subacao/processo SIGEF com responsavel funcional definido.
 - Segregar registros sem correspondencia confiavel em fila de excecao auditavel por lote D+1.
+- Formalizar comunicacao e agendar checkpoint de homologacao com a equipe do Patronage antes do handoff do contrato de dados, conforme plano de acao do sprint-change-proposal-2026-07-21.
