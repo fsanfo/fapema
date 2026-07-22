@@ -1,7 +1,7 @@
 ---
 artifact: catalogo-entidades-prioritarias
 story_id: 1.1
-version: 0.2
+version: 0.3
 status: draft
 updated_at: 2026-07-22
 ---
@@ -58,20 +58,26 @@ Consolidar entidades e relacionamentos prioritarios de Patronage e SIGEF para su
 - patronage/ddls/chamada_dados_contratacao.sql: tabela chamada_dados_contratacao (id, edital_chamada_id, valor_bolsa).
 - patronage/ddls/chamada_execucoes.sql: tabela chamada_execucoes (id, edital_chamada_id, etapa_id, data_inicio, data_fim).
 
+## Respostas Consolidadas
+
+- Donos funcionais nominais por entidade prioritaria: Sr. Ivanilson.
+- Schema oficial SIGEF: nao ha acesso operacional no momento, pois o protocolo de obtencao de acesso, login e uso da API nao foi documentado pela equipe do Patronage; a equipe hoje possui apenas as credenciais de login e o uso de um unico endpoint.
+- Regra de de-para edital Patronage x subacao/processo SIGEF: ainda sera confirmada com o Sr. Ivanilson.
+- Recorte temporal e granularidade por entidade para KPI: benchmark de mercado e melhores praticas, considerando que a base possui mais de 10 anos de dados.
+- Politica de mascaramento de CPF na camada de consumo geral: definicao a cargo da equipe de DEV UI do Patronage.
+- SLA para curadoria de excecoes sem match: benchmark de mercado e melhores praticas.
+
 ## Pendencias em Aberto
 
-- Definir donos funcionais nominais por entidade com PO/gestao.
-- Anexar schema oficial SIGEF para pagamentos, saldos e processo/subacao.
+- Documentar e validar o protocolo de acesso ao SIGEF, incluindo login e uso dos endpoints disponiveis.
+- Confirmar, quando houver acesso documentado, o schema oficial SIGEF para pagamentos, saldos e processo/subacao.
 - Validar regra de de-para edital Patronage x subacao/processo SIGEF.
-- Confirmar recorte temporal e granularidade por entidade para KPI.
-- Confirmar politica de mascaramento de CPF na camada de consumo geral.
 
 ## Itens que Exigem Decisao Humana
 
-- Dono funcional nomeado para cada entidade prioritaria.
 - Regra oficial de de-para entre edital e subacao/processo SIGEF.
-- Definicao de qual coluna oficial de CPF chega do SIGEF e seu formato.
-- Definicao de SLA para curadoria de excecoes sem match.
+- Definicao de qual coluna oficial de CPF chega do SIGEF e seu formato, caso o acesso ao SIGEF seja restabelecido/documentado.
+- Parametrizacao formal do SLA para curadoria de excecoes sem match, caso a equipe precise fixar um valor alvo.
 
 ## Aprovacao Funcional
 
