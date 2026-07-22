@@ -1,0 +1,61 @@
+# generated: 2026-07-22
+# last_updated: 2026-07-22
+# project: fapema
+# project_key: NOKEY
+# tracking_system: file-system
+# story_location: {project-root}/_bmad-output/implementation-artifacts
+
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic not yet started
+#   - in-progress: Epic actively being worked on
+#   - done: All stories in epic completed
+#
+# Epic Status Transitions:
+#   - backlog -> in-progress: Automatically when first story is created (via create-story)
+#   - in-progress -> done: Manually when all stories reach 'done' status
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - ready-for-dev: Story file created in stories folder
+#   - in-progress: Developer actively working on implementation
+#   - review: Ready for code review
+#   - done: Story completed
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - done: Retrospective has been completed
+#
+# Action Item Status:
+#   - open: Committed during a retrospective, not yet addressed
+#   - in-progress: Actively being worked on
+#   - done: Completed
+
+generated: 2026-07-22
+last_updated: 2026-07-22
+project: fapema
+project_key: NOKEY
+tracking_system: file-system
+story_location: {project-root}/_bmad-output/implementation-artifacts
+
+development_status:
+  epic-1: in-progress
+  1-1-catalogar-entidades-prioritarias-e-regras-de-correlacao: in-progress
+  1-2-definir-modelo-dimensional-inicial-da-fase-1: backlog
+  1-3-implementar-carga-etl-d-1-com-checkpoint-e-rastreabilidade: backlog
+  1-4-aplicar-validacoes-de-qualidade-e-batimento-financeiro: backlog
+  1-5-implementar-controles-lgpd-e-minimizacao-na-camada-analitica: backlog
+  1-6-parametrizar-regras-de-negocio-e-governanca-de-kpi: backlog
+  1-7-estabelecer-observabilidade-slo-e-runbook-operacional: backlog
+  1-8-homologar-contrato-sigef-e-fallback-operacional: backlog
+  epic-1-retrospective: optional
+  epic-2: backlog
+  2-1-empacotar-contrato-de-design-system-e-shell-de-navegacao-para-o-patronage: backlog
+  2-2-documentar-requisitos-de-acessibilidade-e-responsividade-como-contrato-de-referencia: backlog
+  2-3-entregar-painel-operacional-de-chamadas-e-editais: backlog
+  2-4-entregar-painel-gerencial-de-convenios-e-execucao: backlog
+  2-5-entregar-contrato-de-dados-views-de-conciliacao-sigef-x-patronage: backlog
+  2-6-entregar-contrato-de-dados-views-executivas-com-kpis-institucionais: backlog
+  2-7-operacionalizar-checklist-de-homologacao-e-aceite-formal-do-contrato-de-dados: backlog
+  epic-2-retrospective: optional

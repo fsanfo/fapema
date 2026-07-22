@@ -1,0 +1,1105 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ciclo 1 | Catálogo + Regra de Correlação para Aprovação</title>
+  <meta name="description" content="Documento consolidado para aprovação do PO/Tech Lead com catálogo de entidades prioritárias e regra de correlação Patronage x SIGEF.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy-deep: #0d2138;
+      --blue-atlas: #16568b;
+      --teal-signal: #0b7d7a;
+      --sand-paper: #f2eee6;
+      --rust-seal: #b45b2e;
+      --ink-main: #1a2a3a;
+      --ink-soft: #4f5f70;
+      --line: rgba(26, 42, 58, 0.16);
+      --panel: rgba(255, 255, 255, 0.82);
+      --panel-strong: #ffffff;
+      --ok: #2f8f5f;
+      --warn: #b88419;
+      --risk: #b7483d;
+      --radius-xl: 26px;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --shadow-soft: 0 14px 44px rgba(13, 33, 56, 0.12);
+      --shadow-crisp: 0 6px 18px rgba(13, 33, 56, 0.1);
+      --site-max: 1200px;
+      --step--1: clamp(0.82rem, 0.79rem + 0.2vw, 0.95rem);
+      --step-0: clamp(0.98rem, 0.92rem + 0.33vw, 1.14rem);
+      --step-1: clamp(1.2rem, 1.07rem + 0.66vw, 1.58rem);
+      --step-2: clamp(1.55rem, 1.28rem + 1.15vw, 2.22rem);
+      --step-3: clamp(2.1rem, 1.48rem + 2.5vw, 3.45rem);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      color: var(--ink-main);
+      font-family: "Poppins", sans-serif;
+      font-size: var(--step-0);
+      line-height: 1.55;
+      background:
+        radial-gradient(circle at 84% 10%, rgba(11, 125, 122, 0.14), transparent 34%),
+        radial-gradient(circle at 10% 22%, rgba(22, 86, 139, 0.18), transparent 30%),
+        linear-gradient(155deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0) 46%),
+        var(--sand-paper);
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        repeating-linear-gradient(
+          -32deg,
+          rgba(26, 42, 58, 0.035) 0,
+          rgba(26, 42, 58, 0.035) 1px,
+          transparent 1px,
+          transparent 17px
+        );
+      opacity: 0.42;
+      z-index: 0;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+
+    .skip-link:focus {
+      left: 1rem;
+      top: 1rem;
+      width: auto;
+      height: auto;
+      z-index: 100;
+      background: #fff;
+      border: 2px solid var(--blue-atlas);
+      border-radius: 10px;
+      padding: 0.5rem 0.75rem;
+      font-weight: 700;
+      text-decoration: none;
+      color: var(--ink-main);
+    }
+
+    :focus-visible {
+      outline: 2px solid rgba(20, 112, 150, 0.45);
+      outline-offset: 3px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      background: rgba(242, 238, 230, 0.9);
+      border-bottom: 1px solid rgba(13, 33, 56, 0.1);
+    }
+
+    .topbar-inner {
+      max-width: var(--site-max);
+      margin: 0 auto;
+      padding: 0.72rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .brand strong {
+      display: block;
+      font-family: "League Spartan", sans-serif;
+      font-size: var(--step-1);
+      line-height: 1;
+      letter-spacing: 0.01em;
+      color: var(--navy-deep);
+    }
+
+    .brand span {
+      display: block;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+
+    .meta {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .meta-pill {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.42rem 0.7rem;
+      border: 1px solid rgba(13, 33, 56, 0.13);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.76);
+      color: var(--ink-soft);
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: var(--site-max);
+      margin: 0 auto;
+      padding: clamp(1rem, 1.6vw, 1.5rem);
+      display: grid;
+      gap: 1.2rem;
+    }
+
+    .hero {
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(13, 33, 56, 0.12);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      background: var(--panel-strong);
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(280px, 0.88fr);
+    }
+
+    .hero-copy {
+      padding: clamp(1.35rem, 2.2vw, 2.2rem);
+      background: linear-gradient(135deg, rgba(13, 33, 56, 0.98), rgba(22, 86, 139, 0.92));
+      color: #f8fbff;
+      display: grid;
+      gap: 1rem;
+      align-content: space-between;
+      min-height: 350px;
+    }
+
+    .eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      margin: 0;
+      opacity: 0.86;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-family: "League Spartan", sans-serif;
+      font-size: var(--step-3);
+      line-height: 0.93;
+      letter-spacing: 0.01em;
+      max-width: 14ch;
+      text-wrap: balance;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 58ch;
+      color: rgba(248, 251, 255, 0.9);
+    }
+
+    .hero-notes {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 0.45rem;
+    }
+
+    .hero-notes li {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: var(--step--1);
+      color: rgba(248, 251, 255, 0.9);
+    }
+
+    .hero-notes li::before {
+      content: "";
+      width: 24px;
+      height: 1px;
+      background: rgba(248, 251, 255, 0.65);
+    }
+
+    .hero-signature {
+      padding: clamp(1.25rem, 2vw, 2rem);
+      display: grid;
+      align-content: center;
+      background:
+        radial-gradient(circle at 70% 30%, rgba(11, 125, 122, 0.17), transparent 52%),
+        radial-gradient(circle at 25% 80%, rgba(180, 91, 46, 0.16), transparent 45%),
+        var(--panel);
+    }
+
+    .join-key {
+      width: min(430px, 100%);
+      margin: 0 auto;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(13, 33, 56, 0.14);
+      background: #fff;
+      box-shadow: var(--shadow-crisp);
+      overflow: hidden;
+      animation: pulse-border 5s ease-in-out infinite;
+    }
+
+    .join-key header {
+      background: linear-gradient(120deg, rgba(13, 33, 56, 0.95), rgba(11, 125, 122, 0.92));
+      color: #f8fbff;
+      padding: 0.7rem 0.9rem;
+      font-family: "League Spartan", sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.03em;
+    }
+
+    .join-key-body {
+      padding: 0.9rem;
+      display: grid;
+      gap: 0.6rem;
+    }
+
+    .token-line {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .token {
+      border-radius: 999px;
+      border: 1px solid rgba(13, 33, 56, 0.12);
+      padding: 0.35rem 0.65rem;
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      background: rgba(22, 86, 139, 0.08);
+      color: var(--navy-deep);
+      font-weight: 600;
+    }
+
+    .token.separator {
+      border: none;
+      padding: 0;
+      background: transparent;
+      font-size: 1.1rem;
+      letter-spacing: 0;
+    }
+
+    .signature-note {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: var(--step--1);
+    }
+
+    .section {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      background: var(--panel-strong);
+      box-shadow: var(--shadow-crisp);
+      overflow: hidden;
+    }
+
+    .section-head {
+      padding: 1rem 1.1rem;
+      border-bottom: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.78));
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-family: "League Spartan", sans-serif;
+      font-size: var(--step-2);
+      color: var(--navy-deep);
+      line-height: 0.95;
+      letter-spacing: 0.01em;
+    }
+
+    .section-head span {
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink-soft);
+    }
+
+    .section-body {
+      padding: 1rem 1.1rem 1.2rem;
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .lead {
+      margin: 0;
+      color: var(--ink-soft);
+    }
+
+    .grid-two {
+      display: grid;
+      gap: 0.9rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.88);
+      padding: 0.8rem;
+    }
+
+    .card h3 {
+      margin: 0 0 0.4rem;
+      font-size: var(--step-0);
+      font-family: "League Spartan", sans-serif;
+      color: var(--navy-deep);
+      letter-spacing: 0.01em;
+    }
+
+    .card ul {
+      margin: 0;
+      padding-left: 1.05rem;
+      display: grid;
+      gap: 0.35rem;
+      color: var(--ink-main);
+    }
+
+    .table-wrap {
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: #fff;
+    }
+
+    .table-wrap.compact-entities-wrap {
+      overflow: visible;
+    }
+
+    .table-wrap.compact-relations-wrap {
+      overflow: visible;
+    }
+
+    table {
+      width: 100%;
+      min-width: 900px;
+      border-collapse: collapse;
+    }
+
+    table.compact-entities {
+      min-width: 0;
+      table-layout: fixed;
+    }
+
+    table.compact-relations {
+      min-width: 0;
+      table-layout: fixed;
+    }
+
+    table.compact-entities th,
+    table.compact-entities td {
+      padding: 0.5rem 0.55rem;
+      word-break: normal;
+      overflow-wrap: anywhere;
+      hyphens: manual;
+      font-size: 0.84rem;
+    }
+
+    table.compact-relations th,
+    table.compact-relations td {
+      padding: 0.5rem 0.55rem;
+      word-break: normal;
+      overflow-wrap: anywhere;
+      hyphens: manual;
+      font-size: 0.84rem;
+    }
+
+    table.compact-entities .op-meta {
+      font-size: 0.79rem;
+      color: var(--ink-soft);
+      line-height: 1.4;
+    }
+
+    th,
+    td {
+      text-align: left;
+      padding: 0.64rem 0.72rem;
+      border-bottom: 1px solid rgba(26, 42, 58, 0.1);
+      vertical-align: top;
+    }
+
+    th {
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink-soft);
+      background: rgba(22, 86, 139, 0.07);
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    tbody tr:nth-child(even) {
+      background: rgba(11, 125, 122, 0.03);
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 0.18rem 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .tag.alta {
+      color: #fff;
+      background: var(--risk);
+    }
+
+    .tag.media {
+      color: #fff;
+      background: var(--warn);
+    }
+
+    .tag.ok {
+      color: #fff;
+      background: var(--ok);
+    }
+
+    .mono {
+      font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 0.9em;
+    }
+
+    .decision-list li {
+      margin-bottom: 0.35rem;
+    }
+
+    .approval {
+      border: 1px solid rgba(13, 33, 56, 0.22);
+      border-radius: var(--radius-md);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(242, 238, 230, 0.72));
+      padding: 0.95rem;
+      display: grid;
+      gap: 0.65rem;
+    }
+
+    .approval-row {
+      display: grid;
+      gap: 0.4rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .field {
+      border: 1px dashed rgba(26, 42, 58, 0.3);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.9);
+      min-height: 44px;
+      padding: 0.5rem 0.6rem;
+    }
+
+    .field strong {
+      display: block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--ink-soft);
+      margin-bottom: 0.15rem;
+    }
+
+    .footnote {
+      margin: 0;
+      font-size: var(--step--1);
+      color: var(--ink-soft);
+    }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      max-width: var(--site-max);
+      margin: 0 auto;
+      padding: 0 1rem 1.25rem;
+      color: var(--ink-soft);
+      font-size: 0.75rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    @keyframes pulse-border {
+      0%, 100% {
+        box-shadow: var(--shadow-crisp);
+      }
+      50% {
+        box-shadow: 0 9px 28px rgba(13, 33, 56, 0.2);
+      }
+    }
+
+    @media (max-width: 960px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .grid-two,
+      .approval-row {
+        grid-template-columns: 1fr;
+      }
+
+      main {
+        padding: 0.9rem;
+      }
+
+      .section-body,
+      .section-head {
+        padding-left: 0.85rem;
+        padding-right: 0.85rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+
+    @media print {
+      .topbar,
+      .skip-link {
+        display: none !important;
+      }
+
+      body::before {
+        display: none !important;
+      }
+
+      main,
+      footer {
+        max-width: none;
+      }
+
+      .table-wrap.compact-entities-wrap {
+        overflow: visible;
+      }
+
+      .table-wrap.compact-relations-wrap {
+        overflow: visible;
+      }
+
+      .section {
+        box-shadow: none;
+        break-inside: auto;
+        page-break-inside: auto;
+      }
+
+      .section-head {
+        break-after: avoid-page;
+        page-break-after: avoid;
+      }
+
+      .section-body {
+        break-before: avoid-page;
+        page-break-before: avoid;
+      }
+
+      table.compact-entities {
+        font-size: 10px;
+      }
+
+      table.compact-relations {
+        font-size: 10px;
+      }
+
+      table.compact-entities th,
+      table.compact-entities td {
+        padding: 4px 5px;
+      }
+
+      table.compact-relations th,
+      table.compact-relations td {
+        padding: 4px 5px;
+      }
+
+      th {
+        position: static;
+      }
+
+      thead {
+        display: table-header-group;
+      }
+
+      tfoot {
+        display: table-footer-group;
+      }
+
+      tr,
+      th,
+      td {
+        break-inside: avoid-page;
+        page-break-inside: avoid;
+      }
+
+      .tag {
+        padding: 0.08rem 0.35rem;
+        font-size: 0.62rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="#conteudo" class="skip-link">Pular para o conteúdo principal</a>
+
+  <header class="topbar" aria-label="Barra superior">
+    <div class="topbar-inner">
+      <div class="brand">
+        <strong>FAPEMA Patronage Analytics</strong>
+        <span>Consolidado de validação - ciclo 1</span>
+      </div>
+      <div class="meta" aria-label="Metadados do documento">
+        <span class="meta-pill">Status: Draft consolidado</span>
+        <span class="meta-pill">Atualizado: 2026-07-22</span>
+      </div>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <section class="hero" aria-labelledby="titulo-hero">
+      <div class="hero-copy">
+        <div>
+          <p class="eyebrow">Aprovação PO / Tech Lead</p>
+          <h1 id="titulo-hero">Catálogo de Entidades + Regra de Correlação</h1>
+        </div>
+        <p>Página única para deliberação do ciclo 1 de conciliação financeira Patronage x SIGEF, consolidando escopo de dados prioritários, relacionamentos e critério oficial de match.</p>
+        <ul class="hero-notes">
+          <li>Foco: Conciliação Financeira e Painel Executivo</li>
+          <li>Chave base: edital normalizado + CPF normalizado</li>
+          <li>Pendências de decisão humana destacadas para aceite</li>
+        </ul>
+      </div>
+      <div class="hero-signature" aria-label="Assinatura visual da regra de correlação">
+        <div class="join-key">
+          <header>Join Key Oficial</header>
+          <div class="join-key-body">
+            <div class="token-line">
+              <span class="token">normalizar(id_edital)</span>
+              <span class="token separator">+</span>
+              <span class="token">"|"</span>
+              <span class="token separator">+</span>
+              <span class="token">normalizar(cpf_proponente)</span>
+            </div>
+            <p class="signature-note">Assinatura do ciclo 1: a correlação é confiável apenas quando os dois componentes existem, estão normalizados e passaram pelas validações definidas.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="sec-visao-geral">
+      <div class="section-head">
+        <h2 id="sec-visao-geral">Visão Geral Consolidada</h2>
+        <span>Baseado nos artefatos 1.1 v0.2</span>
+      </div>
+      <div class="section-body">
+        <p class="lead">Este consolidado combina os artefatos "Catálogo de Entidades Prioritárias - Ciclo 1" e "Regra de Correlação Patronage x SIGEF por Edital + CPF" para habilitar aprovação funcional e técnica em um único documento.</p>
+        <div class="grid-two">
+          <article class="card">
+            <h3>Objetivo do Catálogo</h3>
+            <ul>
+              <li>Consolidar entidades e relacionamentos prioritários de Patronage e SIGEF.</li>
+              <li>Suportar modelagem analítica e conciliação financeira do ciclo 1.</li>
+              <li>Aplicar priorização por impacto em Conciliação e Executivo.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Objetivo da Regra de Correlação</h3>
+            <ul>
+              <li>Definir critério oficial de match entre registros Patronage e SIGEF.</li>
+              <li>Padronizar normalização de edital/subação/processo e CPF.</li>
+              <li>Classificar divergências e direcionar exceções para curadoria.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="sec-entidades">
+      <div class="section-head">
+        <h2 id="sec-entidades">Entidades Prioritárias - Ciclo 1</h2>
+        <span>Inventário base consolidado</span>
+      </div>
+      <div class="section-body">
+        <div class="table-wrap compact-entities-wrap" role="region" aria-label="Tabela de entidades prioritárias condensada para impressão" tabindex="0">
+          <table class="compact-entities">
+            <thead>
+              <tr>
+                <th>Entidade</th>
+                <th>Origem</th>
+                <th>Prioridade</th>
+                <th>Chave técnica</th>
+                <th>Correlação</th>
+                <th>Contexto operacional</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>editais</td>
+                <td>Patronage</td>
+                <td><span class="tag alta">alta</span></td>
+                <td>id</td>
+                <td>id</td>
+                <td>domínio: edital<br><span class="op-meta">D+1 | dono: PO/gestão | fonte mestre de identificação de edital</span></td>
+              </tr>
+              <tr>
+                <td>edital_chamadas</td>
+                <td>Patronage</td>
+                <td><span class="tag alta">alta</span></td>
+                <td>id</td>
+                <td>edital_id</td>
+                <td>domínio: chamada<br><span class="op-meta">D+1 | dono: PO/gestão | ponte entre chamada e edital</span></td>
+              </tr>
+              <tr>
+                <td>processos</td>
+                <td>Patronage</td>
+                <td><span class="tag alta">alta</span></td>
+                <td>id</td>
+                <td>edital_chamada_id + user_id</td>
+                <td>domínio: solicitações/processo<br><span class="op-meta">D+1 | dono: PO/gestão | referência edital_chamada e usuário</span></td>
+              </tr>
+              <tr>
+                <td>users</td>
+                <td>Patronage</td>
+                <td><span class="tag alta">alta</span></td>
+                <td>id</td>
+                <td>documento (CPF quando tipo_documento=1)</td>
+                <td>domínio: pessoa<br><span class="op-meta">D+1 | dono: PO/gestão | campo documento usado para CPF</span></td>
+              </tr>
+              <tr>
+                <td>creditos</td>
+                <td>Patronage</td>
+                <td><span class="tag alta">alta</span></td>
+                <td>id</td>
+                <td>processo_id</td>
+                <td>domínio: financeiro<br><span class="op-meta">D+1 | dono: PO/gestão | valores concedidos por processo</span></td>
+              </tr>
+              <tr>
+                <td>credito_processos</td>
+                <td>Patronage</td>
+                <td><span class="tag media">media</span></td>
+                <td>id</td>
+                <td>processo_id/processoscredito_id</td>
+                <td>domínio: financeiro<br><span class="op-meta">D+1 | dono: PO/gestão | complemento de crédito por processo</span></td>
+              </tr>
+              <tr>
+                <td>chamada_dados_contratacao</td>
+                <td>Patronage</td>
+                <td><span class="tag media">media</span></td>
+                <td>id</td>
+                <td>edital_chamada_id</td>
+                <td>domínio: contratação<br><span class="op-meta">D+1 | dono: PO/gestão | janela de contratação e valor_bolsa</span></td>
+              </tr>
+              <tr>
+                <td>chamada_execucoes</td>
+                <td>Patronage</td>
+                <td><span class="tag media">media</span></td>
+                <td>id</td>
+                <td>edital_chamada_id</td>
+                <td>domínio: execução<br><span class="op-meta">D+1 | dono: PO/gestão | etapas e datas de execução por chamada</span></td>
+              </tr>
+              <tr>
+                <td>pagamentos_sigef</td>
+                <td>SIGEF</td>
+                <td><span class="tag alta">alta</span></td>
+                <td>identificador_pagamento</td>
+                <td>edital + cpf_proponente</td>
+                <td>domínio: financeiro<br><span class="op-meta">D+1 | dono: financeiro | entidade externa; schema pendente de anexo</span></td>
+              </tr>
+              <tr>
+                <td>saldos_sigef</td>
+                <td>SIGEF</td>
+                <td><span class="tag alta">alta</span></td>
+                <td>identificador_saldo</td>
+                <td>edital + cpf_proponente</td>
+                <td>domínio: financeiro<br><span class="op-meta">D+1 | dono: financeiro | entidade externa; schema pendente de anexo</span></td>
+              </tr>
+              <tr>
+                <td>processo_sigef/subacao</td>
+                <td>SIGEF</td>
+                <td><span class="tag alta">alta</span></td>
+                <td>numero_processo/subacao</td>
+                <td>edital + cpf_proponente</td>
+                <td>domínio: processo/subação<br><span class="op-meta">D+1 | dono: financeiro | entidade externa; schema pendente de anexo</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="sec-relacionamentos">
+      <div class="section-head">
+        <h2 id="sec-relacionamentos">Relacionamentos Prioritários</h2>
+        <span>Regras de associação válidas para ciclo 1</span>
+      </div>
+      <div class="section-body">
+        <div class="table-wrap compact-relations-wrap" role="region" aria-label="Tabela de relacionamentos prioritários condensada para impressão" tabindex="0">
+          <table class="compact-relations">
+            <thead>
+              <tr>
+                <th>Entidade A</th>
+                <th>Entidade B</th>
+                <th>Tipo</th>
+                <th>Regra de associação</th>
+                <th>Criticidade</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>editais</td>
+                <td>edital_chamadas</td>
+                <td>1:N</td>
+                <td class="mono">editais.id = edital_chamadas.edital_id</td>
+                <td><span class="tag alta">alta</span></td>
+              </tr>
+              <tr>
+                <td>edital_chamadas</td>
+                <td>processos</td>
+                <td>1:N</td>
+                <td class="mono">edital_chamadas.id = processos.edital_chamada_id</td>
+                <td><span class="tag alta">alta</span></td>
+              </tr>
+              <tr>
+                <td>processos</td>
+                <td>users</td>
+                <td>N:1</td>
+                <td class="mono">processos.user_id = users.id</td>
+                <td><span class="tag alta">alta</span></td>
+              </tr>
+              <tr>
+                <td>processos</td>
+                <td>creditos</td>
+                <td>1:N</td>
+                <td class="mono">processos.id = creditos.processo_id</td>
+                <td><span class="tag alta">alta</span></td>
+              </tr>
+              <tr>
+                <td>processos</td>
+                <td>credito_processos</td>
+                <td>1:N</td>
+                <td class="mono">processos.id = credito_processos.processo_id</td>
+                <td><span class="tag media">media</span></td>
+              </tr>
+              <tr>
+                <td>edital_chamadas</td>
+                <td>chamada_dados_contratacao</td>
+                <td>1:N</td>
+                <td class="mono">edital_chamadas.id = chamada_dados_contratacao.edital_chamada_id</td>
+                <td><span class="tag media">media</span></td>
+              </tr>
+              <tr>
+                <td>edital_chamadas</td>
+                <td>chamada_execucoes</td>
+                <td>1:N</td>
+                <td class="mono">edital_chamadas.id = chamada_execucoes.edital_chamada_id</td>
+                <td><span class="tag media">media</span></td>
+              </tr>
+              <tr>
+                <td>processos + users + editais</td>
+                <td>pagamentos_sigef / saldos_sigef</td>
+                <td>N:N logico</td>
+                <td>correlação por edital normalizado + CPF normalizado + período</td>
+                <td><span class="tag alta">alta</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="sec-regra">
+      <div class="section-head">
+        <h2 id="sec-regra">Regra Oficial de Correlação</h2>
+        <span>Patronage x SIGEF por edital + CPF</span>
+      </div>
+      <div class="section-body">
+        <article class="card">
+          <h3>Regra principal</h3>
+          <p class="lead"><span class="mono">join_key = normalizar(id_edital) + "|" + normalizar(cpf_proponente)</span></p>
+        </article>
+
+        <div class="grid-two">
+          <article class="card">
+            <h3>Caminho da chave no Patronage</h3>
+            <ul>
+              <li>edital: <span class="mono">editais.id</span></li>
+              <li>chamada: <span class="mono">edital_chamadas.id</span> com FK <span class="mono">edital_chamadas.edital_id -> editais.id</span></li>
+              <li>processo: <span class="mono">processos.id</span> com FK <span class="mono">processos.edital_chamada_id -> edital_chamadas.id</span></li>
+              <li>proponente: <span class="mono">users.id</span> com FK <span class="mono">processos.user_id -> users.id</span></li>
+              <li>cpf: <span class="mono">users.documento</span> quando <span class="mono">users.tipo_documento = '1'</span></li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Regras de normalização</h3>
+            <ul>
+              <li>CPF: remover não numéricos e validar 11 dígitos.</li>
+              <li>CPF sem máscara somente em camada restrita; mascarar consumo geral.</li>
+              <li>Edital/subação/processo: trim, padronização de caixa e delimitadores.</li>
+              <li>Aplicar tabela de-para versionada para codificações distintas.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="grid-two">
+          <article class="card">
+            <h3>Regras de match</h3>
+            <ul>
+              <li><span class="tag ok">match exato</span> id_edital e CPF normalizados iguais.</li>
+              <li><span class="tag media">match por de-para</span> edital Patronage mapeado para subação/processo SIGEF.</li>
+              <li><span class="tag alta">sem match</span> sem correspondência após normalização e de-para.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Classificação de divergências</h3>
+            <ul>
+              <li><span class="mono">ausencia_no_sigef</span>: existe no Patronage e não no SIGEF.</li>
+              <li><span class="mono">ausencia_no_patronage</span>: existe no SIGEF e não no Patronage.</li>
+              <li><span class="mono">diferenca_valor</span>: chave igual com valor financeiro divergente.</li>
+              <li><span class="mono">diferenca_status</span>: chave igual com status de pagamento divergente.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="sec-evidencias-pendencias">
+      <div class="section-head">
+        <h2 id="sec-evidencias-pendencias">Evidências, Pendências e Exceções</h2>
+        <span>Itens para governança de dados</span>
+      </div>
+      <div class="section-body">
+        <div class="grid-two">
+          <article class="card">
+            <h3>Fontes de evidência (DDL Patronage)</h3>
+            <ul>
+              <li><span class="mono">patronage/ddls/editais.sql</span></li>
+              <li><span class="mono">patronage/ddls/edital_chamadas.sql</span></li>
+              <li><span class="mono">patronage/ddls/processos.sql</span></li>
+              <li><span class="mono">patronage/ddls/users.sql</span></li>
+              <li><span class="mono">patronage/ddls/creditos.sql</span></li>
+              <li><span class="mono">patronage/ddls/credito_processos.sql</span></li>
+              <li><span class="mono">patronage/ddls/chamada_dados_contratacao.sql</span></li>
+              <li><span class="mono">patronage/ddls/chamada_execucoes.sql</span></li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Evidências de auditoria</h3>
+            <ul>
+              <li><span class="mono">lote_referencia</span></li>
+              <li><span class="mono">data_execucao</span></li>
+              <li><span class="mono">fonte_origem</span></li>
+              <li><span class="mono">regra_aplicada</span></li>
+              <li><span class="mono">tipo_divergencia</span></li>
+              <li><span class="mono">usuario_responsavel_curadoria</span></li>
+            </ul>
+          </article>
+        </div>
+
+        <article class="card">
+          <h3>Tratamento de exceções</h3>
+          <ul>
+            <li>Registros sem correspondência confiável devem ir para fila de exceção versionada.</li>
+            <li>Não consolidar no painel executivo enquanto exceção crítica estiver aberta sem aceite funcional.</li>
+            <li>Curadoria deve registrar contexto e decisão para rastreabilidade de auditoria.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="sec-decisoes-humanas">
+      <div class="section-head">
+        <h2 id="sec-decisoes-humanas">Pontos em Aberto para Decisão Humana</h2>
+        <span>Necessários antes de produção plena</span>
+      </div>
+      <div class="section-body">
+        <ul class="decision-list">
+          <li>Definir se a chave de edital para conciliação será <span class="mono">editais.id</span> ou combinação <span class="mono">editais.numero + editais.ano</span>.</li>
+          <li>Definir estrutura oficial do identificador equivalente no SIGEF (subação/processo).</li>
+          <li>Definir regra para casos em que <span class="mono">users.tipo_documento != '1'</span> (passaporte) no ciclo 1.</li>
+          <li>Definir critério de fallback para match parcial quando faltar um componente da chave.</li>
+          <li>Definir donos funcionais nominais por entidade prioritária.</li>
+          <li>Anexar schema oficial SIGEF para pagamentos, saldos e processo/subação.</li>
+          <li>Confirmar recorte temporal e granularidade por entidade para KPI.</li>
+          <li>Confirmar política de mascaramento de CPF na camada de consumo geral.</li>
+          <li>Definir SLA de curadoria para exceções sem match.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="sec-aprovacao">
+      <div class="section-head">
+        <h2 id="sec-aprovacao">Aprovação Funcional</h2>
+        <span>Seção final para aceite PO / Tech Lead</span>
+      </div>
+      <div class="section-body">
+        <div class="approval" role="form" aria-label="Formulário de aprovação funcional">
+          <div class="approval-row">
+            <div class="field">
+              <strong>Responsável pelo aceite</strong>
+              _________________________________
+            </div>
+            <div class="field">
+              <strong>Data</strong>
+              ____/____/2026
+            </div>
+          </div>
+          <div class="field">
+            <strong>Decisão</strong>
+            aprovado | ressalvas | reprovado | pendente
+          </div>
+          <div class="field" style="min-height: 96px;">
+            <strong>Observações</strong>
+            _______________________________________________<br>
+            _______________________________________________<br>
+            _______________________________________________
+          </div>
+        </div>
+        <p class="footnote">Uso recomendado: coletar parecer funcional e técnico no mesmo checkpoint, com registro de pendências remanescentes e prazo de resolução.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Fonte consolidada: _bmad-output/implementation-artifacts/catalogo-entidades-ciclo1-2026-07-22.md + _bmad-output/implementation-artifacts/regra-correlacao-edital-cpf-2026-07-22.md
+  </footer>
+</body>
+</html>
+
+

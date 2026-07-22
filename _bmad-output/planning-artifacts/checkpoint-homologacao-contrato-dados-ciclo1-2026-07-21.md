@@ -1,7 +1,8 @@
 # Checkpoint de Homologacao do Contrato de Dados - Ciclo 1
 
 **Data de preparo:** 2026-07-21
-**Status do checkpoint:** pronto para execucao
+**Data da rodada de decisao:** 2026-07-22
+**Status do checkpoint:** concluido com aceite de gestao
 **Objetivo:** conduzir o aceite formal do contrato de dados/views dos dois paineis prioritarios do ciclo 1 - Conciliacao (prioridade principal) e Executivo (prioridade secundaria) - antes do handoff para a equipe do Patronage, responsavel pela implementacao da UI final em Laravel.
 
 > Este checkpoint substitui `checkpoint-homologacao-paineis-fase-1-2026-07-17.md` apos o reescopo do ciclo 1 (ver `change-trigger-reescopo-paineis-2026-07-21.md` e `sprint-change-proposal-2026-07-21.md`, Secao 4.5). Os paineis Operacional e Gerencial nao fazem parte desta rodada; os criterios originais permanecem preservados no checkpoint de 2026-07-17 para retomada em ciclo futuro.
@@ -47,33 +48,33 @@
 **Aprovador principal:** lideranca financeira institucional e controle interno
 **Publico principal:** financeiro institucional e controle interno
 **Story de referencia:** Story 2.5 (`epics.md`)
-**Status da rodada:** pendente
+**Status da rodada:** concluido
 
 | Critério | Evidência esperada | Responsável de validação | Decisão | Observações | Responsável por ação | Prazo |
 | --- | --- | --- | --- | --- | --- | --- |
-| Batimento usando chave composta ID do edital + CPF do proponente | Regra explicitada no schema/documentacao da view | Liderança financeira institucional |  |  |  |  |
-| Classificação de divergencias por ausencia no SIGEF, ausencia no Patronage e diferenca de valor ou status | Colunas de classificacao documentadas na view | Controle interno |  |  |  |  |
-| Trilha de auditoria por lote D+1 com data de carga e quantidade conciliada | Colunas de lote/data/quantidade documentadas na view | Financeiro + equipe de dados |  |  |  |  |
-| Sinalizacao de restricao quando o lote estiver parcial, falho ou dependente de fonte externa | Flag/coluna de status operacional do lote documentada na view | Financeiro + equipe de dados |  |  |  |  |
-| Contrato de dados suficiente para a equipe do Patronage implementar a UI sem informacao faltante | Confirmacao formal da equipe do Patronage apos revisao do schema | Equipe do Patronage |  |  |  |  |
+| Batimento usando chave composta ID do edital + CPF do proponente | Regra explicitada no schema/documentacao da view | Lideranca financeira institucional | ressalvas | Gestao acatou pendencia tecnica sem bloqueio do ciclo. | PO | 2026-07-29 |
+| Classificacao de divergencias por ausencia no SIGEF, ausencia no Patronage e diferenca de valor ou status | Colunas de classificacao documentadas na view | Controle interno | ressalvas | Ajustes finos de nomenclatura ficam para ciclo de execucao. | PO | 2026-07-29 |
+| Trilha de auditoria por lote D+1 com data de carga e quantidade conciliada | Colunas de lote/data/quantidade documentadas na view | Financeiro + equipe de dados | ressalvas | Estrutura aceita pela gestao com detalhamento incremental na implementacao. | PO | 2026-07-29 |
+| Sinalizacao de restricao quando o lote estiver parcial, falho ou dependente de fonte externa | Flag/coluna de status operacional do lote documentada na view | Financeiro + equipe de dados | ressalvas | Regra aceita com monitoramento no handoff para Patronage. | PO | 2026-07-29 |
+| Contrato de dados suficiente para a equipe do Patronage implementar a UI sem informacao faltante | Confirmacao formal da equipe do Patronage apos revisao do schema | Equipe do Patronage | ressalvas | Equipe Patronage segue com contrato atual e solicita refinamentos durante execucao. | PO | 2026-07-29 |
 
-**Decisão do painel:** pendente
+**Decisao do painel:** ressalvas
 
 ## Painel 02 - Executivo C-Level de KPIs Institucionais (prioridade secundaria)
 
 **Aprovador principal:** patrocinador executivo do programa de analytics
 **Publico principal:** presidencia, diretorias e alta gestao
 **Story de referencia:** Story 2.6 (`epics.md`)
-**Status da rodada:** pendente
+**Status da rodada:** concluido
 
 | Critério | Evidência esperada | Responsável de validação | Decisão | Observações | Responsável por ação | Prazo |
 | --- | --- | --- | --- | --- | --- | --- |
-| KPIs mínimos institucionais exigidos no PRD (orcamento, ciclo, convenios, divergencia SIGEF x Patronage, alertas criticos) | Colunas/agregados documentados na view executiva | PO + patrocinador executivo |  |  |  |  |
-| Tendencias mensal, trimestral, semestral e anual precomputadas o suficiente para leitura executiva em ate 5 minutos | Granularidade e payload da view documentados | PO + diretoria patrocinadora |  |  |  |  |
-| Sinalização executiva da conciliacao financeira com semaforizacao aprovada | Regra de semaforizacao documentada na view | Patrocinador executivo + controle interno |  |  |  |  |
-| Contrato de dados suficiente para a equipe do Patronage implementar a UI sem informacao faltante | Confirmacao formal da equipe do Patronage apos revisao do schema | Equipe do Patronage |  |  |  |  |
+| KPIs minimos institucionais exigidos no PRD (orcamento, ciclo, convenios, divergencia SIGEF x Patronage, alertas criticos) | Colunas/agregados documentados na view executiva | PO + patrocinador executivo | ressalvas | Priorizacao de KPI validada; detalhes tecnicos evoluem no sprint. | PO | 2026-07-29 |
+| Tendencias mensal, trimestral, semestral e anual precomputadas o suficiente para leitura executiva em ate 5 minutos | Granularidade e payload da view documentados | PO + diretoria patrocinadora | ressalvas | Gestao aceitou seguir sem bloqueio por ausencia de equipe de dados dedicada. | PO | 2026-07-29 |
+| Sinalizacao executiva da conciliacao financeira com semaforizacao aprovada | Regra de semaforizacao documentada na view | Patrocinador executivo + controle interno | ressalvas | Semaforizacao sera detalhada no ciclo de execucao com validacao do patrocinador. | PO | 2026-07-29 |
+| Contrato de dados suficiente para a equipe do Patronage implementar a UI sem informacao faltante | Confirmacao formal da equipe do Patronage apos revisao do schema | Equipe do Patronage | ressalvas | Patronage confirmou viabilidade com refinamento incremental durante desenvolvimento. | PO | 2026-07-29 |
 
-**Decisão do painel:** pendente
+**Decisao do painel:** ressalvas
 
 ## Paineis adiados para ciclo futuro
 
@@ -83,22 +84,29 @@ Os paineis Operacional (chamadas e editais) e Gerencial (convenios e execucao) n
 
 | Tópico | Responsável | Prazo | Status |
 | --- | --- | --- | --- |
-| Consolidar schema/documentacao das views de Conciliacao e Executivo | Equipe de dados |  | Pendente |
-| Registrar aceite formal por painel | Aprovadores designados + equipe do Patronage |  | Pendente |
-| Comunicar formalmente a equipe do Patronage sobre a nova fronteira de responsabilidade | PO |  | Pendente |
-| Liberar handoff do contrato de dados para o Patronage ou devolver com pendencias | PO + patrocinador executivo |  | Pendente |
+| Consolidar schema/documentacao das views de Conciliacao e Executivo | PO + Patronage | 2026-07-29 | Em andamento |
+| Registrar aceite formal por painel | Aprovadores designados + equipe do Patronage | 2026-07-22 | Concluido |
+| Comunicar formalmente a equipe do Patronage sobre a nova fronteira de responsabilidade | PO | 2026-07-22 | Concluido |
+| Liberar handoff do contrato de dados para o Patronage ou devolver com pendencias | PO + patrocinador executivo | 2026-07-22 | Concluido |
 
 ## Resultado consolidado
 
-- Painel de Conciliacao: pendente
-- Painel Executivo: pendente
-- Aceite global do ciclo 1: bloqueado ate conclusao da homologacao formal
+- Painel de Conciliacao: ressalvas (aceito)
+- Painel Executivo: ressalvas (aceito)
+- Aceite global do ciclo 1: aprovado com ressalvas
+- Handoff do contrato de dados para o Patronage: autorizado em 2026-07-22
 
 ## Criterio de fechamento do checkpoint
 
 Este checkpoint pode ser considerado concluido quando:
 
-1. Ambos os paineis prioritarios tiverem decisao registrada.
-2. Toda ressalva ou pendencia tiver responsavel e prazo.
-3. A equipe do Patronage confirmar que o contrato de dados e suficiente para implementacao da UI.
-4. O PO e os aprovadores designados confirmarem o aceite final ou o retorno com correcoes.
+1. Ambos os paineis prioritarios tiverem decisao registrada. (Concluido em 2026-07-22)
+2. Toda ressalva ou pendencia tiver responsavel e prazo. (Concluido em 2026-07-22)
+3. A equipe do Patronage confirmar que o contrato de dados e suficiente para implementacao da UI. (Concluido em 2026-07-22)
+4. O PO e os aprovadores designados confirmarem o aceite final ou o retorno com correcoes. (Concluido em 2026-07-22)
+
+## Registro de decisao da gestao
+
+- As pendencias tecnicas remanescentes foram apresentadas e acatadas pela gestao.
+- A ausencia de equipe de dados dedicada para aprofundamento tecnico nao bloqueia a continuidade.
+- O risco residual foi aceito pelo patrocinador e pelo PO para execucao incremental no sprint.

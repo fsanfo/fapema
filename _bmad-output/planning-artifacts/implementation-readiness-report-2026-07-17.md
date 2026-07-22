@@ -24,6 +24,10 @@ filesIncluded:
 
 # Implementation Readiness Assessment Report
 
+> Status historico: este relatorio foi superado pelo update de 2026-07-22 com decisao de gestao e liberacao para planejamento da execucao.
+>
+> Referencia vigente: `_bmad-output/planning-artifacts/implementation-readiness-update-2026-07-22.md`.
+
 **Date:** 2026-07-17
 **Project:** fapema
 

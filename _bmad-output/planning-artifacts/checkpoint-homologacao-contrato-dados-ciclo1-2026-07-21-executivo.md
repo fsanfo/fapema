@@ -1,6 +1,6 @@
 # Checkpoint Executivo de Homologacao - Contrato de Dados Ciclo 1
 
-**Data sugerida:** ___/___/2026
+**Data sugerida:** 22/07/2026
 **Duracao sugerida:** 30 a 40 minutos
 **Objetivo:** sair da reuniao com decisao clara por painel prioritario: `aprovado`, `ressalvas`, `reprovado` ou `pendente`, e autorizacao (ou nao) do handoff do contrato de dados para a equipe do Patronage.
 
@@ -84,15 +84,22 @@ Saida esperada:
 
 ## Ata minima da reuniao
 
-Preencher ao final:
+Preenchimento da rodada de 22/07/2026:
 
-- Conciliacao: ___
-- Executivo: ___
-- Aceite global: ___
-- Handoff para o Patronage autorizado: ___
-- Responsaveis por ajustes: ___
-- Prazos acordados: ___
+- Conciliacao: ressalvas (aceito)
+- Executivo: ressalvas (aceito)
+- Aceite global: aprovado com ressalvas
+- Handoff para o Patronage autorizado: sim
+- Responsaveis por ajustes: PO (consolidacao e priorizacao), equipe Patronage (consumo do contrato na UI)
+- Prazos acordados: 29/07/2026 para consolidacao dos refinamentos priorizados
 
 ## Criterio de sucesso
 
 A reuniao foi bem-sucedida se terminar com decisao registrada para os dois paineis prioritarios e, quando houver ressalvas, com dono e prazo definidos.
+
+## Resultado registrado
+
+- Reuniao encerrada com decisao valida para os dois paineis prioritarios.
+- Pendencias tecnicas remanescentes foram apresentadas e acatadas pela gestao.
+- Risco residual aceito sem bloqueio do ciclo.
+- Planejamento da execucao liberado.
