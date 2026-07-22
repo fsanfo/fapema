@@ -726,7 +726,7 @@
     <section class="section" aria-labelledby="sec-visao-geral">
       <div class="section-head">
         <h2 id="sec-visao-geral">Visão Geral Consolidada</h2>
-        <span>Baseado nos artefatos 1.1 v0.2</span>
+        <span>Baseado nos artefatos 1.1 v0.3</span>
       </div>
       <div class="section-body">
         <p class="lead">Este consolidado combina os artefatos "Catálogo de Entidades Prioritárias - Ciclo 1" e "Regra de Correlação Patronage x SIGEF por Edital + CPF" para habilitar aprovação funcional e técnica em um único documento.</p>
@@ -1033,6 +1033,17 @@
         </div>
 
         <article class="card">
+          <h3>Respostas consolidadas do catálogo</h3>
+          <ul>
+            <li>Donos funcionais nominais por entidade prioritária: Sr. Ivanilson.</li>
+            <li>SIGEF: não há acesso operacional documentado; a equipe possui apenas login e uso de um único endpoint.</li>
+            <li>Recorte temporal e granularidade: benchmark de mercado e melhores práticas, considerando base com mais de 10 anos.</li>
+            <li>Mascaramento de CPF: definido pela equipe de DEV UI do Patronage.</li>
+            <li>SLA para exceções sem match: benchmark de mercado e melhores práticas.</li>
+          </ul>
+        </article>
+
+        <article class="card">
           <h3>Tratamento de exceções</h3>
           <ul>
             <li>Registros sem correspondência confiável devem ir para fila de exceção versionada.</li>
@@ -1054,11 +1065,10 @@
           <li>Definir estrutura oficial do identificador equivalente no SIGEF (subação/processo).</li>
           <li>Definir regra para casos em que <span class="mono">users.tipo_documento != '1'</span> (passaporte) no ciclo 1.</li>
           <li>Definir critério de fallback para match parcial quando faltar um componente da chave.</li>
-          <li>Definir donos funcionais nominais por entidade prioritária.</li>
-          <li>Anexar schema oficial SIGEF para pagamentos, saldos e processo/subação.</li>
-          <li>Confirmar recorte temporal e granularidade por entidade para KPI.</li>
-          <li>Confirmar política de mascaramento de CPF na camada de consumo geral.</li>
-          <li>Definir SLA de curadoria para exceções sem match.</li>
+          <li>Documentar o protocolo de acesso ao SIGEF, incluindo login e uso dos endpoints disponíveis.</li>
+          <li>Confirmar, quando houver acesso documentado, o schema oficial SIGEF para pagamentos, saldos e processo/subação.</li>
+          <li>Definir qual coluna oficial de CPF chega do SIGEF e seu formato, caso o acesso seja restabelecido e documentado.</li>
+          <li>Validar a regra de de-para edital Patronage x subação/processo SIGEF com o Sr. Ivanilson.</li>
         </ul>
       </div>
     </section>
